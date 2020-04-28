@@ -3,14 +3,46 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   padding: 0 10%;
+
+  @media (max-width: 769px) {
+    padding: 0 1em;
+  }
 `;
-export const Nav = styled.nav``;
+export const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const Logo = styled.div`
+  display: flex;
+  align-items: center;
+
+  .img {
+    img {
+      display: block;
+      width: 3em;
+    }
+  }
+
+  h3 {
+    color: teal;
+    margin: 0;
+
+    span {
+      color: orangered;
+    }
+  }
+`;
 export const Ul = styled.ul`
   list-style: none;
   display: flex;
   align-items: center;
   margin: 0;
   padding: 0.8em 0;
+
+  /* @media (max-width: 769px) {
+    display: none;
+  } */
 
   .links {
     text-decoration: none;

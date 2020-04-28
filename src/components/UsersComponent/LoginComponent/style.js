@@ -19,6 +19,10 @@ export const ModalContent = styled.div`
   padding: 1em;
   border-radius: 0.25em;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 769px) {
+    width: 95%;
+  }
 `;
 export const ModalHeader = styled.div`
   padding-bottom: 2em;
@@ -54,6 +58,6 @@ export const Close = styled.h1`
   font-size: 5.5em;
   cursor: pointer;
   position: absolute;
-  top: 10%;
+  top: 2%;
   right: 10%;
 `;

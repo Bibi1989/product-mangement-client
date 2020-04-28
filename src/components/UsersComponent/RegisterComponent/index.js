@@ -12,19 +12,33 @@ import {
 } from "../LoginComponent/style";
 import { Form, Button } from "semantic-ui-react";
 import { useLocation, useHistory, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../userRedux/store";
 
 const Register = () => {
-  const [visible, setVisible] = useState(true);
-  const path = useLocation().pathname.split("/")[1];
+  const [visible] = useState(true);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //     if (path === "register") {
-  //       setVisible(true);
-  //     }
-  //   }, [visible]);
+  const [values, setValues] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
 
-  console.log(visible);
+  const handleValues = ({ target: { name, value } }) => {
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+  const onsubmit = (e) => {
+    e.preventDefault();
+
+    registerUser(dispatch, values);
+  };
 
   return (
     <Container>
@@ -36,26 +50,46 @@ const Register = () => {
               <H1>Register Here</H1>
             </ModalHeader>
             <ModalBody>
-              <Form>
+              <Form onSubmit={onsubmit}>
                 <Form.Field>
                   <label>First Name</label>
-                  <input placeholder='First Name' name='first_name' />
+                  <input
+                    placeholder='First Name'
+                    name='first_name'
+                    onChange={handleValues}
+                  />
                 </Form.Field>
                 <Form.Field>
                   <label>Last Name</label>
-                  <input placeholder='Last Name' name='last_name' />
+                  <input
+                    placeholder='Last Name'
+                    name='last_name'
+                    onChange={handleValues}
+                  />
                 </Form.Field>
                 <Form.Field>
                   <label>Email Address</label>
-                  <input placeholder='Email Address' name='email' />
+                  <input
+                    placeholder='Email Address'
+                    name='email'
+                    onChange={handleValues}
+                  />
                 </Form.Field>
                 <Form.Field>
                   <label>Phone Number</label>
-                  <input placeholder='Phone Number' name='phone' />
+                  <input
+                    placeholder='Phone Number'
+                    name='phone'
+                    onChange={handleValues}
+                  />
                 </Form.Field>
                 <Form.Field>
                   <label>Password</label>
-                  <input placeholder='Password' name='password' />
+                  <input
+                    placeholder='Password'
+                    name='password'
+                    onChange={handleValues}
+                  />
                 </Form.Field>
                 <Button
                   type='submit'
