@@ -1,0 +1,36 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 100%;
+  padding: 0 10%;
+`;
+export const Nav = styled.nav``;
+export const Ul = styled.ul`
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.8em 0;
+
+  .links {
+    text-decoration: none;
+    color: #555555;
+  }
+`;
+export const Li = styled.li`
+  &.login {
+    padding: 0.8em 2em;
+    background: teal;
+    color: #eeeeee;
+    border-radius: 30px;
+  }
+  &.register {
+    padding: 0.8em 2em;
+    background: orangered;
+    color: #eeeeee;
+    border-radius: 30px;
+    margin-left: 1em;
+  }
+`;
+export const ModalBody = styled.div``;
+// export const Container = styled.div``

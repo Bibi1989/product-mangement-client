@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import styled from "styled-components";
+
+import Login from "./components/UsersComponent/LoginComponent/index";
+import "./App.css";
+import Nav from "./components/NavBar/index";
+import Register from "./components/UsersComponent/RegisterComponent/index";
+import FirstSection from "./components/ProjectComponent/FirstSection";
+import SecondSection from "./components/ProjectComponent/SecondSecion";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Wrapper>
+        <Nav />
+        <Switch>
+          <Route exact path='/'>
+            <FirstSection />
+            <SecondSection />
+          </Route>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+          <Route exact path='/register'>
+            <Register />
+          </Route>
+        </Switch>
+      </Wrapper>
+    </BrowserRouter>
   );
 }
+
+const Wrapper = styled.div`
+  position: relative;
+`;
 
 export default App;
