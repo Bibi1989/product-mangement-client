@@ -7,9 +7,11 @@ import {
   ModalContent,
   H1,
   Close,
+  Div,
+  ModalFooter,
 } from "../LoginComponent/style";
 import { Form, Button } from "semantic-ui-react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 
 const Register = () => {
   const [visible, setVisible] = useState(true);
@@ -63,6 +65,15 @@ const Register = () => {
                 </Button>
               </Form>
             </ModalBody>
+            <ModalFooter>
+              <Div>
+                If you have register already click{" "}
+                <Link to='/login'>
+                  <span>Login</span>
+                </Link>
+                to login
+              </Div>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       )}

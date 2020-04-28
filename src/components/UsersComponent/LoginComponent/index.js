@@ -7,9 +7,11 @@ import {
   ModalContent,
   H1,
   Close,
+  ModalFooter,
+  Div,
 } from "./style";
 import { Form, Button } from "semantic-ui-react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 
 const Login = () => {
   const [visible, setVisible] = useState(true);
@@ -48,6 +50,15 @@ const Login = () => {
                 </Button>
               </Form>
             </ModalBody>
+            <ModalFooter>
+              <Div>
+                If you are yet to register click
+                <Link to='/register'>
+                  <span>Register</span>
+                </Link>
+                to register
+              </Div>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       )}

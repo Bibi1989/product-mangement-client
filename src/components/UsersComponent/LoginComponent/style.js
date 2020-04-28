@@ -8,24 +8,40 @@ export const Container = styled.div`
 export const Modal = styled.div`
   width: 100%;
   min-height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 export const ModalContent = styled.div`
   width: 40%;
-  background: #eeeeee;
+  background: white;
   padding: 1em;
   border-radius: 0.25em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 `;
 export const ModalHeader = styled.div`
   padding-bottom: 2em;
   border-bottom: 1px solid #999999;
 `;
 export const ModalBody = styled.div`
+  padding: 1.5em 0;
+`;
+export const ModalFooter = styled.div`
+  padding: 1.5em 0;
+  border-top: 1px solid #999999;
+`;
+export const Div = styled.div`
   padding-top: 1.5em;
+  text-align: center;
+
+  span {
+    padding: 0.7em 1.4em;
+    background: orangered;
+    color: #eeeeee;
+    border-radius: 30px;
+    margin: 0 0.5em;
+  }
 `;
 export const H1 = styled.h1`
   text-align: center;

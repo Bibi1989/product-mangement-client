@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, H1, H2, P, Image } from "./style";
 import { Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const SecondSection = () => {
   return (
@@ -14,9 +15,11 @@ const SecondSection = () => {
             natus, provident nulla quod aspernatur. Vero inventore odit
             cupiditate libero porro.
           </P>
-          <Button className='started' color='teal'>
-            Get Started
-          </Button>
+          <Link to='/register'>
+            <Button className='started' color='teal'>
+              Get Started
+            </Button>
+          </Link>
         </Col>
         <Col>
           <Image>

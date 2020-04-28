@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   background: rgba(0, 200, 230, 0.9);
+  border-bottom-right-radius: 30%;
+  border-bottom-left-radius: 30%;
 `;
 export const Row = styled.div`
   padding: 0 10%;
