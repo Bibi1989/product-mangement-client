@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalContent,
-  H1,
-  Close,
-  Div,
-  ModalFooter,
-} from "../LoginComponent/style";
-import { Form, Button } from "semantic-ui-react";
-import { useHistory, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Container } from "../LoginComponent/style";
+import { Form, Button, Modal } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { registerUser } from "../userRedux/store";
 
 const Register = () => {
-  const [visible] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -47,75 +36,61 @@ const Register = () => {
 
   return (
     <Container>
-      {visible && <Close onClick={() => history.push("/")}>&times;</Close>}
-      {visible && (
-        <Modal>
-          <ModalContent>
-            <ModalHeader>
-              <H1>Register Here</H1>
-            </ModalHeader>
-            <ModalBody>
-              <Form onSubmit={onsubmit}>
-                <Form.Field>
-                  <label>First Name</label>
-                  <input
-                    placeholder='First Name'
-                    name='first_name'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Last Name</label>
-                  <input
-                    placeholder='Last Name'
-                    name='last_name'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Email Address</label>
-                  <input
-                    placeholder='Email Address'
-                    name='email'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Phone Number</label>
-                  <input
-                    placeholder='Phone Number'
-                    name='phone'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Password</label>
-                  <input
-                    placeholder='Password'
-                    name='password'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Button
-                  type='submit'
-                  style={{ display: "block", margin: "auto" }}
-                >
-                  Submit
-                </Button>
-              </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Div>
-                If you have register already click{" "}
-                <Link to='/login'>
-                  <span>Login</span>
-                </Link>
-                to login
-              </Div>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
+      <Modal trigger={<button className='btn'>Sign Up</button>}>
+        <Modal.Header>Register Here</Modal.Header>
+        <Modal.Content image>
+          <Modal.Description>
+            <Form onSubmit={onsubmit}>
+              <Form.Field>
+                <label>First Name</label>
+                <input
+                  placeholder='First Name'
+                  name='first_name'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Last Name</label>
+                <input
+                  placeholder='Last Name'
+                  name='last_name'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Email Address</label>
+                <input
+                  placeholder='Email Address'
+                  name='email'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Phone Number</label>
+                <input
+                  placeholder='Phone Number'
+                  name='phone'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  placeholder='Password'
+                  name='password'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Button
+                type='submit'
+                style={{ display: "block", margin: "1.5em auto" }}
+              >
+                Register
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
     </Container>
   );
 };

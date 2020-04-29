@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  background: rgba(0, 200, 230, 0.9);
+  /* background: rgba(0, 200, 230, 0.9); */
+  background: orangered;
   border-bottom-right-radius: 30%;
   border-bottom-left-radius: 30%;
 `;

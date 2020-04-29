@@ -12,6 +12,7 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 8vh;
 `;
 export const Logo = styled.div`
   display: flex;
@@ -32,6 +33,13 @@ export const Logo = styled.div`
       color: orangered;
     }
   }
+`;
+export const User = styled.div`
+  display: flex;
+  align-self: center;
+  margin: 0.8em 0;
+  margin-right: 5%;
+  height: 100%;
 `;
 export const Ul = styled.ul`
   list-style: none;

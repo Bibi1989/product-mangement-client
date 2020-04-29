@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { Provider } from "react-redux";
 
-import Login from "./components/UsersComponent/LoginComponent/index";
+// import Login from "./components/UsersComponent/LoginComponent/index";
+// import Register from "./components/UsersComponent/RegisterComponent/index";
 import Nav from "./components/NavBar/index";
-import Register from "./components/UsersComponent/RegisterComponent/index";
 
 import store from "./redux/store";
 
@@ -16,6 +16,7 @@ import WelcomePage from "./components/Dashboard/WelcomePage";
 import LandingPage from "./components/ProjectComponent/LandingPage";
 import CreateProject from "./components/Dashboard/CreateProject/index";
 import PageNotFound from "./PageNotFound";
+import Tasks from "./components/Dashboard/Tasks";
 
 function App() {
   return (
@@ -28,17 +29,20 @@ function App() {
               <Route exact path='/'>
                 <LandingPage />
               </Route>
-              <Route exact path='/login'>
+              {/* <Route exact path='/login'>
                 <Login />
               </Route>
               <Route exact path='/register'>
                 <Register />
-              </Route>
+              </Route> */}
               <Route exact path='/dashboard'>
                 <WelcomePage />
               </Route>
               <Route exact path='/create'>
                 <CreateProject />
+              </Route>
+              <Route exact path='/tasks'>
+                <Tasks />
               </Route>
               <Route exact to='/notfound'>
                 <PageNotFound />

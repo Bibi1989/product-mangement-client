@@ -4,6 +4,34 @@ export const Container = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
+
+  .btn,
+  .btn-login {
+    background: orangered;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 0.7em 1.4em;
+    position: static !important;
+    margin: 0.8em 0;
+    cursor: pointer;
+  }
+
+  .create {
+    background: teal;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 0.7em 1.4em;
+    position: absolute !important;
+    top: 50%;
+    cursor: pointer;
+  }
+
+  .btn-login {
+    margin-left: -100px;
+    background: teal;
+  }
 `;
 export const Modal = styled.div`
   width: 100%;
@@ -49,8 +77,8 @@ export const Div = styled.div`
 `;
 export const H1 = styled.h1`
   text-align: center;
-  color: orangered;
-  font-size: 2.5em;
+  color: #999;
+  font-size: 1.5em;
 `;
 export const Close = styled.h1`
   text-align: center;

@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalContent,
-  H1,
-  Close,
-  ModalFooter,
-  Div,
-} from "./style";
-import { Form, Button } from "semantic-ui-react";
-import { useHistory, Link } from "react-router-dom";
+import { Container } from "./style";
+import { Form, Button, Modal } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 
 const Login = () => {
-  const [visible] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -47,51 +36,37 @@ const Login = () => {
   };
   return (
     <Container>
-      {visible && <Close onClick={() => history.push("/")}>&times;</Close>}
-      {visible && (
-        <Modal>
-          <ModalContent>
-            <ModalHeader>
-              <H1>Login Here</H1>
-            </ModalHeader>
-            <ModalBody>
-              <Form onSubmit={onsubmit}>
-                <Form.Field>
-                  <label>Email Address</label>
-                  <input
-                    placeholder='Email Address'
-                    name='email'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Password</label>
-                  <input
-                    placeholder='Password'
-                    name='password'
-                    onChange={handleValues}
-                  />
-                </Form.Field>
-                <Button
-                  type='submit'
-                  style={{ display: "block", margin: "auto" }}
-                >
-                  Submit
-                </Button>
-              </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Div>
-                If you are yet to register click
-                <Link to='/register'>
-                  <span>Register</span>
-                </Link>
-                to register
-              </Div>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
+      <Modal trigger={<button className='btn-login'>Sign In</button>}>
+        <Modal.Header>Login Here</Modal.Header>
+        <Modal.Content image>
+          <Modal.Description>
+            <Form onSubmit={onsubmit}>
+              <Form.Field>
+                <label>Email Address</label>
+                <input
+                  placeholder='Email Address'
+                  name='email'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  placeholder='Password'
+                  name='password'
+                  onChange={handleValues}
+                />
+              </Form.Field>
+              <Button
+                type='submit'
+                style={{ display: "block", margin: "1.5em auto" }}
+              >
+                Login
+              </Button>
+            </Form>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
     </Container>
   );
 };

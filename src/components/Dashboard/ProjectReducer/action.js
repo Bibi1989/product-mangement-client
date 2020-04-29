@@ -1,4 +1,4 @@
-import { ADD, FETCHALL, FETCHSINGLE, DELETE, UPDATE } from "./type";
+import { ADD, FETCHALL, FETCHSINGLE, DELETE, UPDATE, TASK } from "./type";
 
 export const getAllAction = (response) => ({
   type: FETCHALL,
@@ -22,5 +22,9 @@ export const updateAction = (response) => ({
 
 export const deleteAction = (response) => ({
   type: DELETE,
+  payload: response,
+});
+export const getTaskAction = (response) => ({
+  type: TASK,
   payload: response,
 });

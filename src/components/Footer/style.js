@@ -5,7 +5,7 @@ export const Container = styled.div`
   min-height: 30vh;
   display: flex;
   align-items: center;
-  background: #444444;
+  background: orangered;
   margin-top: 5%;
 `;
 export const Row = styled.div`

@@ -1,68 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 import {
   Container,
   Row,
   Col,
-  Card,
   Project,
   Prob,
   Date,
   Header,
+  Menu,
+  DropUp,
 } from "../Home/style";
 import { Icon, Button } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProjects } from "../ProjectReducer/store";
+import {
+  fetchAllProjects,
+  getSingleProject,
+  getSingleTask,
+  deleteProject,
+} from "../ProjectReducer/store";
 
 const ProjectComponent = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const history = useHistory();
+  const [show, setShow] = useState("");
 
   const dispatch = useDispatch();
 
   const projects = useSelector(({ project: { projects } }) => projects);
-  // let noOfTasks = 0;
-  // projects !== undefined &&
-  //   projects.forEach((project) => {
-  //     noOfTasks += project.Tasks.length;
-  //   });
+  const deletes = useSelector(
+    ({ project: { deleted_project } }) => deleted_project
+  );
 
-  console.log(projects);
+  useEffect(() => {
+    fetchAllProjects(dispatch);
+
+    // eslint-disable-next-line
+  }, [deletes]);
 
   if (!token) {
     history.push("/login");
   }
 
-  useEffect(() => {
-    fetchAllProjects(dispatch);
-  }, []);
+  const handleDelete = (id) => {
+    deleteProject(dispatch, id, history);
+    setShow("");
+  };
+  const handleEdit = (id) => {
+    getSingleProject(dispatch, id);
+    setShow("");
+    history.push("/create");
+  };
+
+  const onTask = (id) => {
+    getSingleTask(dispatch, id, history);
+  };
+
   return (
     <Container>
       <Row>
-        {/* <Col>
-          <Card>
-            <p>Total Projects</p>
-            <div className='total'>
-              <Icon name='chart bar' />
-              <span>{projects !== undefined && projects.length}</span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Tasks</p>
-            <div className='total'>
-              <Icon name='chart line' />
-              <span>{0}</span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Likes</p>
-            <div className='total'>
-              <Icon name='chart pie' />
-              <span>3</span>
-            </div>
-          </Card>
-        </Col> */}
         <Col>
           <Link to='/create'>
             <Button className='btn'>
@@ -72,27 +69,46 @@ const ProjectComponent = () => {
           </Link>
         </Col>
         <Col>
-          {projects.length <= 0 && <p>You Have no project create one!!!</p>}
+          {/* {projects.length !== undefined && (
+            <p>You Have no project create one!!!</p>
+          )} */}
           <Project>
             {projects !== undefined &&
-              projects.map((array) => (
-                <Prob key={array.id}>
+              projects.map((project) => (
+                <Prob key={project.id}>
                   <Header>
-                    <h1>{array.project_name}</h1>
+                    <h1>{project.project_name}</h1>
                     <p
                       className={
-                        array.project_identifier === "public"
+                        project.project_identifier === "public"
                           ? "public"
                           : "private"
                       }
                     >
-                      {array.project_identifier}
+                      {project.project_identifier}
                     </p>
                   </Header>
-                  <p>{array.description}</p>
+                  <p onClick={() => onTask(project.id)}>
+                    {project.description}
+                  </p>
                   <Date>
-                    <span>Created: {array.start_date} -- </span>
-                    <span>Due: {array.end_date}</span>
+                    <div>
+                      <span>Created: {project.start_date} -- </span>
+                      <span>Due: {project.end_date}</span>
+                    </div>
+                    <Menu onClick={() => setShow(project.id)}>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <DropUp className={show === project.id && "show"}>
+                        <p onClick={() => handleEdit(project.id)}>
+                          <Icon name='edit' color='teal' />
+                        </p>
+                        <p onClick={() => handleDelete(project.id)}>
+                          <Icon name='cut' color='orange' />
+                        </p>
+                      </DropUp>
+                    </Menu>
                   </Date>
                 </Prob>
               ))}

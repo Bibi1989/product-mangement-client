@@ -60,6 +60,10 @@ export const Prob = styled.div`
   background: white;
   padding: 1em;
 
+  h1 {
+    font-size: 1.5em;
+  }
+
   .private,
   .public {
     margin: 0;
@@ -81,6 +85,7 @@ export const Date = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 export const Menu = styled.div`
   display: flex;

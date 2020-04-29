@@ -1,4 +1,4 @@
-import { ADD, FETCHALL, FETCHSINGLE, DELETE, UPDATE } from "./type";
+import { ADD, FETCHALL, FETCHSINGLE, DELETE, UPDATE, TASK } from "./type";
 
 const initialState = {
   projects: [],
@@ -6,19 +6,26 @@ const initialState = {
   deleted_project: null,
   updated_project: null,
   added_project: null,
+  tasks: null,
+  count: 0,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHALL:
+      console.log(action.payload);
+      const count =
+        action.payload !== undefined &&
+        action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
       return {
         ...state,
         projects: action.payload,
+        count: count,
       };
     case ADD:
       return {
         ...state,
-        added_project: action.payload,
+        project: [action.payload, ...state.projects],
       };
     case FETCHSINGLE:
       return {
@@ -34,6 +41,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deleted_project: action.payload,
+      };
+    case TASK:
+      return {
+        ...state,
+        tasks: action.payload,
       };
 
     default:

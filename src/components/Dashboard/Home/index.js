@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useLocation } from "react-router-dom";
 
 import {
   Container,
@@ -13,52 +13,62 @@ import {
   Menu,
   DropUp,
 } from "./style";
-import { Icon, Button } from "semantic-ui-react";
+import { Icon, Buttons } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Badge } from "react-bootstrap";
 import {
   fetchAllProjects,
   deleteProject,
   getSingleProject,
+  getSingleTask,
 } from "../ProjectReducer/store";
+import CreateProject, { ModalProject } from "../CreateProject";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import { loginUser, registerUser } from "../../UsersComponent/userRedux/store";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const history = useHistory();
   const [show, setShow] = useState("");
-  const [single, setSingle] = useState();
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const projects = useSelector(({ project: { projects } }) => projects);
+  const count = useSelector(({ project: { count } }) => count);
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
+  const single = useSelector(({ project: { project } }) => project);
 
   useEffect(() => {
     fetchAllProjects(dispatch);
-  }, [deletes]);
-  // let noOfTasks = 0;
-  // projects !== undefined &&
-  //   projects.forEach((project) => {
-  //     noOfTasks += project.Tasks.length;
-  //   });
 
-  console.log(deletes);
+    // eslint-disable-next-line
+  }, [deletes, token, location]);
 
   if (!token) {
-    history.push("/login");
+    history.push("/");
   }
+  const [shows, setShows] = useState(false);
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);
     setShow("");
   };
   const handleEdit = (id) => {
-    const getSingle = getSingleProject(dispatch, id);
+    getSingleProject(dispatch, id);
     setShow("");
-    setSingle(getSingle);
-    history.push("/create");
+    setShows(true);
+    // history.push("/dashboard");
   };
+
+  const onTask = (id) => {
+    getSingleTask(dispatch, id, history);
+  };
+
+  const handleShow = () => setShows(true);
+  const handleClose = () => setShows(false);
 
   return (
     <Container>
@@ -75,7 +85,7 @@ const Home = () => {
             <p>Total Tasks</p>
             <div className='total'>
               <Icon name='chart line' />
-              <span>{0}</span>
+              <span>{count}</span>
             </div>
           </Card>
           <Card>
@@ -87,32 +97,45 @@ const Home = () => {
           </Card>
         </Col>
         <Col>
-          <Link to='/create'>
+          {/* <Link to='/create'>
             <Button className='btn'>
               <Icon name='plus' />
               Create Project
             </Button>
-          </Link>
+          </Link> */}
+          <CreateProject />
+          <Button variant='primary' onClick={handleShow}>
+            <Icon name='plus' /> Create Project
+          </Button>
+          <CreateProject
+            show={shows}
+            handleClose={handleClose}
+            single={single}
+          />
         </Col>
         <Col>
-          {projects.length <= 0 && <p>You Have no project create one!!!</p>}
+          {/* {projects.length <= 0 && <p>You Have no project create one!!!</p>} */}
           <Project>
-            {projects.length >= 0 &&
+            {projects !== undefined &&
               projects.map((project) => (
                 <Prob key={project.id}>
                   <Header>
                     <h1>{project.project_name}</h1>
-                    <p
-                      className={
+                    <Badge
+                      className='primary'
+                      pill
+                      variant={
                         project.project_identifier === "public"
-                          ? "public"
-                          : "private"
+                          ? "info"
+                          : "primary"
                       }
                     >
                       {project.project_identifier}
-                    </p>
+                    </Badge>
                   </Header>
-                  <p>{project.description}</p>
+                  <p onClick={() => onTask(project.id)}>
+                    {project.description}
+                  </p>
                   <Date>
                     <div>
                       <span>Created: {project.start_date} -- </span>

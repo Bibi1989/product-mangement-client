@@ -30,6 +30,13 @@ const Footer = () => {
             <Li>System Status</Li>
           </Ul>
         </Col>
+        <Col>
+          <Ul>
+            <Li>Help Center</Li>
+            <Li>Contact Us</Li>
+            <Li>System Status</Li>
+          </Ul>
+        </Col>
       </Row>
     </Container>
   );
