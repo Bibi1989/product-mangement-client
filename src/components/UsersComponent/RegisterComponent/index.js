@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Modal,
@@ -11,7 +11,7 @@ import {
   ModalFooter,
 } from "../LoginComponent/style";
 import { Form, Button } from "semantic-ui-react";
-import { useLocation, useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../userRedux/store";
 
@@ -19,6 +19,11 @@ const Register = () => {
   const [visible] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  if (token) {
+    history.push("/dashboard");
+  }
 
   const [values, setValues] = useState({
     first_name: "",
@@ -37,7 +42,7 @@ const Register = () => {
   const onsubmit = (e) => {
     e.preventDefault();
 
-    registerUser(dispatch, values);
+    registerUser(dispatch, values, history);
   };
 
   return (

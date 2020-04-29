@@ -6,15 +6,16 @@ import { Provider } from "react-redux";
 import Login from "./components/UsersComponent/LoginComponent/index";
 import Nav from "./components/NavBar/index";
 import Register from "./components/UsersComponent/RegisterComponent/index";
-import FirstSection from "./components/ProjectComponent/FirstSection";
-import SecondSection from "./components/ProjectComponent/SecondSecion";
-import HowItWork from "./components/ProjectComponent/HowItWork";
-import Slider from "./components/Utils/Slider";
+
 import store from "./redux/store";
 
 import "swiper/css/swiper.css";
 import "./App.css";
 import Footer from "./components/Footer";
+import WelcomePage from "./components/Dashboard/WelcomePage";
+import LandingPage from "./components/ProjectComponent/LandingPage";
+import CreateProject from "./components/Dashboard/CreateProject/index";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
@@ -22,20 +23,28 @@ function App() {
       <Provider store={store}>
         <Wrapper>
           <Nav />
-          <Switch>
-            <Route exact path='/'>
-              <FirstSection />
-              <SecondSection />
-              <HowItWork />
-              <Slider />
-            </Route>
-            <Route exact path='/login'>
-              <Login />
-            </Route>
-            <Route exact path='/register'>
-              <Register />
-            </Route>
-          </Switch>
+          <div>
+            <Switch>
+              <Route exact path='/'>
+                <LandingPage />
+              </Route>
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <Route exact path='/register'>
+                <Register />
+              </Route>
+              <Route exact path='/dashboard'>
+                <WelcomePage />
+              </Route>
+              <Route exact path='/create'>
+                <CreateProject />
+              </Route>
+              <Route exact to='/notfound'>
+                <PageNotFound />
+              </Route>
+            </Switch>
+          </div>
           <Footer />
         </Wrapper>
       </Provider>
@@ -45,6 +54,10 @@ function App() {
 
 const Wrapper = styled.div`
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export default App;

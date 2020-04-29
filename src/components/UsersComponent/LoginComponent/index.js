@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Modal,
@@ -11,15 +11,23 @@ import {
   Div,
 } from "./style";
 import { Form, Button } from "semantic-ui-react";
-import { useLocation, useHistory, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useHistory, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 
 const Login = () => {
-  const [visible, setVisible] = useState(true);
-  const path = useLocation().pathname.split("/")[1];
+  const [visible] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  if (token) {
+    history.push("/dashboard");
+  }
+
+  const users = useSelector(({ user: { login_user } }) => login_user);
+
+  console.log(users);
 
   const [values, setValues] = useState({
     email: "",
@@ -35,7 +43,7 @@ const Login = () => {
   const onsubmit = (e) => {
     e.preventDefault();
 
-    loginUser(dispatch, values);
+    loginUser(dispatch, values, history);
   };
   return (
     <Container>

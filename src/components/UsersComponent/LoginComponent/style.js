@@ -14,7 +14,7 @@ export const Modal = styled.div`
   align-items: center;
 `;
 export const ModalContent = styled.div`
-  width: 40%;
+  width: ${(props) => (props.width ? props.width : "40%")};
   background: white;
   padding: 1em;
   border-radius: 0.25em;

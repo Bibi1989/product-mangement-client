@@ -40,9 +40,10 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
-  /* @media (max-width: 769px) {
-    display: none;
-  } */
+  .user {
+    margin-right: 1em;
+    font-size: 1.2em;
+  }
 
   .links {
     text-decoration: none;
@@ -53,6 +54,12 @@ export const Li = styled.li`
   &.login {
     padding: 0.8em 2em;
     background: teal;
+    color: #eeeeee;
+    border-radius: 30px;
+  }
+  &.logout {
+    padding: 0.8em 2em;
+    background: orangered;
     color: #eeeeee;
     border-radius: 30px;
   }
