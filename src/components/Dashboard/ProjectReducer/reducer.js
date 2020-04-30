@@ -6,6 +6,9 @@ import {
   UPDATE,
   TASK,
   ADD_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+  SINGLE_TASK,
 } from "./type";
 
 const initialState = {
@@ -15,6 +18,9 @@ const initialState = {
   updated_project: null,
   added_project: null,
   tasks: null,
+  delete_task: null,
+  update_task: [],
+  single_task: null,
   count: 0,
 };
 
@@ -55,10 +61,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         tasks: action.payload,
       };
+    case SINGLE_TASK:
+      return {
+        ...state,
+        single_task: action.payload,
+      };
     case ADD_TASK:
       return {
         ...state,
         tasks: [action.payload, ...state.tasks],
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        delete_task: action.payload,
+      };
+    case UPDATE_TASK:
+      return {
+        ...state,
+        update_task: [action.payload, ...state.update_task],
       };
 
     default:

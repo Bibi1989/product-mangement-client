@@ -90,10 +90,11 @@ const CreateTask = ({ show, handleClose }) => {
             <Form.Field>
               <label>Status</label>
               <input
+                hidden
                 placeholder='Status'
                 name='status'
                 onChange={handleValues}
-                // value={values.project_identifier}
+                value='start'
               />
             </Form.Field>
             <Form.Field>

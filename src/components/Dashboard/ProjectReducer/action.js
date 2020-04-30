@@ -6,6 +6,9 @@ import {
   UPDATE,
   TASK,
   ADD_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+  SINGLE_TASK,
 } from "./type";
 
 export const getAllAction = (response) => ({
@@ -36,7 +39,19 @@ export const getTaskAction = (response) => ({
   type: TASK,
   payload: response,
 });
+export const singleAction = (response) => ({
+  type: SINGLE_TASK,
+  payload: response,
+});
 export const addTaskAction = (response) => ({
   type: ADD_TASK,
+  payload: response,
+});
+export const updateTaskAction = (response) => ({
+  type: UPDATE_TASK,
+  payload: response,
+});
+export const deleteTaskAction = (response) => ({
+  type: DELETE_TASK,
   payload: response,
 });

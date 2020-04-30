@@ -103,13 +103,14 @@ export const Menu = styled.div`
 export const DropUp = styled.div`
   display: flex;
   flex-direction: column;
-  background: #f1f1f1;
+  background: ${(props) => (props.background ? props.background : "#f1f1f1")};
   padding: 1em;
   position: absolute;
   bottom: 1.3em;
   right: -1em;
   opacity: 0;
   pointer-events: none;
+  z-index: 4;
 
   &.show {
     opacity: 1;
@@ -119,5 +120,14 @@ export const DropUp = styled.div`
   p {
     padding-bottom: 0.5em;
     cursor: pointer;
+  }
+`;
+
+export const Cover = styled.div`
+  display: flex;
+  align-items: center;
+
+  .arrow {
+    margin-right: 0.7em;
   }
 `;

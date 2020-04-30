@@ -1,20 +1,53 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getTasks } from "../ProjectReducer/store";
+import { useParams, useHistory } from "react-router-dom";
+import {
+  getTasks,
+  deleteTask,
+  updateTask,
+  getOne,
+} from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Badge } from "react-bootstrap";
-import { Icon } from "semantic-ui-react";
+import { Button, Badge, DropdownButton, Dropdown } from "react-bootstrap";
+import { Icon, Label } from "semantic-ui-react";
+import { Menu, DropUp, Cover } from "../Home/style";
 
 const Tasks = () => {
   const { projectId } = useParams();
+  const history = useHistory();
   const tasks = useSelector(({ project: { tasks } }) => tasks);
-  // console.log({ tasks, projectId });
+  const delete_task = useSelector(
+    ({ project: { delete_task } }) => delete_task
+  );
+  const update_task = useSelector(
+    ({ project: { update_task } }) => update_task
+  );
+
+  const reviews =
+    (tasks !== null && tasks.filter((task) => task.status === "review")) ||
+    null;
+  const finishes =
+    (tasks !== null && tasks.filter((task) => task.status === "finish")) ||
+    null;
+  const starts =
+    (tasks !== null && tasks.filter((task) => task.status === "start")) || null;
+  console.log({ finishes, tasks });
   const dispatch = useDispatch();
   useEffect(() => {
     getTasks(dispatch, parseInt(projectId));
-  }, []);
+  }, [delete_task, update_task]);
+
+  const [show, setShow] = useState("");
+
+  const handleDelete = (id) => {
+    deleteTask(dispatch, parseInt(id));
+    setShow("");
+  };
+  const handleEdit = (id) => {
+    setShow("");
+    history.push(`/tasks/${projectId}`);
+  };
 
   const [shows, setShows] = useState(false);
 
@@ -23,6 +56,14 @@ const Tasks = () => {
 
   return (
     <Container>
+      <Button
+        variant='danger'
+        onClick={() => history.push("/dashboard")}
+        style={{ marginBottom: "1em", cursor: "pointer" }}
+      >
+        {" "}
+        Go Back
+      </Button>
       <Row>
         <Col>
           <h1>Start</h1>
@@ -35,14 +76,41 @@ const Tasks = () => {
           </Button>
           <CreateTask show={shows} handleClose={handleClose} />
           <Task>
-            {tasks !== null &&
-              tasks.map((task) => (
+            {starts !== null &&
+              starts.map((task) => (
                 <Display>
+                  <p>{task.status}</p>
                   <p>{task.summary}</p>
                   <p>{task.project_sequence}</p>
                   <div className='status'>
-                    {/* <p>{task.createdAt}</p> */}
-                    <p>{task.status}</p>
+                    <p>{task.createdAt}</p>
+                    <Cover>
+                      <Icon
+                        className='arrow'
+                        name='arrow right'
+                        color='orange'
+                        size='big'
+                        onClick={() => {
+                          updateTask(dispatch, task.id, task, "review");
+                        }}
+                      ></Icon>
+                      <Menu onClick={() => setShow(task.id)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <DropUp
+                          className={show === task.id && "show"}
+                          background='white'
+                        >
+                          <p onClick={() => handleEdit(task.id)}>
+                            <Icon name='edit' color='teal' />
+                          </p>
+                          <p onClick={() => handleDelete(task.id)}>
+                            <Icon name='cut' color='orange' />
+                          </p>
+                        </DropUp>
+                      </Menu>
+                    </Cover>
                   </div>
                 </Display>
               ))}
@@ -51,27 +119,96 @@ const Tasks = () => {
         <Col>
           <h1>Review</h1>
           <Task>
-            <Display>
-              <p>Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit.</p>
-              <div className='status'>
-                <p>mild</p>
-                <p>2020-05-29</p>
-              </div>
-            </Display>
+            {reviews !== null &&
+              reviews.map((task) => (
+                <Display>
+                  <p>{task.status}</p>
+                  <p>{task.summary}</p>
+                  <p>{task.project_sequence}</p>
+                  <div className='status'>
+                    <p>{task.createdAt}</p>
+                    <Cover>
+                      <Icon
+                        className='arrow'
+                        name='arrow left'
+                        color='orange'
+                        size='big'
+                        onClick={() => {
+                          updateTask(dispatch, task.id, task, "start");
+                        }}
+                      ></Icon>
+                      <Icon
+                        className='arrow'
+                        name='arrow right'
+                        color='orange'
+                        size='big'
+                        onClick={() => {
+                          updateTask(dispatch, task.id, task, "finish");
+                        }}
+                      ></Icon>
+                      <Menu onClick={() => setShow(task.id)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <DropUp
+                          className={show === task.id && "show"}
+                          background='white'
+                        >
+                          <p onClick={() => handleEdit(task.id)}>
+                            <Icon name='edit' color='teal' />
+                          </p>
+                          <p onClick={() => handleDelete(task.id)}>
+                            <Icon name='cut' color='orange' />
+                          </p>
+                        </DropUp>
+                      </Menu>
+                    </Cover>
+                  </div>
+                </Display>
+              ))}
           </Task>
         </Col>
         <Col>
           <h1>Finish</h1>
           <Task>
-            <Display>
-              <p>Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit.</p>
-              <div className='status'>
-                <p>2020-05-29</p>
-                <p>mild</p>
-              </div>
-            </Display>
+            {finishes !== null &&
+              finishes.map((task) => (
+                <Display>
+                  <p>{task.status}</p>
+                  <p>{task.summary}</p>
+                  <p>{task.project_sequence}</p>
+                  <div className='status'>
+                    <p>{task.createdAt}</p>
+                    <Cover>
+                      <Icon
+                        className='arrow'
+                        name='arrow left'
+                        color='orange'
+                        size='big'
+                        onClick={() => {
+                          updateTask(dispatch, task.id, task, "review");
+                        }}
+                      ></Icon>
+                      <Menu onClick={() => setShow(task.id)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <DropUp
+                          className={show === task.id && "show"}
+                          background='white'
+                        >
+                          <p onClick={() => handleEdit(task.id)}>
+                            <Icon name='edit' color='teal' />
+                          </p>
+                          <p onClick={() => handleDelete(task.id)}>
+                            <Icon name='cut' color='orange' />
+                          </p>
+                        </DropUp>
+                      </Menu>
+                    </Cover>
+                  </div>
+                </Display>
+              ))}
           </Task>
         </Col>
       </Row>
@@ -111,6 +248,7 @@ export const Col = styled.div`
 
   p {
     padding: 0;
+    padding-bottom: 0.5em;
     margin: 0;
   }
 `;
@@ -129,4 +267,14 @@ export const Task = styled.div`
   min-height: 30vh;
   max-height: 40vh;
   overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    /* display: none; */
+    width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    /* display: none; */
+    width: 1.5px;
+    background-color: teal;
+  }
 `;
