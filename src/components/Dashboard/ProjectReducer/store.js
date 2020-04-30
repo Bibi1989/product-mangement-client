@@ -6,8 +6,10 @@ import {
   updateAction,
   deleteAction,
   getTaskAction,
+  addTaskAction,
 } from "./action";
 const PROJECT_URL = "http://localhost:5000/api/v1/projects";
+const TASK_URL = "http://localhost:5000/api/v1/tasks";
 const token = JSON.parse(sessionStorage.getItem("token"));
 
 export const fetchAllProjects = async (dispatch) => {
@@ -68,14 +70,31 @@ export const updateProject = async (dispatch, id, value, history) => {
   history.push("/dashboard");
   dispatch(updateAction(response.data.data));
 };
-export const getSingleTask = async (dispatch, id, history) => {
-  const response = await axios.get(`${PROJECT_URL}/${id}`, {
+export const createTask = async (dispatch, id, task, history) => {
+  const tasks = {
+    ...task,
+    ProjectId: id,
+  };
+  const response = await axios.post(`${TASK_URL}/add`, tasks, {
     headers: {
       "Content-type": "Application/Json",
       auth: `${token}`,
     },
   });
-  history.push("/tasks");
-  console.log({ res: response.data.data.Tasks, tok: token });
-  dispatch(getTaskAction(response.data.data.Tasks));
+  history.push(`/tasks/${id}`);
+  console.log({ res: response.data.data, tok: token });
+  dispatch(addTaskAction(response.data.data));
+};
+export const getTasks = async (dispatch, ProjectId) => {
+  console.log({ proId: ProjectId });
+  const data = {
+    ProjectId,
+  };
+  const response = await axios.post(`${TASK_URL}`, JSON.stringify(data), {
+    headers: {
+      "Content-type": "Application/Json",
+      auth: `${token}`,
+    },
+  });
+  dispatch(getTaskAction(response.data.data));
 };

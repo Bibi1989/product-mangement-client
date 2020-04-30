@@ -1,4 +1,12 @@
-import { ADD, FETCHALL, FETCHSINGLE, DELETE, UPDATE, TASK } from "./type";
+import {
+  ADD,
+  FETCHALL,
+  FETCHSINGLE,
+  DELETE,
+  UPDATE,
+  TASK,
+  ADD_TASK,
+} from "./type";
 
 const initialState = {
   projects: [],
@@ -25,7 +33,7 @@ const reducer = (state = initialState, action) => {
     case ADD:
       return {
         ...state,
-        project: [action.payload, ...state.projects],
+        projects: [action.payload, ...state.projects],
       };
     case FETCHSINGLE:
       return {
@@ -46,6 +54,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: action.payload,
+      };
+    case ADD_TASK:
+      return {
+        ...state,
+        tasks: [action.payload, ...state.tasks],
       };
 
     default:

@@ -41,7 +41,7 @@ function App() {
               <Route exact path='/create'>
                 <CreateProject />
               </Route>
-              <Route exact path='/tasks'>
+              <Route exact path='/tasks/:projectId'>
                 <Tasks />
               </Route>
               <Route exact to='/notfound'>

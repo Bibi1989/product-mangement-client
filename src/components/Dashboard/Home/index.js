@@ -20,7 +20,6 @@ import {
   fetchAllProjects,
   deleteProject,
   getSingleProject,
-  getSingleTask,
 } from "../ProjectReducer/store";
 import CreateProject, { ModalProject } from "../CreateProject";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -63,10 +62,6 @@ const Home = () => {
     // history.push("/dashboard");
   };
 
-  const onTask = (id) => {
-    getSingleTask(dispatch, id, history);
-  };
-
   const handleShow = () => setShows(true);
   const handleClose = () => setShows(false);
 
@@ -97,13 +92,6 @@ const Home = () => {
           </Card>
         </Col>
         <Col>
-          {/* <Link to='/create'>
-            <Button className='btn'>
-              <Icon name='plus' />
-              Create Project
-            </Button>
-          </Link> */}
-          <CreateProject />
           <Button variant='primary' onClick={handleShow}>
             <Icon name='plus' /> Create Project
           </Button>
@@ -133,9 +121,9 @@ const Home = () => {
                       {project.project_identifier}
                     </Badge>
                   </Header>
-                  <p onClick={() => onTask(project.id)}>
-                    {project.description}
-                  </p>
+                  <Link to={`/tasks/${project.id}`}>
+                    <p>{project.description}</p>
+                  </Link>
                   <Date>
                     <div>
                       <span>Created: {project.start_date} -- </span>

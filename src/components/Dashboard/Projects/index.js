@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
   getSingleProject,
-  getSingleTask,
   deleteProject,
 } from "../ProjectReducer/store";
 
@@ -53,10 +52,6 @@ const ProjectComponent = () => {
     history.push("/create");
   };
 
-  const onTask = (id) => {
-    getSingleTask(dispatch, id, history);
-  };
-
   return (
     <Container>
       <Row>
@@ -88,9 +83,9 @@ const ProjectComponent = () => {
                       {project.project_identifier}
                     </p>
                   </Header>
-                  <p onClick={() => onTask(project.id)}>
-                    {project.description}
-                  </p>
+                  <Link to={`/tasks/${project.id}`}>
+                    <p>{project.description}</p>
+                  </Link>
                   <Date>
                     <div>
                       <span>Created: {project.start_date} -- </span>

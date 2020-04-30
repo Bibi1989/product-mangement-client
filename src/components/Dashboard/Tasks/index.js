@@ -1,33 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getTasks } from "../ProjectReducer/store";
+import CreateTask from "../CreateTask";
+import { Button, Badge } from "react-bootstrap";
+import { Icon } from "semantic-ui-react";
 
 const Tasks = () => {
-  // const tasks = useSelector(({ project: { tasks } }) => tasks);
-  // console.log({ tasks });
+  const { projectId } = useParams();
+  const tasks = useSelector(({ project: { tasks } }) => tasks);
+  // console.log({ tasks, projectId });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getTasks(dispatch, parseInt(projectId));
+  }, []);
+
+  const [shows, setShows] = useState(false);
+
+  const handleShow = () => setShows(true);
+  const handleClose = () => setShows(false);
+
   return (
     <Container>
       <Row>
         <Col>
           <h1>Start</h1>
-          <input type='text' placeholder='Enter task' />
+          <Button
+            variant='primary'
+            onClick={handleShow}
+            style={{ marginBottom: "1em" }}
+          >
+            <Icon name='plus' /> Create Task
+          </Button>
+          <CreateTask show={shows} handleClose={handleClose} />
           <Task>
-            <Display>
-              <p>Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit.</p>
-              <div className='status'>
-                <p>mild</p>
-                <p>2020-05-29</p>
-              </div>
-            </Display>
-            <Display>
-              <p>Lorem ipsum dolor sit amet.</p>
-              <p>Lorem ipsum dolor sit.</p>
-              <div className='status'>
-                <p>mild</p>
-                <p>2020-05-29</p>
-              </div>
-            </Display>
+            {tasks !== null &&
+              tasks.map((task) => (
+                <Display>
+                  <p>{task.summary}</p>
+                  <p>{task.project_sequence}</p>
+                  <div className='status'>
+                    {/* <p>{task.createdAt}</p> */}
+                    <p>{task.status}</p>
+                  </div>
+                </Display>
+              ))}
           </Task>
         </Col>
         <Col>
