@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Nav, Ul, Li, Logo, User } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Icon } from "semantic-ui-react";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -14,6 +17,15 @@ const NavBar = () => {
     sessionStorage.removeItem("project_user");
     history.push("/");
   };
+
+  const [shows, setShows] = useState(false);
+  const [showsLogin, setShowsLogin] = useState(false);
+
+  const handleShow = () => setShows(true);
+  const handleClose = () => setShows(false);
+  const handleShowLogin = () => setShowsLogin(true);
+  const handleCloseLogin = () => setShowsLogin(false);
+
   return (
     <Container>
       <Nav>
@@ -39,8 +51,22 @@ const NavBar = () => {
           </Ul>
         ) : (
           <User>
-            <Login />
-            <Register />
+            <Button
+              variant='primary'
+              onClick={handleShowLogin}
+              style={{ marginBottom: "1em" }}
+            >
+              Login
+            </Button>
+            <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
+            <Button
+              variant='primary'
+              onClick={handleShow}
+              style={{ marginBottom: "1em" }}
+            >
+              Register
+            </Button>
+            <Register show={shows} handleClose={handleClose} />
           </User>
         )}
       </Nav>

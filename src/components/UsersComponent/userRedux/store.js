@@ -25,14 +25,17 @@ export const loginUser = async (dispatch, user, history) => {
         "Content-Type": "Application/Json",
       },
     });
-    console.log(response.data.data);
-    sessionStorage.setItem(
-      "project_user",
-      JSON.stringify(response.data.data.user)
-    );
-    sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
-    history.push("/dashboard");
-    dispatch(loginAction(response.data));
+    if (response.data.data.user.isVerify) {
+      sessionStorage.setItem(
+        "project_user",
+        JSON.stringify(response.data.data.user)
+      );
+      sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
+      history.push("/dashboard");
+      dispatch(loginAction(response.data));
+    } else {
+      history.push("/");
+    }
   } catch (error) {
     return dispatch(errorAction(error.response));
   }

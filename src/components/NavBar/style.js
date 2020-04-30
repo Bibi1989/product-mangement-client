@@ -38,8 +38,12 @@ export const User = styled.div`
   display: flex;
   align-self: center;
   margin: 0.8em 0;
-  margin-right: 5%;
+  /* margin-right: 5%; */
   height: 100%;
+
+  button {
+    margin-left: 0.8em;
+  }
 `;
 export const Ul = styled.ul`
   list-style: none;

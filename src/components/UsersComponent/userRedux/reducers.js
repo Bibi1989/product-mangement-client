@@ -1,8 +1,9 @@
-import { LOGIN, REGISTER, ERRORS } from "./types";
+import { LOGIN, REGISTER, ERRORS, VERIFY } from "./types";
 
 const initialState = {
   login_user: null,
   register_user: null,
+  verify: null,
   errors: null,
 };
 
@@ -17,6 +18,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         login_user: action.payload,
+      };
+    case VERIFY:
+      return {
+        ...state,
+        verify: action.payload,
       };
     case ERRORS:
       return {

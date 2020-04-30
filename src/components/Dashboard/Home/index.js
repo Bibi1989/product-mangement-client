@@ -15,18 +15,19 @@ import {
 } from "./style";
 import { Icon, Buttons } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Badge } from "react-bootstrap";
 import {
   fetchAllProjects,
   deleteProject,
   getSingleProject,
 } from "../ProjectReducer/store";
 import CreateProject, { ModalProject } from "../CreateProject";
+import { Button, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { loginUser, registerUser } from "../../UsersComponent/userRedux/store";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
+  const users = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
   const [show, setShow] = useState("");
 
@@ -44,11 +45,11 @@ const Home = () => {
     fetchAllProjects(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes, token, location]);
+  }, [deletes, location]);
 
-  if (!token) {
-    history.push("/");
-  }
+  // if (!token) {
+  //   history.push("/");
+  // }
   const [shows, setShows] = useState(false);
 
   const handleDelete = (id) => {
