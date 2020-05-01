@@ -5,6 +5,7 @@ import FirstSection from "../FirstSection";
 import SecondSection from "../SecondSecion";
 import HowItWork from "../HowItWork";
 import Slider from "../../Utils/Slider";
+import SlidingComponent from "../SlidingComponent";
 
 const LandingPage = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -17,7 +18,8 @@ const LandingPage = () => {
       <FirstSection />
       <SecondSection />
       <HowItWork />
-      <Slider />
+      <SlidingComponent />
+      {/* <Slider /> */}
     </div>
   );
 };

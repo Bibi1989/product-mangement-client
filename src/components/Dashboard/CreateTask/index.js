@@ -11,7 +11,12 @@ import {
 import { Form, Buttons, Icon, Modalss } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addProject, updateProject, createTask } from "../ProjectReducer/store";
+import {
+  addProject,
+  updateProject,
+  createTask,
+  getOne,
+} from "../ProjectReducer/store";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -20,8 +25,7 @@ const CreateTask = ({ show, handleClose }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
-
-  console.log({ roor: projectId });
+  const [updateState, setUpdateState] = useState(false);
 
   const [values, setValues] = useState({
     summary: "",
@@ -30,11 +34,11 @@ const CreateTask = ({ show, handleClose }) => {
     status: "",
     due_date: "",
   });
-  //   useEffect(() => {
-  //     setValues(edit);
-
-  //     // eslint-disable-next-line
-  //   }, []);
+  useEffect(() => {
+    getOne(dispatch, projectId);
+    // eslint-disable-next-line
+  }, [updateState]);
+  console.log({ updateState });
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -45,8 +49,10 @@ const CreateTask = ({ show, handleClose }) => {
   const onsubmit = (e) => {
     e.preventDefault();
 
-    console.log("submit");
     createTask(dispatch, parseInt(projectId), values, history);
+    getOne(dispatch, projectId);
+    handleClose();
+    setUpdateState(!updateState);
   };
 
   if (!token) {
@@ -88,22 +94,13 @@ const CreateTask = ({ show, handleClose }) => {
               />
             </Form.Field>
             <Form.Field>
-              <label>Status</label>
+              {/* <label>Status</label> */}
               <input
                 hidden
                 placeholder='Status'
                 name='status'
                 onChange={handleValues}
                 value='start'
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Project Sequence</label>
-              <input
-                placeholder='Project Sequence'
-                name='project_sequence'
-                onChange={handleValues}
-                // value={values.start_date}
               />
             </Form.Field>
             <Form.Field>

@@ -11,8 +11,10 @@ import {
   updateTaskAction,
   singleAction,
 } from "./action";
-const PROJECT_URL = "http://localhost:5000/api/v1/projects";
-const TASK_URL = "http://localhost:5000/api/v1/tasks";
+const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
+// const PROJECT_URL = "http://localhost:5000/api/v1/projects";
+const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
+// const TASK_URL = "http://localhost:5000/api/v1/tasks";
 const token = JSON.parse(sessionStorage.getItem("token"));
 
 export const fetchAllProjects = async (dispatch) => {
@@ -31,17 +33,13 @@ export const fetchAllProjects = async (dispatch) => {
 
 export const addProject = async (dispatch, project, history) => {
   try {
-    const response = await axios.post(
-      `http://localhost:5000/api/v1/projects`,
-      project,
-      {
-        headers: {
-          "Content-type": "Application/Json",
-          auth: `${token}`,
-        },
-      }
-    );
-    // history.push("/dashboard");
+    const response = await axios.post(`${PROJECT_URL}`, project, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    history.push("/dashboard");
     dispatch(addAction(response.data.data));
   } catch (error) {
     console.log(error.response);
@@ -61,7 +59,7 @@ export const deleteProject = async (dispatch, id, history) => {
     console.log(error.response);
   }
 };
-export const getSingleProject = async (dispatch, id, history) => {
+export const getSingleProject = async (dispatch, id) => {
   try {
     const response = await axios.get(`${PROJECT_URL}/${id}`, {
       headers: {
@@ -131,6 +129,7 @@ export const getOne = async (dispatch, id) => {
         auth: `${token}`,
       },
     });
+    console.log({ response });
     dispatch(singleAction(response.data.data));
   } catch (error) {
     console.log(error.response);

@@ -18,6 +18,7 @@ const initialState = {
   updated_project: null,
   added_project: null,
   tasks: null,
+  task: null,
   delete_task: null,
   update_task: [],
   single_task: null,
@@ -27,7 +28,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHALL:
-      console.log(action.payload);
       const count =
         action.payload !== undefined &&
         action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
     case ADD:
       return {
         ...state,
-        projects: [action.payload, ...state.projects],
+        added_project: action.payload,
       };
     case FETCHSINGLE:
       return {
@@ -69,7 +69,7 @@ const reducer = (state = initialState, action) => {
     case ADD_TASK:
       return {
         ...state,
-        tasks: [action.payload, ...state.tasks],
+        task: action.payload,
       };
     case DELETE_TASK:
       return {

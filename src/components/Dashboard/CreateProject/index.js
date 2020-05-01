@@ -51,15 +51,14 @@ const CreateProject = ({ show, handleClose, single }) => {
   const onsubmit = (e) => {
     e.preventDefault();
 
-    console.log("submit");
     addProject(dispatch, values, history);
+    handleClose();
   };
 
   const onupdate = (e) => {
     e.preventDefault();
-    console.log("update");
     updateProject(dispatch, single.id, values, history);
-    // history.push("/dashboard");
+    handleClose();
   };
 
   if (!token) {

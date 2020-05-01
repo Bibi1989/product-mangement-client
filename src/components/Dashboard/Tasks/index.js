@@ -7,6 +7,7 @@ import {
   deleteTask,
   updateTask,
   getOne,
+  getSingleProject,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 import { Button, Badge, DropdownButton, Dropdown } from "react-bootstrap";
@@ -17,12 +18,15 @@ const Tasks = () => {
   const { projectId } = useParams();
   const history = useHistory();
   const tasks = useSelector(({ project: { tasks } }) => tasks);
+  const single_project = useSelector(({ project: { project } }) => project);
   const delete_task = useSelector(
     ({ project: { delete_task } }) => delete_task
   );
   const update_task = useSelector(
     ({ project: { update_task } }) => update_task
   );
+
+  const single_task = useSelector(({ project: { task } }) => task);
 
   const reviews =
     (tasks !== null && tasks.filter((task) => task.status === "review")) ||
@@ -34,9 +38,11 @@ const Tasks = () => {
     (tasks !== null && tasks.filter((task) => task.status === "start")) || null;
   console.log({ finishes, tasks });
   const dispatch = useDispatch();
+
   useEffect(() => {
     getTasks(dispatch, parseInt(projectId));
-  }, [delete_task, update_task]);
+    getSingleProject(dispatch, projectId);
+  }, [delete_task, update_task, single_task]);
 
   const [show, setShow] = useState("");
 
@@ -64,6 +70,7 @@ const Tasks = () => {
         {" "}
         Go Back
       </Button>
+      <P>{single_project !== null && single_project.project_name}</P>
       <Row>
         <Col>
           <h1>Start</h1>
@@ -79,9 +86,8 @@ const Tasks = () => {
             {starts !== null &&
               starts.map((task) => (
                 <Display>
-                  <p>{task.status}</p>
-                  <p>{task.summary}</p>
                   <p>{task.project_sequence}</p>
+                  <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
@@ -122,9 +128,8 @@ const Tasks = () => {
             {reviews !== null &&
               reviews.map((task) => (
                 <Display>
-                  <p>{task.status}</p>
-                  <p>{task.summary}</p>
                   <p>{task.project_sequence}</p>
+                  <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
@@ -174,9 +179,8 @@ const Tasks = () => {
             {finishes !== null &&
               finishes.map((task) => (
                 <Display>
-                  <p>{task.status}</p>
-                  <p>{task.summary}</p>
                   <p>{task.project_sequence}</p>
+                  <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
@@ -219,19 +223,27 @@ const Tasks = () => {
 export default Tasks;
 
 export const Container = styled.div`
-  padding: 5% 10%;
+  padding: 5%;
   background: #f9fbfc;
+
+  @media (max-width: 769px) {
+    padding: 3% 1em;
+  }
 `;
 export const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2em;
+
+  @media (max-width: 769px) {
+    grid-template-columns: 1fr;
+  }
 `;
 export const Col = styled.div`
   padding: 1em;
   background: #ffffff;
   border-radius: 0.25em;
-  box-shadow: 0 0 15px solid #999;
+  box-shadow: 0 0 30px #cccccc;
 
   h1 {
     padding-bottom: 1em;
@@ -254,8 +266,9 @@ export const Col = styled.div`
 `;
 export const Display = styled.div`
   padding: 0.8em;
-  background: #f4f4f4;
+  background: violet;
   margin-bottom: 0.8em;
+  color: #ffffff;
 
   .status {
     display: flex;
@@ -264,8 +277,8 @@ export const Display = styled.div`
 `;
 
 export const Task = styled.div`
-  min-height: 30vh;
-  max-height: 40vh;
+  min-height: 40vh;
+  max-height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
@@ -275,6 +288,12 @@ export const Task = styled.div`
   &::-webkit-scrollbar-thumb {
     /* display: none; */
     width: 1.5px;
-    background-color: teal;
+    background-color: orangered;
   }
+`;
+
+export const P = styled.p`
+  font-size: 1.8em;
+  font-weight: 800;
+  color: orangered;
 `;

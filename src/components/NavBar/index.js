@@ -52,17 +52,31 @@ const NavBar = () => {
         ) : (
           <User>
             <Button
-              variant='primary'
+              // variant='success'
               onClick={handleShowLogin}
-              style={{ marginBottom: "1em" }}
+              style={{
+                marginBottom: "1em",
+                borderRadius: "30px",
+                outline: "none",
+                padding: "0.7em 1.5em",
+                background: "teal",
+                border: "none",
+              }}
             >
               Login
             </Button>
             <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
             <Button
-              variant='primary'
+              // variant='primary'
               onClick={handleShow}
-              style={{ marginBottom: "1em" }}
+              style={{
+                marginBottom: "1em",
+                borderRadius: "30px",
+                outline: "none",
+                padding: "0.7em 1.5em",
+                background: "orangered",
+                border: "none",
+              }}
             >
               Register
             </Button>

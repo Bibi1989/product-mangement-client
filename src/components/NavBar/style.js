@@ -52,9 +52,10 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
-  .user {
-    margin-right: 1em;
-    font-size: 1.2em;
+  @media (max-width: 769px) {
+    .user {
+      display: none;
+    }
   }
 
   .links {
