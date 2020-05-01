@@ -55,6 +55,7 @@ export default WelcomePage;
 
 export const Container = styled.div`
   min-height: 50vh;
+  width: 100%;
 
   .item {
     padding: 1.4em !important;

@@ -9,7 +9,7 @@ export const Container = styled.div`
   }
 `;
 export const Nav = styled.nav`
-  width: 100%;
+  width: 95%;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -45,7 +45,6 @@ export const Logo = styled.div`
   }
 `;
 export const User = styled.div`
-  width: 80%;
   display: flex;
   align-self: center;
   margin: 0.8em 0;
@@ -90,7 +89,7 @@ export const Li = styled.li`
     border-radius: 30px;
   }
   &.logout {
-    padding: 0.8em 2em;
+    padding: 0.8em 1.2em;
     background: orangered;
     color: #eeeeee;
     border-radius: 30px;
@@ -104,4 +103,5 @@ export const Li = styled.li`
   }
 `;
 export const ModalBody = styled.div``;
+export const Buttons = styled.button``;
 // export const Container = styled.div``

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Nav, Ul, Li, Logo, User } from "./style";
+import { Container, Nav, Ul, Li, Logo, User, Buttons } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
@@ -37,52 +37,54 @@ const NavBar = () => {
             <span>B</span>-MANAGER
           </h3>
         </Logo>
-        {token ? (
-          <Ul className='dash'>
-            <Li className='user' onClick={handleLogout}>
-              <span>Welcome: </span>
-              <span>{user.first_name}</span>
-            </Li>
-            <Link className='links' to='/'>
-              <Li className='logout' onClick={handleLogout}>
-                Logout
+        <>
+          {token ? (
+            <Ul className='dash'>
+              <Li className='user' onClick={handleLogout}>
+                <span>Welcome: </span>
+                <span>{user.first_name}</span>
               </Li>
-            </Link>
-          </Ul>
-        ) : (
-          <User>
-            <Button
-              // variant='success'
-              onClick={handleShowLogin}
-              style={{
-                marginBottom: "1em",
-                borderRadius: "30px",
-                outline: "none",
-                padding: "0.7em 1.5em",
-                background: "teal",
-                border: "none",
-              }}
-            >
-              Login
-            </Button>
-            <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
-            <Button
-              // variant='primary'
-              onClick={handleShow}
-              style={{
-                marginBottom: "1em",
-                borderRadius: "30px",
-                outline: "none",
-                padding: "0.7em 1.5em",
-                background: "orangered",
-                border: "none",
-              }}
-            >
-              Register
-            </Button>
-            <Register show={shows} handleClose={handleClose} />
-          </User>
-        )}
+              <Link className='links' to='/'>
+                <Li className='logout' onClick={handleLogout}>
+                  Logout
+                </Li>
+              </Link>
+            </Ul>
+          ) : (
+            <User>
+              <Buttons
+                // variant='success'
+                onClick={handleShowLogin}
+                style={{
+                  marginBottom: "1em",
+                  borderRadius: "30px",
+                  outline: "none",
+                  padding: "0.7em 1.5em",
+                  background: "teal",
+                  border: "none",
+                }}
+              >
+                Login
+              </Buttons>
+              <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
+              <Buttons
+                // variant='primary'
+                onClick={handleShow}
+                style={{
+                  marginBottom: "1em",
+                  borderRadius: "30px",
+                  outline: "none",
+                  padding: "0.7em 1.5em",
+                  background: "orangered",
+                  border: "none",
+                }}
+              >
+                Register
+              </Buttons>
+              <Register show={shows} handleClose={handleClose} />
+            </User>
+          )}
+        </>
       </Nav>
     </Container>
   );
