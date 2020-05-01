@@ -5,11 +5,11 @@ export const Container = styled.div`
   padding: 0 10%;
 
   @media (max-width: 769px) {
-    padding: 0 1em;
+    padding: 0;
   }
 `;
 export const Nav = styled.nav`
-  width: 90%;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -19,6 +19,14 @@ export const Nav = styled.nav`
 export const Logo = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 769px) {
+    font-size: 1em;
+
+    h3 {
+      font-size: 1.4em;
+    }
+  }
 
   .img {
     img {
@@ -37,7 +45,7 @@ export const Logo = styled.div`
   }
 `;
 export const User = styled.div`
-  width: 100%;
+  width: 80%;
   display: flex;
   align-self: center;
   margin: 0.8em 0;
@@ -46,6 +54,14 @@ export const User = styled.div`
 
   button {
     margin-left: 0.8em;
+  }
+
+  @media (max-width: 769px) {
+    /* display: none; */
+
+    button {
+      width: 80px;
+    }
   }
 `;
 export const Ul = styled.ul`
