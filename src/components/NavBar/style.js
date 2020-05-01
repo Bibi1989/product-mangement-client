@@ -9,7 +9,8 @@ export const Container = styled.div`
   }
 `;
 export const Nav = styled.nav`
-  width: 100%;
+  width: 90%;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,6 +37,7 @@ export const Logo = styled.div`
   }
 `;
 export const User = styled.div`
+  width: 100%;
   display: flex;
   align-self: center;
   margin: 0.8em 0;
