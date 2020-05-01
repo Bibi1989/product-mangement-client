@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
   position: absolute;
   top: 0;
-  width: 100%;
+  /* width: 100%; */
+  max-width: 80%;
 
   .btn,
   .btn-login {
