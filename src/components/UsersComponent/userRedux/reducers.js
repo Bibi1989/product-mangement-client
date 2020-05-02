@@ -4,8 +4,11 @@ const initialState = {
   login_user: null,
   register_user: null,
   verify: null,
+  loading: true,
   errors: null,
 };
+
+const token = JSON.parse(sessionStorage.getItem("token")) || null;
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,9 +18,16 @@ const userReducer = (state = initialState, action) => {
         register_user: action.payload,
       };
     case LOGIN:
+      let loading = "load";
+      if (!token) {
+        loading = "loading";
+      } else {
+        loading = "unload";
+      }
       return {
         ...state,
         login_user: action.payload,
+        loading,
       };
     case VERIFY:
       return {

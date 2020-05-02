@@ -81,6 +81,18 @@ export const H1 = styled.h1`
   color: #999;
   font-size: 1.5em;
 `;
+export const Loading = styled.div`
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 69, 0, 0.8);
+`;
 export const Close = styled.h1`
   text-align: center;
   color: orangered;

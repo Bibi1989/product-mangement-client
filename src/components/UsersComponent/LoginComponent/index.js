@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { Container } from "./style";
+import { Container, Loading } from "./style";
 import { Form } from "semantic-ui-react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
 
   let path = window.location.href.split("/").slice(1, 3).join("");
   path = `http://${path}`;
@@ -21,12 +23,25 @@ const Login = ({ handleCloseLogin, show }) => {
     history.push("/dashboard");
   }
 
-  // const users = useSelector(({ user: { login_user } }) => login_user);
+  const users = useSelector(({ user: { login_user } }) => login_user);
+
+  console.log(users);
 
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+
+  // React.useEffect(() => {
+  //   if (!token) {
+  //     console.log("no token");
+  //     return (
+  //       <Loading>
+  //         <Spinner animation='border' variant='success' />
+  //       </Loading>
+  //     );
+  //   }
+  // }, [users]);
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -38,7 +53,19 @@ const Login = ({ handleCloseLogin, show }) => {
     e.preventDefault();
 
     loginUser(dispatch, values, history);
+    if (users === null) {
+      setLoading(true);
+    }
   };
+
+  if (loading) {
+    return (
+      <Loading>
+        <Spinner animation='border' variant='success' />
+      </Loading>
+    );
+  }
+
   return (
     <Container>
       <Modal

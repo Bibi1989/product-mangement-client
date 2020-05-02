@@ -3,14 +3,16 @@ import { Container, Nav, Ul, Li, Logo, User, Buttons } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
-import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Icon } from "semantic-ui-react";
+import { useSelector } from "react-redux";
+import { Loading } from "../UsersComponent/LoginComponent/style";
+import { Spinner } from "react-bootstrap";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const user = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
+  const users = useSelector(({ user: { login_user } }) => login_user);
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
