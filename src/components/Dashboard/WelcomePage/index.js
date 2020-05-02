@@ -3,50 +3,49 @@ import { Tab } from "semantic-ui-react";
 import styled from "styled-components";
 import Home from "../Home/index";
 import ProjectComponent from "../Projects";
+import { Tabs } from "react-bootstrap";
 
-const panes = [
-  {
-    menuItem: "Create Project",
-    render: () => (
-      <Div>
-        <Home />
-      </Div>
-    ),
-  },
-  {
-    menuItem: "All Projects",
-    render: () => (
-      <Tab.Pane>
-        <ProjectComponent />
-      </Tab.Pane>
-    ),
-  },
-  { menuItem: "Tab 3", render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
-];
+// const panes = [
+//   {
+//     menuItem: "Create Project",
+//     render: () => (
+//       <Div>
+//         <Home />
+//       </Div>
+//     ),
+//   },
+//   {
+//     menuItem: "All Projects",
+//     render: () => (
+//       <Tab.Pane>
+//         <ProjectComponent />
+//       </Tab.Pane>
+//     ),
+//   },
+//   { menuItem: "Tab 3", render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
+// ];
 
 const WelcomePage = () => {
+  const [key, setKey] = React.useState("dashboard");
   return (
     <Container>
-      <Tab
+      {/* <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={panes}
-      />
-      {/* <div>
-        <div className='ui grid'>
-          <div className='four wide column'>
-            <div className='ui fluid vertical tabular menu'>
-              <a className='active item'>Tab 1</a>
-              <a className='item'>Tab 2</a>
-              <a className='item'>Tab 3</a>
-            </div>
-          </div>
-          <div className='stretched twelve wide column'>
-            <div className='ui bottom attached segment active tab'>
-              Tab 1 Content
-            </div>
-          </div>
-        </div>
-      </div> */}
+      /> */}
+
+      <Tabs
+        id='controlled-tab-example'
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+      >
+        <Tab eventKey='dashboard' title='Dashboard'>
+          <Home />
+        </Tab>
+        <Tab eventKey='projects' title='All Projects'>
+          <ProjectComponent />
+        </Tab>
+      </Tabs>
     </Container>
   );
 };
@@ -56,6 +55,12 @@ export default WelcomePage;
 export const Container = styled.div`
   min-height: 50vh;
   width: 100%;
+  padding: 3% 10%;
+  background: #f9fbfc !important;
+
+  @media (max-width: 769px) {
+    padding: 3% 0;
+  }
 
   .grid {
     width: 99%;

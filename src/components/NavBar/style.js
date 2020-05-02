@@ -70,9 +70,24 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
+  .user {
+    cursor: pointer;
+    h2 {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: lightgray;
+      font-size: 1.3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0.8em;
+    }
+  }
+
   @media (max-width: 769px) {
     .user {
-      display: none;
+      /* display: none; */
     }
   }
 
@@ -103,5 +118,30 @@ export const Li = styled.li`
   }
 `;
 export const ModalBody = styled.div``;
+export const ProfilePic = styled.div`
+  display: flex;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: lightgray;
+    font-size: 1.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.8em 1em;
+  }
+
+  .profile_contact {
+    align-self: center;
+    padding-right: 2em;
+
+    p {
+      margin: 0;
+      padding: 0.1em 0;
+    }
+  }
+`;
 export const Buttons = styled.button``;
 // export const Container = styled.div``

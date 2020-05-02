@@ -41,6 +41,6 @@ export const loginUser = async (dispatch, user, history) => {
     //   history.push("/");
     // }
   } catch (error) {
-    return dispatch(errorAction(error.response.data));
+    return dispatch(errorAction(error.response.data.data));
   }
 };

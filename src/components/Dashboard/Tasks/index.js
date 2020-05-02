@@ -62,14 +62,16 @@ const Tasks = () => {
 
   return (
     <Container>
-      <Button
-        variant='danger'
-        onClick={() => history.push("/dashboard")}
-        style={{ marginBottom: "1em", cursor: "pointer" }}
-      >
-        {" "}
-        Go Back
-      </Button>
+      <Headers>
+        <Button
+          variant='danger'
+          onClick={() => history.push("/dashboard")}
+          style={{ marginBottom: "1em", cursor: "pointer" }}
+        >
+          {" "}
+          Go Back
+        </Button>
+      </Headers>
       <P>{single_project !== null && single_project.project_name}</P>
       <Row>
         <Col>
@@ -238,9 +240,12 @@ const Tasks = () => {
 export default Tasks;
 
 export const Container = styled.div`
-  padding: 5%;
+  padding: 5% 10%;
   background: #f9fbfc;
 
+  @media (max-width: 1200px) {
+    padding: 3% 5%;
+  }
   @media (max-width: 769px) {
     padding: 3% 1em;
   }
@@ -321,4 +326,8 @@ export const P = styled.p`
   font-size: 1.8em;
   font-weight: 800;
   color: orangered;
+`;
+export const Headers = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

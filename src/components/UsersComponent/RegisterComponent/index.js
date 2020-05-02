@@ -22,7 +22,7 @@ const Register = ({ handleClose, show }) => {
   const users = useSelector(({ user: { register_user } }) => register_user);
   const errors = useSelector(({ user: { errors } }) => errors);
 
-  const [values, setValues] = useState({
+  const [values, setValuesRegister] = useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -31,7 +31,7 @@ const Register = ({ handleClose, show }) => {
   });
 
   const handleValues = ({ target: { name, value } }) => {
-    setValues({
+    setValuesRegister({
       ...values,
       [name]: value,
     });
@@ -65,7 +65,7 @@ const Register = ({ handleClose, show }) => {
     <Container>
       <Modal
         show={show}
-        onHide={handleClose}
+        onHide={() => handleClose(setValuesRegister)}
         size='lg'
         aria-labelledby='contained-modal-title-vcenter'
         centered
@@ -94,7 +94,7 @@ const Register = ({ handleClose, show }) => {
               onChange={handleValues}
               error={
                 errors &&
-                values.password === "" && {
+                values.first_name === "" && {
                   content: "Please enter First Name",
                   pointing: "below",
                 }
@@ -109,7 +109,7 @@ const Register = ({ handleClose, show }) => {
               onChange={handleValues}
               error={
                 errors &&
-                values.password === "" && {
+                values.last_name === "" && {
                   content: "Please enter Last Name",
                   pointing: "below",
                 }
@@ -132,7 +132,7 @@ const Register = ({ handleClose, show }) => {
               onChange={handleValues}
               error={
                 errors &&
-                values.password === "" && {
+                values.email === "" && {
                   content: "Please enter Email Address",
                   pointing: "below",
                 }
@@ -155,7 +155,7 @@ const Register = ({ handleClose, show }) => {
               onChange={handleValues}
               error={
                 errors &&
-                values.password === "" && {
+                values.phone === "" && {
                   content: "Please enter Phone Number",
                   pointing: "below",
                 }

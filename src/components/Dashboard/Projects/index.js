@@ -28,6 +28,9 @@ const ProjectComponent = () => {
   const dispatch = useDispatch();
 
   const projects = useSelector(({ project: { projects } }) => projects);
+  const added_project = useSelector(
+    ({ project: { added_project } }) => added_project
+  );
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
@@ -36,7 +39,7 @@ const ProjectComponent = () => {
     fetchAllProjects(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes]);
+  }, [deletes, added_project]);
 
   if (!token) {
     history.push("/login");

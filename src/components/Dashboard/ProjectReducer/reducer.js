@@ -23,6 +23,7 @@ const initialState = {
   update_task: [],
   single_task: null,
   count: 0,
+  length: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,10 +32,12 @@ const reducer = (state = initialState, action) => {
       const count =
         action.payload !== undefined &&
         action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
+      const length = action.payload !== undefined && action.payload.length;
       return {
         ...state,
         projects: action.payload,
         count: count,
+        length,
       };
     case ADD:
       return {

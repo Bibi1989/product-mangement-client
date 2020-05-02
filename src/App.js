@@ -18,6 +18,7 @@ import LandingPage from "./components/ProjectComponent/LandingPage";
 import CreateProject from "./components/Dashboard/CreateProject/index";
 import PageNotFound from "./PageNotFound";
 import Tasks from "./components/Dashboard/Tasks";
+import Profile from "./components/Dashboard/ProfileView";
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
               </Route>
               <Route exact path='/tasks/:projectId'>
                 <Tasks />
+              </Route>
+              <Route exact path='/profile'>
+                <Profile />
               </Route>
               <Route exact to='/notfound'>
                 <PageNotFound />

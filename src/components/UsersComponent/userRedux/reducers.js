@@ -35,6 +35,7 @@ const userReducer = (state = initialState, action) => {
         verify: action.payload,
       };
     case ERRORS:
+      console.log(action.payload);
       return {
         ...state,
         errors: action.payload,

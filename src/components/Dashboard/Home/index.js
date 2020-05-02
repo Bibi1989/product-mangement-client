@@ -38,6 +38,9 @@ const Home = () => {
 
   const projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
+  const added_project = useSelector(
+    ({ project: { added_project } }) => added_project
+  );
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
@@ -47,7 +50,7 @@ const Home = () => {
     fetchAllProjects(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes, count]);
+  }, [deletes, count, added_project]);
 
   // if (!token) {
   //   history.push("/");
