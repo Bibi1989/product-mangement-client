@@ -34,8 +34,8 @@ export const loginUser = async (dispatch, user, history) => {
     );
     sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
     history.push("/dashboard");
-    // window.location.href = "https://b-manager.netlify.app/dashboard";
-    window.location.href = "http://localhost:3000/dashboard";
+    window.location.href = "https://b-manager.netlify.app/dashboard";
+    // window.location.href = "http://localhost:3000/dashboard";
     dispatch(loginAction(response.data));
     // } else {
     //   history.push("/");
