@@ -10,14 +10,14 @@ import {
   getSingleProject,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Spinner } from "react-bootstrap";
-import { Icon } from "semantic-ui-react";
+import { Button, Spinner, InputGroup } from "react-bootstrap";
+import { Icon, Input, Form } from "semantic-ui-react";
 import { Menu, DropUp, Cover } from "../Home/style";
 
 const Tasks = () => {
   const { projectId } = useParams();
   const history = useHistory();
-  const tasks = useSelector(({ project: { tasks } }) => tasks);
+  let tasks = useSelector(({ project: { tasks } }) => tasks);
   const single_project = useSelector(({ project: { project } }) => project);
   const delete_task = useSelector(
     ({ project: { delete_task } }) => delete_task
@@ -28,15 +28,14 @@ const Tasks = () => {
 
   const single_task = useSelector(({ project: { task } }) => task);
 
-  const reviews =
+  let reviews =
     (tasks !== null && tasks.filter((task) => task.status === "review")) ||
     null;
-  const finishes =
+  let finishes =
     (tasks !== null && tasks.filter((task) => task.status === "finish")) ||
     null;
-  const starts =
+  let starts =
     (tasks !== null && tasks.filter((task) => task.status === "start")) || null;
-  console.log({ finishes, tasks });
   const dispatch = useDispatch();
 
   useEffect(() => {

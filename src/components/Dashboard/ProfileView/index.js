@@ -1,11 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { ProfilePic } from "../../NavBar/style";
+import { Icon, Button } from "semantic-ui-react";
 
 const Profile = () => {
   const user = JSON.parse(sessionStorage.getItem("project_user"));
+  const history = useHistory();
   return (
     <Container>
+      <Icon
+        name='home'
+        size='huge'
+        style={{ marginBottom: "1em", color: "orangered" }}
+        onClick={() => {
+          history.push("/dashboard");
+        }}
+      />
       <ProfilePic>
         <h2 className='avatar'>
           {user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}

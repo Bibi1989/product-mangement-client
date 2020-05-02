@@ -12,8 +12,9 @@ import {
   Header,
   Menu,
   DropUp,
+  Headers,
 } from "./style";
-import { Icon, Buttons } from "semantic-ui-react";
+import { Icon, Buttons, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
@@ -36,7 +37,7 @@ const Home = () => {
 
   // console.log();
 
-  const projects = useSelector(({ project: { projects } }) => projects) || [];
+  let projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
@@ -52,11 +53,23 @@ const Home = () => {
     // eslint-disable-next-line
   }, [deletes, count, added_project]);
 
-  // if (!token) {
-  //   history.push("/");
-  // }
+  if (!token) {
+    history.push("/");
+  }
   const [shows, setShows] = useState(false);
-  console.log({ projects: projects });
+
+  const [search, setSearch] = useState("");
+
+  const handleSearch = ({ target: { value } }) => {
+    setSearch(value);
+  };
+
+  projects =
+    (projects !== null &&
+      projects.filter((project) =>
+        project.project_name.toLowerCase().includes(search.toLowerCase())
+      )) ||
+    null;
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);
@@ -99,9 +112,19 @@ const Home = () => {
           </Card>
         </Col>
         <Col>
-          <Button variant='primary' onClick={handleShow}>
-            <Icon name='plus' /> Create Project
-          </Button>
+          <Headers>
+            <Button variant='primary' onClick={handleShow}>
+              <Icon name='plus' /> Create Project
+            </Button>
+            <Form style={{ width: "30%" }}>
+              <Form.Field>
+                <input
+                  placeholder='Search for projects...'
+                  onChange={handleSearch}
+                />
+              </Form.Field>
+            </Form>
+          </Headers>
           <CreateProject
             show={shows}
             handleClose={handleClose}

@@ -11,14 +11,16 @@ import {
   Header,
   Menu,
   DropUp,
+  Headers,
 } from "../Home/style";
-import { Icon, Button } from "semantic-ui-react";
+import { Icon, Button, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
   getSingleProject,
   deleteProject,
 } from "../ProjectReducer/store";
+import CreateProject from "../CreateProject";
 
 const ProjectComponent = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -27,7 +29,7 @@ const ProjectComponent = () => {
 
   const dispatch = useDispatch();
 
-  const projects = useSelector(({ project: { projects } }) => projects);
+  let projects = useSelector(({ project: { projects } }) => projects);
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
   );
@@ -42,8 +44,21 @@ const ProjectComponent = () => {
   }, [deletes, added_project]);
 
   if (!token) {
-    history.push("/login");
+    history.push("/");
   }
+
+  const [search, setSearch] = useState("");
+
+  const handleSearch = ({ target: { value } }) => {
+    setSearch(value);
+  };
+
+  projects =
+    (projects !== null &&
+      projects.filter((project) =>
+        project.project_name.toLowerCase().includes(search.toLowerCase())
+      )) ||
+    null;
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);
@@ -54,17 +69,29 @@ const ProjectComponent = () => {
     setShow("");
     history.push("/create");
   };
+  const [shows, setShows] = useState(false);
+
+  const handleShow = () => setShows(true);
+  const handleClose = () => setShows(false);
 
   return (
     <Container>
       <Row>
         <Col>
-          <Link to='/create'>
-            <Button className='btn'>
-              <Icon name='plus' />
-              Create Project
+          <Headers>
+            <Button variant='primary' onClick={handleShow}>
+              <Icon name='plus' /> Create Project
             </Button>
-          </Link>
+            <Form style={{ width: "30%" }}>
+              <Form.Field>
+                <input
+                  placeholder='Search for projects...'
+                  onChange={handleSearch}
+                />
+              </Form.Field>
+            </Form>
+          </Headers>
+          <CreateProject show={shows} handleClose={handleClose} />
         </Col>
         <Col>
           {/* {projects.length !== undefined && (

@@ -139,3 +139,10 @@ export const Cover = styled.div`
     margin-right: 0.7em;
   }
 `;
+
+export const Headers = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
