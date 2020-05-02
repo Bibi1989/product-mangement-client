@@ -59,10 +59,6 @@ export const Container = styled.div`
 
   .grid {
     width: 99%;
-    .stretched.twelve {
-      margin: 0 !important;
-      padding: 0 !important;
-    }
   }
 
   .item {
