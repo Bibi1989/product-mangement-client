@@ -58,6 +58,9 @@ export const Container = styled.div`
   padding: 3% 10%;
   background: #f9fbfc !important;
 
+  @media (max-width: 1200px) {
+    padding: 3% 5%;
+  }
   @media (max-width: 769px) {
     padding: 3% 0;
   }

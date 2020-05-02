@@ -19,7 +19,7 @@ import { Spinner, Popover, OverlayTrigger } from "react-bootstrap";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const user = JSON.parse(sessionStorage.getItem("project_user"));
+  const user = JSON.parse(sessionStorage.getItem("project_user")) || null;
   const history = useHistory();
   const users = useSelector(({ user: { login_user } }) => login_user);
 
@@ -56,14 +56,15 @@ const NavBar = () => {
     <Popover id='popover-basic'>
       <ProfilePic>
         <h2 className='avatar'>
-          {user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}
+          {user !== null &&
+            user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}
         </h2>
         <div className='profile_contact'>
           <p>
-            {user.first_name} {user.last_name}
+            {user !== null && user.first_name} {user !== null && user.last_name}
           </p>
-          <p>{user.email}</p>
-          <p>{user.phone}</p>
+          <p>{user !== null && user.email}</p>
+          <p>{user !== null && user.phone}</p>
         </div>
       </ProfilePic>
       <Popover.Content>
