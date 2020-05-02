@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Loading } from "../LoginComponent/style";
-import { Form } from "semantic-ui-react";
+import { Form, Input } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../userRedux/store";
@@ -46,20 +46,20 @@ const Register = ({ handleClose, show }) => {
     }
   };
 
-  if (loading) {
-    return (
-      <Loading>
-        <Spinner animation='border' variant='success' />
-        <Button
-          onClick={() => {
-            setLoading(false);
-          }}
-        >
-          Cancel
-        </Button>
-      </Loading>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Loading>
+  //       <Spinner animation='border' variant='success' />
+  //       <Button
+  //         onClick={() => {
+  //           setLoading(false);
+  //         }}
+  //       >
+  //         Cancel
+  //       </Button>
+  //     </Loading>
+  //   );
+  // }
 
   return (
     <Container>
@@ -77,46 +77,121 @@ const Register = ({ handleClose, show }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={onsubmit}>
-            <Form.Field>
+            {/* <Form.Field>
               <label>First Name</label>
               <input
                 placeholder='First Name'
                 name='first_name'
                 onChange={handleValues}
               />
-            </Form.Field>
-            <Form.Field>
+            </Form.Field> */}
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='First Name'
+              placeholder='First Name'
+              name='first_name'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter First Name",
+                  pointing: "below",
+                }
+              }
+            />
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Last Name'
+              placeholder='Last Name'
+              name='last_name'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter Last Name",
+                  pointing: "below",
+                }
+              }
+            />
+            {/* <Form.Field>
               <label>Last Name</label>
               <input
                 placeholder='Last Name'
                 name='last_name'
                 onChange={handleValues}
               />
-            </Form.Field>
-            <Form.Field>
+            </Form.Field> */}
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Email Address'
+              placeholder='Email Address'
+              name='email'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter Email Address",
+                  pointing: "below",
+                }
+              }
+            />
+            {/* <Form.Field>
               <label>Email Address</label>
               <input
                 placeholder='Email Address'
                 name='email'
                 onChange={handleValues}
               />
-            </Form.Field>
-            <Form.Field>
+            </Form.Field> */}
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Phone Number'
+              placeholder='Phone Number'
+              name='phone'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter Phone Number",
+                  pointing: "below",
+                }
+              }
+            />
+            {/* <Form.Field>
               <label>Phone Number</label>
               <input
                 placeholder='Phone Number'
                 name='phone'
                 onChange={handleValues}
               />
-            </Form.Field>
-            <Form.Field>
+            </Form.Field> */}
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Password'
+              placeholder='Password'
+              name='password'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter a valid password",
+                  pointing: "below",
+                }
+              }
+            />
+            {/* <Form.Field>
               <label>Password</label>
               <input
                 placeholder='Password'
                 name='password'
                 onChange={handleValues}
               />
-            </Form.Field>
+            </Form.Field> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

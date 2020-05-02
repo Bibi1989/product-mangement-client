@@ -27,8 +27,6 @@ const Login = ({ handleCloseLogin, show }) => {
 
   const users = useSelector(({ user: { login_user } }) => login_user);
 
-  console.log(users);
-
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -79,6 +77,9 @@ const Login = ({ handleCloseLogin, show }) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {errors !== null && (
+            <p style={{ color: "red" }}>You are yet to register</p>
+          )}
           <Form onSubmit={onsubmit}>
             <Form.Field
               id='form-input-control-error-email'
@@ -118,6 +119,9 @@ const Login = ({ handleCloseLogin, show }) => {
             type='submit'
             style={{ display: "block", margin: "1.5em auto" }}
           >
+            {loading === null && (
+              <Spinner animation='border' variant='success' size='sm' />
+            )}{" "}
             Login
           </Button>
         </Modal.Footer>
