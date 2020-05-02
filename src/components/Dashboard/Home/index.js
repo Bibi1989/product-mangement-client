@@ -21,7 +21,7 @@ import {
   getSingleProject,
 } from "../ProjectReducer/store";
 import CreateProject, { ModalProject } from "../CreateProject";
-import { Button, Badge } from "react-bootstrap";
+import { Button, Badge, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { loginUser, registerUser } from "../../UsersComponent/userRedux/store";
 
@@ -34,7 +34,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const projects = useSelector(({ project: { projects } }) => projects);
+  // console.log();
+
+  const projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
@@ -45,12 +47,13 @@ const Home = () => {
     fetchAllProjects(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes, location]);
+  }, [deletes, count]);
 
   // if (!token) {
   //   history.push("/");
   // }
   const [shows, setShows] = useState(false);
+  console.log({ projects: projects });
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);
@@ -103,7 +106,16 @@ const Home = () => {
           />
         </Col>
         <Col>
-          {/* {projects.length <= 0 && <p>You Have no project create one!!!</p>} */}
+          {projects.length === 0 && (
+            <p style={{ textAlign: "center" }}>
+              You Have no project create one!!!
+            </p>
+          )}
+          <div className='spinner'>
+            {projects.length === 0 && (
+              <Spinner animation='border' variant='success' />
+            )}
+          </div>
           <Project>
             {projects !== undefined &&
               projects.map((project) => (

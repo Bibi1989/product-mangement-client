@@ -10,8 +10,8 @@ import {
   getSingleProject,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Badge, DropdownButton, Dropdown } from "react-bootstrap";
-import { Icon, Label } from "semantic-ui-react";
+import { Button, Spinner } from "react-bootstrap";
+import { Icon } from "semantic-ui-react";
 import { Menu, DropUp, Cover } from "../Home/style";
 
 const Tasks = () => {
@@ -83,9 +83,14 @@ const Tasks = () => {
           </Button>
           <CreateTask show={shows} handleClose={handleClose} />
           <Task>
+            <div className='spinner'>
+              {starts === null && (
+                <Spinner animation='border' variant='success' />
+              )}
+            </div>
             {starts !== null &&
               starts.map((task) => (
-                <Display>
+                <Display key={task.id}>
                   <p>{task.project_sequence}</p>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -125,9 +130,14 @@ const Tasks = () => {
         <Col>
           <h1>Review</h1>
           <Task>
+            <div className='spinner'>
+              {starts === null && (
+                <Spinner animation='border' variant='success' />
+              )}
+            </div>
             {reviews !== null &&
               reviews.map((task) => (
-                <Display>
+                <Display key={task.id}>
                   <p>{task.project_sequence}</p>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -176,9 +186,14 @@ const Tasks = () => {
         <Col>
           <h1>Finish</h1>
           <Task>
+            <div className='spinner'>
+              {starts === null && (
+                <Spinner animation='border' variant='success' />
+              )}
+            </div>
             {finishes !== null &&
               finishes.map((task) => (
-                <Display>
+                <Display key={task.id}>
                   <p>{task.project_sequence}</p>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -266,9 +281,11 @@ export const Col = styled.div`
 `;
 export const Display = styled.div`
   padding: 0.8em;
-  background: violet;
+  background: #f9fbfc;
   margin-bottom: 0.8em;
-  color: #ffffff;
+  color: #777777;
+  border-radius: 0.3em;
+  box-shadow: 0px 0px 5px #eee;
 
   .status {
     display: flex;
@@ -281,6 +298,7 @@ export const Task = styled.div`
   max-height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
+  position: relative;
   &::-webkit-scrollbar {
     /* display: none; */
     width: 2px;
@@ -289,6 +307,13 @@ export const Task = styled.div`
     /* display: none; */
     width: 1.5px;
     background-color: orangered;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 

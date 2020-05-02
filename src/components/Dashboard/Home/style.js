@@ -10,6 +10,14 @@ export const Row = styled.div``;
 export const Col = styled.div`
   display: flex;
   margin-bottom: 2em;
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   @media (max-width: 769px) {
     flex-direction: column;

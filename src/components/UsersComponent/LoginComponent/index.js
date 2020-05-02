@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "./style";
 import { Form } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 import { Button, Modal } from "react-bootstrap";
@@ -9,7 +9,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
+
+  let path = window.location.href.split("/").slice(1, 3).join("");
+  path = `http://${path}`;
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   // const [show, setShow] = useState(false);
