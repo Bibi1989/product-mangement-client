@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Loading } from "./style";
-import { Form } from "semantic-ui-react";
+import { Form, Input } from "semantic-ui-react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
@@ -23,6 +23,8 @@ const Login = ({ handleCloseLogin, show }) => {
     history.push("/dashboard");
   }
 
+  const errors = useSelector(({ user: { errors } }) => errors);
+
   const users = useSelector(({ user: { login_user } }) => login_user);
 
   console.log(users);
@@ -31,12 +33,6 @@ const Login = ({ handleCloseLogin, show }) => {
     email: "",
     password: "",
   });
-
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 10000);
-  // }, [users]);
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -53,26 +49,26 @@ const Login = ({ handleCloseLogin, show }) => {
     }
   };
 
-  if (loading) {
-    return (
-      <Loading>
-        <Spinner animation='border' variant='success' />
-        <Button
-          onClick={() => {
-            setLoading(false);
-          }}
-        >
-          Cancel
-        </Button>
-      </Loading>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Loading>
+  //       <Spinner animation='border' variant='success' />
+  //       <Button
+  //         onClick={() => {
+  //           setLoading(false);
+  //         }}
+  //       >
+  //         Cancel
+  //       </Button>
+  //     </Loading>
+  //   );
+  // }
 
   return (
     <Container>
       <Modal
         show={show}
-        onHide={handleCloseLogin}
+        onHide={() => handleCloseLogin(setValues)}
         size='lg'
         aria-labelledby='contained-modal-title-vcenter'
         centered
@@ -84,22 +80,36 @@ const Login = ({ handleCloseLogin, show }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={onsubmit}>
-            <Form.Field>
-              <label>Email Address</label>
-              <input
-                placeholder='Email Address'
-                name='email'
-                onChange={handleValues}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input
-                placeholder='Password'
-                name='password'
-                onChange={handleValues}
-              />
-            </Form.Field>
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Email Address'
+              placeholder='Email Address'
+              name='email'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.email === "" && {
+                  content: "Please enter a valid email address",
+                  pointing: "below",
+                }
+              }
+            />
+            <Form.Field
+              id='form-input-control-error-email'
+              control={Input}
+              label='Password'
+              placeholder='Password'
+              name='password'
+              onChange={handleValues}
+              error={
+                errors &&
+                values.password === "" && {
+                  content: "Please enter a valid password",
+                  pointing: "below",
+                }
+              }
+            />
           </Form>
         </Modal.Body>
         <Modal.Footer>

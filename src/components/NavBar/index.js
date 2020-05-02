@@ -26,7 +26,13 @@ const NavBar = () => {
   const handleShow = () => setShows(true);
   const handleClose = () => setShows(false);
   const handleShowLogin = () => setShowsLogin(true);
-  const handleCloseLogin = () => setShowsLogin(false);
+  const handleCloseLogin = (setValues) => {
+    setValues({
+      email: "",
+      password: "",
+    });
+    setShowsLogin(false);
+  };
 
   return (
     <Container>

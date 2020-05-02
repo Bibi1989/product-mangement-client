@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { Provider } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 
 // import Login from "./components/UsersComponent/LoginComponent/index";
 // import Register from "./components/UsersComponent/RegisterComponent/index";

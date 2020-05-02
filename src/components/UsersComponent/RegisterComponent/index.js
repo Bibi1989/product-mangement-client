@@ -1,20 +1,26 @@
 import React, { useState } from "react";
-import { Container } from "../LoginComponent/style";
+import { Container, Loading } from "../LoginComponent/style";
 import { Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../userRedux/store";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from "react-toastify";
 
 const Register = ({ handleClose, show }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   const token = JSON.parse(sessionStorage.getItem("token"));
   if (token) {
     history.push("/dashboard");
   }
+
+  const users = useSelector(({ user: { register_user } }) => register_user);
+  const errors = useSelector(({ user: { errors } }) => errors);
 
   const [values, setValues] = useState({
     first_name: "",
@@ -34,7 +40,26 @@ const Register = ({ handleClose, show }) => {
     e.preventDefault();
 
     registerUser(dispatch, values, history);
+
+    if (users === null) {
+      setLoading(true);
+    }
   };
+
+  if (loading) {
+    return (
+      <Loading>
+        <Spinner animation='border' variant='success' />
+        <Button
+          onClick={() => {
+            setLoading(false);
+          }}
+        >
+          Cancel
+        </Button>
+      </Loading>
+    );
+  }
 
   return (
     <Container>
