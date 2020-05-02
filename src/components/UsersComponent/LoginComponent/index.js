@@ -33,14 +33,9 @@ const Login = ({ handleCloseLogin, show }) => {
   });
 
   // React.useEffect(() => {
-  //   if (!token) {
-  //     console.log("no token");
-  //     return (
-  //       <Loading>
-  //         <Spinner animation='border' variant='success' />
-  //       </Loading>
-  //     );
-  //   }
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 10000);
   // }, [users]);
 
   const handleValues = ({ target: { name, value } }) => {
@@ -62,6 +57,13 @@ const Login = ({ handleCloseLogin, show }) => {
     return (
       <Loading>
         <Spinner animation='border' variant='success' />
+        <Button
+          onClick={() => {
+            setLoading(false);
+          }}
+        >
+          Cancel
+        </Button>
       </Loading>
     );
   }
