@@ -8,6 +8,7 @@ import {
   updateTask,
   getOne,
   getSingleProject,
+  inviteUser,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 import { Button, Spinner, InputGroup } from "react-bootstrap";
@@ -15,6 +16,7 @@ import { Icon, Input, Form } from "semantic-ui-react";
 import { Menu, DropUp, Cover } from "../Home/style";
 
 const Tasks = () => {
+  // const user = JSON.parse(sessionStorage.getItem("project_user"));
   const { projectId } = useParams();
   const history = useHistory();
   let tasks = useSelector(({ project: { tasks } }) => tasks);
@@ -55,6 +57,11 @@ const Tasks = () => {
     setShow("");
     history.push(`/tasks/${projectId}`);
   };
+  const [email, setEmail] = useState("");
+
+  const handleInvite = ({ target: { value } }) => {
+    setEmail(value);
+  };
 
   const [shows, setShows] = useState(false);
 
@@ -64,14 +71,6 @@ const Tasks = () => {
   return (
     <Container>
       <Headers>
-        {/* <Button
-          variant='danger'
-          onClick={() => history.push("/dashboard")}
-          style={{ marginBottom: "1em", cursor: "pointer" }}
-        >
-          {" "}
-          Go Back
-        </Button> */}
         <Icon
           name='home'
           size='huge'
@@ -82,6 +81,18 @@ const Tasks = () => {
           }}
           onClick={() => history.push("/dashboard")}
         />
+        <Form.Field
+          style={{ marginRight: "1em", display: "flex", alignSelf: "center" }}
+        >
+          <input
+            placeholder='Invite member'
+            onChange={handleInvite}
+            style={{ padding: "0.5em 1em" }}
+          />
+          <Button onClick={() => inviteUser(dispatch, projectId, email)}>
+            Invite
+          </Button>
+        </Form.Field>
       </Headers>
       <P>{single_project !== null && single_project.project_name}</P>
       <Row>

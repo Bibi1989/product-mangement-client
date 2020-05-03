@@ -9,6 +9,7 @@ import {
   DELETE_TASK,
   UPDATE_TASK,
   SINGLE_TASK,
+  INVITE,
 } from "./type";
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   single_task: null,
   count: 0,
   length: 0,
+  invite: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -83,6 +85,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         update_task: [action.payload, ...state.update_task],
+      };
+    case INVITE:
+      return {
+        ...state,
+        invite: action.payload,
       };
 
     default:

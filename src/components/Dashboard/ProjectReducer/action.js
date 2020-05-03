@@ -55,3 +55,7 @@ export const deleteTaskAction = (response) => ({
   type: DELETE_TASK,
   payload: response,
 });
+export const inviteAction = (response) => ({
+  type: DELETE_TASK,
+  payload: response,
+});

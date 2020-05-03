@@ -72,6 +72,14 @@ export const Prob = styled.div`
     font-size: 1.5em;
   }
 
+  .link {
+    color: #555555;
+
+    p {
+      padding-bottom: 1em;
+    }
+  }
+
   .private,
   .public {
     margin: 0;

@@ -22,9 +22,10 @@ import {
   fetchAllProjects,
   deleteProject,
   getSingleProject,
+  inviteUser,
 } from "../ProjectReducer/store";
 import CreateProject, { ModalProject } from "../CreateProject";
-import { Button, Badge, Spinner } from "react-bootstrap";
+import { Button, Badge, Spinner, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { loginUser, registerUser } from "../../UsersComponent/userRedux/store";
 
@@ -163,7 +164,7 @@ const Home = () => {
                       {project.project_identifier}
                     </Badge>
                   </Header>
-                  <Link to={`/tasks/${project.id}`}>
+                  <Link className='link' to={`/tasks/${project.id}`}>
                     <p>{project.description}</p>
                   </Link>
                   <Date>
@@ -171,7 +172,7 @@ const Home = () => {
                       <span>Created: {project.start_date} -- </span>
                       <span>Due: {project.end_date}</span>
                     </div>
-                    <Menu
+                    {/* <Menu
                       onClick={() => {
                         setOpen(!open);
                         setShow(project.id);
@@ -188,25 +189,31 @@ const Home = () => {
                           <Icon name='cut' color='orange' />
                         </p>
                       </DropUp>
-                    </Menu>
-                    {/* <Menus
-                      onClick={() => {
-                        setShow(project.id);
-                        setOpen(!open);
-                      }}
-                    >
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <DropUps open={project.id === show && open}>
-                        <p onClick={() => setOpen(true)}>
-                          <Icon name='edit' color='teal' />
-                        </p>
-                        <p>
-                          <Icon name='cut' color='orange' />
-                        </p>
-                      </DropUps>
-                    </Menus> */}
+                    </Menu> */}
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        variant='info'
+                        id='dropdown-basic'
+                      ></Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item href='#/action-1'>
+                          <p onClick={() => handleEdit(project.id)}>
+                            <Icon name='edit' color='teal' /> Edit
+                          </p>
+                        </Dropdown.Item>
+                        <Dropdown.Item href='#/action-2'>
+                          <p onClick={() => handleDelete(project.id)}>
+                            <Icon name='cut' color='orange' /> Delete
+                          </p>
+                        </Dropdown.Item>
+                        {/* <Dropdown.Item href='#/action-3'>
+                          <p>
+                            <Icon name='user' color='green' /> Invite member
+                          </p>
+                        </Dropdown.Item> */}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Date>
                 </Prob>
               ))}

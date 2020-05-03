@@ -10,6 +10,7 @@ import {
   deleteTaskAction,
   updateTaskAction,
   singleAction,
+  inviteAction,
 } from "./action";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 // const PROJECT_URL = "http://localhost:5000/api/v1/projects";
@@ -161,6 +162,23 @@ export const deleteTask = async (dispatch, id) => {
       },
     });
     dispatch(deleteTaskAction(response.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const inviteUser = async (dispatch, id, email) => {
+  try {
+    const response = await axios.post(
+      `${PROJECT_URL}/invite`,
+      { id, email },
+      {
+        headers: {
+          "Content-type": "Application/Json",
+          auth: `${token}`,
+        },
+      }
+    );
+    dispatch(inviteAction(response.data.data));
   } catch (error) {
     console.log(error.response);
   }
