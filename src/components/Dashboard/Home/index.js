@@ -13,6 +13,8 @@ import {
   Menu,
   DropUp,
   Headers,
+  Menus,
+  DropUps,
 } from "./style";
 import { Icon, Buttons, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,6 +59,7 @@ const Home = () => {
     history.push("/");
   }
   const [shows, setShows] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -168,11 +171,16 @@ const Home = () => {
                       <span>Created: {project.start_date} -- </span>
                       <span>Due: {project.end_date}</span>
                     </div>
-                    <Menu onClick={() => setShow(project.id)}>
+                    <Menu
+                      onClick={() => {
+                        setOpen(!open);
+                        setShow(project.id);
+                      }}
+                    >
                       <span></span>
                       <span></span>
                       <span></span>
-                      <DropUp className={show === project.id && "show"}>
+                      <DropUp className={show === project.id && open && "show"}>
                         <p onClick={() => handleEdit(project.id)}>
                           <Icon name='edit' color='teal' />
                         </p>
@@ -181,9 +189,40 @@ const Home = () => {
                         </p>
                       </DropUp>
                     </Menu>
+                    {/* <Menus
+                      onClick={() => {
+                        setShow(project.id);
+                        setOpen(!open);
+                      }}
+                    >
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <DropUps open={project.id === show && open}>
+                        <p onClick={() => setOpen(true)}>
+                          <Icon name='edit' color='teal' />
+                        </p>
+                        <p>
+                          <Icon name='cut' color='orange' />
+                        </p>
+                      </DropUps>
+                    </Menus> */}
                   </Date>
                 </Prob>
               ))}
+            {/* <Menus onClick={() => setOpen(!open)}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <DropUps open={open}>
+                <p onClick={() => setOpen(true)}>
+                  <Icon name='edit' color='teal' />
+                </p>
+                <p>
+                  <Icon name='cut' color='orange' />
+                </p>
+              </DropUps>
+            </Menus> */}
           </Project>
         </Col>
       </Row>

@@ -45,6 +45,8 @@ const Tasks = () => {
 
   const [show, setShow] = useState("");
 
+  const [open, setOpen] = useState(false);
+
   const handleDelete = (id) => {
     deleteTask(dispatch, parseInt(id));
     setShow("");
@@ -62,14 +64,24 @@ const Tasks = () => {
   return (
     <Container>
       <Headers>
-        <Button
+        {/* <Button
           variant='danger'
           onClick={() => history.push("/dashboard")}
           style={{ marginBottom: "1em", cursor: "pointer" }}
         >
           {" "}
           Go Back
-        </Button>
+        </Button> */}
+        <Icon
+          name='home'
+          size='huge'
+          style={{
+            color: "orangered",
+            marginBottom: "0.7em",
+            cursor: "pointer",
+          }}
+          onClick={() => history.push("/dashboard")}
+        />
       </Headers>
       <P>{single_project !== null && single_project.project_name}</P>
       <Row>
@@ -106,12 +118,17 @@ const Tasks = () => {
                           updateTask(dispatch, task.id, task, "review");
                         }}
                       ></Icon>
-                      <Menu onClick={() => setShow(task.id)}>
+                      <Menu
+                        onClick={() => {
+                          setOpen(!open);
+                          setShow(task.id);
+                        }}
+                      >
                         <span></span>
                         <span></span>
                         <span></span>
                         <DropUp
-                          className={show === task.id && "show"}
+                          className={show === task.id && open && "show"}
                           background='white'
                         >
                           <p onClick={() => handleEdit(task.id)}>
