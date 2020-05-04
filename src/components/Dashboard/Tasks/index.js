@@ -13,10 +13,10 @@ import {
 import CreateTask from "../CreateTask";
 import { Button, Spinner, InputGroup } from "react-bootstrap";
 import { Icon, Input, Form } from "semantic-ui-react";
-import { Menu, DropUp, Cover } from "../Home/style";
+import { Menu, DropUp, Cover, TaskHeader } from "../Home/style";
 
 const Tasks = () => {
-  // const user = JSON.parse(sessionStorage.getItem("project_user"));
+  const user = JSON.parse(sessionStorage.getItem("project_user"));
   const { projectId } = useParams();
   const history = useHistory();
   let tasks = useSelector(({ project: { tasks } }) => tasks);
@@ -115,7 +115,10 @@ const Tasks = () => {
             {starts !== null &&
               starts.map((task) => (
                 <Display key={task.id}>
-                  <p>{task.project_sequence}</p>
+                  <TaskHeader>
+                    <p>{task.project_sequence}</p>
+                    <p>Added by {task.priorty}</p>
+                  </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>

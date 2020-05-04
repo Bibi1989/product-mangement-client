@@ -17,6 +17,7 @@ const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
 // const TASK_URL = "http://localhost:5000/api/v1/tasks";
 const token = JSON.parse(sessionStorage.getItem("token"));
+const user = JSON.parse(sessionStorage.getItem("project_user"));
 
 export const fetchAllProjects = async (dispatch) => {
   try {
@@ -92,6 +93,7 @@ export const createTask = async (dispatch, id, task, history) => {
   const tasks = {
     ...task,
     status: "start",
+    priorty: user.first_name,
     ProjectId: id,
   };
   try {
