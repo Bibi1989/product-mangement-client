@@ -70,6 +70,13 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
+  .icon {
+    i {
+      font-size: 2em;
+      color: orangered;
+    }
+  }
+
   .user {
     cursor: pointer;
     h2 {
@@ -118,6 +125,12 @@ export const Li = styled.li`
   }
 `;
 export const ModalBody = styled.div``;
+export const Notification = styled.div`
+  p {
+    padding: 1em !important;
+    border-bottom: 1px solid #eee !important;
+  }
+`;
 export const ProfilePic = styled.div`
   display: flex;
 

@@ -6,14 +6,13 @@ import {
   getTasks,
   deleteTask,
   updateTask,
-  getOne,
   getSingleProject,
   inviteUser,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Spinner, InputGroup, Dropdown } from "react-bootstrap";
-import { Icon, Input, Form } from "semantic-ui-react";
-import { Menu, DropUp, Cover, TaskHeader } from "../Home/style";
+import { Button, Spinner, Dropdown } from "react-bootstrap";
+import { Icon, Form } from "semantic-ui-react";
+import { Cover, TaskHeader } from "../Home/style";
 
 const Tasks = () => {
   const user = JSON.parse(sessionStorage.getItem("project_user"));
@@ -73,7 +72,7 @@ const Tasks = () => {
       <Headers>
         <Icon
           name='home'
-          size='huge'
+          size='big'
           style={{
             color: "orangered",
             marginBottom: "0.7em",
@@ -181,24 +180,6 @@ const Tasks = () => {
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      {/* <Icon
-                        className='arrow'
-                        name='arrow left'
-                        color='orange'
-                        size='big'
-                        onClick={() => {
-                          updateTask(dispatch, task.id, task, "start");
-                        }}
-                      ></Icon>
-                      <Icon
-                        className='arrow'
-                        name='arrow right'
-                        color='orange'
-                        size='big'
-                        onClick={() => {
-                          updateTask(dispatch, task.id, task, "finish");
-                        }}
-                      ></Icon> */}
                       <Dropdown>
                         <Dropdown.Toggle
                           variant='info'
@@ -286,7 +267,7 @@ const Tasks = () => {
 export default Tasks;
 
 export const Container = styled.div`
-  padding: 5% 10%;
+  padding: 1% 10%;
   background: #f9fbfc;
 
   @media (max-width: 1200px) {

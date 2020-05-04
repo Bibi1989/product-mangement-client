@@ -8,6 +8,7 @@ import {
   User,
   Buttons,
   ProfilePic,
+  Notification,
 } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
@@ -15,7 +16,8 @@ import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector } from "react-redux";
 import { Loading } from "../UsersComponent/LoginComponent/style";
-import { Spinner, Popover, OverlayTrigger } from "react-bootstrap";
+import { Spinner, Popover, OverlayTrigger, Col, Toast } from "react-bootstrap";
+import { Dropdown } from "semantic-ui-react";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -52,6 +54,10 @@ const NavBar = () => {
     setShowsLogin(false);
   };
 
+  const [showA, setShowA] = useState(true);
+
+  const toggleShowA = () => setShowA(!showA);
+
   const popover = (
     <Popover id='popover-basic'>
       <ProfilePic>
@@ -77,7 +83,11 @@ const NavBar = () => {
 
   return (
     <Container>
-      <Nav>
+      <Nav
+        style={{
+          position: "relative",
+        }}
+      >
         <Logo>
           <div className='img'>
             <img src='../../../assets/pyramid3.svg' alt='logo' />
@@ -89,6 +99,17 @@ const NavBar = () => {
         <>
           {token ? (
             <Ul className='dash'>
+              <Dropdown icon='alarm' floating labeled className='icon'>
+                <Dropdown.Menu style={{ width: "250px" }}>
+                  <Dropdown.Header icon='tags' content='Your Notifications' />
+                  <Dropdown.Item>Important</Dropdown.Item>
+                  <Dropdown.Item>Announcement</Dropdown.Item>
+                  <Dropdown.Item>
+                    Notification feature coming soon!!!
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <Li className='user'>
                 <OverlayTrigger
                   trigger='click'
