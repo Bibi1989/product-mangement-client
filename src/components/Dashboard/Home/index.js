@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link, useLocation } from "react-router-dom";
-
+import axios from "axios";
 import {
   Container,
   Row,
@@ -40,7 +40,7 @@ const Home = () => {
 
   // console.log();
 
-  let projects = useSelector(({ project: { projects } }) => projects) || [];
+  // let projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
@@ -50,8 +50,25 @@ const Home = () => {
   );
   const single = useSelector(({ project: { project } }) => project);
 
+  const [projects, setProjects] = useState([]);
+
+  const fetchProjects = async () => {
+    const response = await axios.get(
+      `https://b-manager-api.herokuapp.com/api/v1/projects`,
+      {
+        headers: {
+          "Content-type": "Application/Json",
+          auth: `${token}`,
+        },
+      }
+    );
+    setProjects(response.data.data);
+  };
+  console.log({ projects });
+
   useEffect(() => {
     fetchAllProjects(dispatch);
+    fetchProjects();
 
     // eslint-disable-next-line
   }, [deletes, count, added_project]);
@@ -68,12 +85,12 @@ const Home = () => {
     setSearch(value);
   };
 
-  projects =
-    (projects !== null &&
-      projects.filter((project) =>
-        project.project_name.toLowerCase().includes(search.toLowerCase())
-      )) ||
-    null;
+  // projects =
+  //   (projects !== null &&
+  //     projects.filter((project) =>
+  //       project.project_name.toLowerCase().includes(search.toLowerCase())
+  //     )) ||
+  //   null;
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);

@@ -24,7 +24,7 @@ const initialState = {
   update_task: [],
   single_task: null,
   count: 0,
-  length: 0,
+  length: [],
   invite: [],
 };
 
@@ -34,12 +34,12 @@ const reducer = (state = initialState, action) => {
       const count =
         action.payload !== undefined &&
         action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
-      const length = action.payload !== undefined && action.payload.length;
+      // const length = action.payload !== undefined && action.payload.length;
+      console.log(state.projects);
       return {
         ...state,
         projects: action.payload,
         count: count,
-        length,
       };
     case ADD:
       return {
