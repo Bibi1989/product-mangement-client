@@ -11,10 +11,10 @@ import {
   SINGLE_TASK,
 } from "./type";
 
-export const getAllAction = (response) => ({
-  type: FETCHALL,
-  payload: response,
-});
+export const getAllAction = (response) => {
+  console.log(response);
+  return { type: FETCHALL, payload: response };
+};
 
 export const addAction = (response) => ({
   type: ADD,

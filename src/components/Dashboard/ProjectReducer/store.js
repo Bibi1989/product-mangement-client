@@ -27,7 +27,6 @@ export const fetchAllProjects = async (dispatch) => {
         auth: `${token}`,
       },
     });
-    console.log(response.data.data);
     dispatch(getAllAction(response.data.data));
   } catch (error) {
     console.log(error.response);

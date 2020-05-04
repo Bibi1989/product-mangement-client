@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link, useLocation } from "react-router-dom";
-import axios from "axios";
 import {
   Container,
   Row,
@@ -11,7 +10,7 @@ import {
   Date,
   Header,
   Headers,
-} from "./style";
+} from "../Home/style";
 import { Icon, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,13 +18,12 @@ import {
   deleteProject,
   getSingleProject,
 } from "../ProjectReducer/store";
-import CreateProject from "../CreateProject";
+import CreateProject, { ModalProject } from "../CreateProject";
 import { Button, Badge, Spinner, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Home = () => {
+const MyProject = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
-  // const users = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
   const [show, setShow] = useState("");
 
@@ -51,7 +49,7 @@ const Home = () => {
     history.push("/");
   }
   const [shows, setShows] = useState(false);
-  // const [open, setOpen] = useState(false);
+  //   const [open, setOpen] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -83,29 +81,6 @@ const Home = () => {
   return (
     <Container>
       <Row>
-        <Col>
-          <Card>
-            <p>Total Projects</p>
-            <div className='total'>
-              <Icon name='chart bar' />
-              <span>{projects !== undefined && projects.length}</span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Tasks</p>
-            <div className='total'>
-              <Icon name='chart line' />
-              <span>{0}</span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Likes</p>
-            <div className='total'>
-              <Icon name='chart pie' />
-              <span>3</span>
-            </div>
-          </Card>
-        </Col>
         <Col>
           <Headers>
             <Button variant='primary' onClick={handleShow}>
@@ -180,11 +155,29 @@ const Home = () => {
                             <Icon name='cut' color='orange' /> Delete
                           </p>
                         </Dropdown.Item>
+                        {/* <Dropdown.Item href='#/action-3'>
+                          <p>
+                            <Icon name='user' color='green' /> Invite member
+                          </p>
+                        </Dropdown.Item> */}
                       </Dropdown.Menu>
                     </Dropdown>
                   </Date>
                 </Prob>
               ))}
+            {/* <Menus onClick={() => setOpen(!open)}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <DropUps open={open}>
+                <p onClick={() => setOpen(true)}>
+                  <Icon name='edit' color='teal' />
+                </p>
+                <p>
+                  <Icon name='cut' color='orange' />
+                </p>
+              </DropUps>
+            </Menus> */}
           </Project>
         </Col>
       </Row>
@@ -192,4 +185,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MyProject;

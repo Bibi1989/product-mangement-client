@@ -31,15 +31,15 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHALL:
-      const count =
-        action.payload !== undefined &&
-        action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
-      // const length = action.payload !== undefined && action.payload.length;
-      console.log(state.projects);
+      // const count =
+      //   (action.payload !== undefined &&
+      //     action.payload.reduce((a, v) => (a += 1), 0)) ||
+      //   0;
+      // console.log(state.projects);
       return {
         ...state,
         projects: action.payload,
-        count: count,
+        // count: count,
       };
     case ADD:
       return {

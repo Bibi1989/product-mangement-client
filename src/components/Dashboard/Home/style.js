@@ -67,6 +67,9 @@ export const Project = styled.div`
 export const Prob = styled.div`
   background: white;
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   h1 {
     font-size: 1.5em;
@@ -188,6 +191,7 @@ export const Headers = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: ${(props) => (props.paddingTop ? props.paddingTop : "")};
 `;
 export const TaskHeader = styled.div`
   width: 100%;

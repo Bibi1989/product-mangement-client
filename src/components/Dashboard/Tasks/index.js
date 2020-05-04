@@ -11,7 +11,7 @@ import {
   inviteUser,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Spinner, InputGroup } from "react-bootstrap";
+import { Button, Spinner, InputGroup, Dropdown } from "react-bootstrap";
 import { Icon, Input, Form } from "semantic-ui-react";
 import { Menu, DropUp, Cover, TaskHeader } from "../Home/style";
 
@@ -81,18 +81,22 @@ const Tasks = () => {
           }}
           onClick={() => history.push("/dashboard")}
         />
-        <Form.Field
-          style={{ marginRight: "1em", display: "flex", alignSelf: "center" }}
-        >
-          <input
-            placeholder='Invite member'
-            onChange={handleInvite}
-            style={{ padding: "0.5em 1em" }}
-          />
-          <Button onClick={() => inviteUser(dispatch, projectId, email)}>
-            Invite
-          </Button>
-        </Form.Field>
+        <Form>
+          <Form.Field
+            style={{ marginRight: "1em", display: "flex", alignSelf: "center" }}
+          >
+            <input
+              placeholder={`Invite member to ${
+                single_project !== null && single_project.project_name
+              }`}
+              onChange={handleInvite}
+              style={{ padding: "1em", width: "100%", marginRight: "0.5em" }}
+            />
+            <Button onClick={() => inviteUser(dispatch, projectId, email)}>
+              Invite
+            </Button>
+          </Form.Field>
+        </Form>
       </Headers>
       <P>{single_project !== null && single_project.project_name}</P>
       <Row>
@@ -123,36 +127,35 @@ const Tasks = () => {
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Icon
-                        className='arrow'
-                        name='arrow right'
-                        color='orange'
-                        size='big'
-                        onClick={() => {
-                          updateTask(dispatch, task.id, task, "review");
-                        }}
-                      ></Icon>
-                      <Menu
-                        onClick={() => {
-                          setOpen(!open);
-                          setShow(task.id);
-                        }}
-                      >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <DropUp
-                          className={show === task.id && open && "show"}
-                          background='white'
-                        >
-                          <p onClick={() => handleEdit(task.id)}>
-                            <Icon name='edit' color='teal' />
-                          </p>
-                          <p onClick={() => handleDelete(task.id)}>
-                            <Icon name='cut' color='orange' />
-                          </p>
-                        </DropUp>
-                      </Menu>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant='info'
+                          id='dropdown-basic'
+                        ></Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item href='#/action-1'>
+                            <p onClick={() => handleEdit(task.id)}>
+                              <Icon name='edit' color='teal' /> Edit
+                            </p>
+                          </Dropdown.Item>
+                          <Dropdown.Item href='#/action-2'>
+                            <p onClick={() => handleDelete(task.id)}>
+                              <Icon name='cut' color='orange' /> Delete
+                            </p>
+                          </Dropdown.Item>
+                          <Dropdown.Item href='#/action-3'>
+                            <p
+                              onClick={() => {
+                                updateTask(dispatch, task.id, task, "review");
+                              }}
+                            >
+                              <Icon name='arrow right' color='orange'></Icon>{" "}
+                              Move
+                            </p>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </Cover>
                   </div>
                 </Display>
@@ -170,12 +173,15 @@ const Tasks = () => {
             {reviews !== null &&
               reviews.map((task) => (
                 <Display key={task.id}>
-                  <p>{task.project_sequence}</p>
+                  <TaskHeader>
+                    <p>{task.project_sequence}</p>
+                    <p>Added by {task.priorty}</p>
+                  </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Icon
+                      {/* <Icon
                         className='arrow'
                         name='arrow left'
                         color='orange'
@@ -192,23 +198,36 @@ const Tasks = () => {
                         onClick={() => {
                           updateTask(dispatch, task.id, task, "finish");
                         }}
-                      ></Icon>
-                      <Menu onClick={() => setShow(task.id)}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <DropUp
-                          className={show === task.id && "show"}
-                          background='white'
-                        >
-                          <p onClick={() => handleEdit(task.id)}>
-                            <Icon name='edit' color='teal' />
-                          </p>
-                          <p onClick={() => handleDelete(task.id)}>
-                            <Icon name='cut' color='orange' />
-                          </p>
-                        </DropUp>
-                      </Menu>
+                      ></Icon> */}
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant='info'
+                          id='dropdown-basic'
+                        ></Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item href='#/action-1'>
+                            <p
+                              onClick={() => {
+                                updateTask(dispatch, task.id, task, "start");
+                              }}
+                            >
+                              <Icon name='arrow left' color='orange'></Icon>{" "}
+                              Move back To Start
+                            </p>
+                          </Dropdown.Item>
+                          <Dropdown.Item href='#/action-2'>
+                            <p
+                              onClick={() => {
+                                updateTask(dispatch, task.id, task, "finish");
+                              }}
+                            >
+                              <Icon name='arrow right' color='orange'></Icon>{" "}
+                              Move To Finish
+                            </p>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </Cover>
                   </div>
                 </Display>
@@ -226,36 +245,33 @@ const Tasks = () => {
             {finishes !== null &&
               finishes.map((task) => (
                 <Display key={task.id}>
-                  <p>{task.project_sequence}</p>
+                  <TaskHeader>
+                    <p>{task.project_sequence}</p>
+                    <p>Added by {task.priorty}</p>
+                  </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Icon
-                        className='arrow'
-                        name='arrow left'
-                        color='orange'
-                        size='big'
-                        onClick={() => {
-                          updateTask(dispatch, task.id, task, "review");
-                        }}
-                      ></Icon>
-                      <Menu onClick={() => setShow(task.id)}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <DropUp
-                          className={show === task.id && "show"}
-                          background='white'
-                        >
-                          <p onClick={() => handleEdit(task.id)}>
-                            <Icon name='edit' color='teal' />
-                          </p>
-                          <p onClick={() => handleDelete(task.id)}>
-                            <Icon name='cut' color='orange' />
-                          </p>
-                        </DropUp>
-                      </Menu>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant='info'
+                          id='dropdown-basic'
+                        ></Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item href='#/action-1'>
+                            <p
+                              onClick={() => {
+                                updateTask(dispatch, task.id, task, "review");
+                              }}
+                            >
+                              <Icon name='arrow left' color='orange'></Icon>{" "}
+                              Move back To Review
+                            </p>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </Cover>
                   </div>
                 </Display>
@@ -317,6 +333,9 @@ export const Col = styled.div`
 export const Display = styled.div`
   padding: 0.8em;
   background: #f9fbfc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-bottom: 0.8em;
   color: #777777;
   border-radius: 0.3em;
