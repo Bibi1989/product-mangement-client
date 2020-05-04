@@ -11,6 +11,7 @@ import {
   Date,
   Header,
   Headers,
+  Welcome,
 } from "./style";
 import { Icon, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
-  // const users = JSON.parse(sessionStorage.getItem("project_user"));
+  const users = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
   const [show, setShow] = useState("");
 
@@ -82,6 +83,12 @@ const Home = () => {
 
   return (
     <Container>
+      <Welcome>
+        <h2>Welcome: </h2>
+        <p>
+          {users.first_name} {users.last_name}
+        </p>
+      </Welcome>
       <Row>
         <Col>
           <Card>

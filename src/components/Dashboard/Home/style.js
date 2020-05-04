@@ -199,3 +199,15 @@ export const TaskHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+export const Welcome = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
+
+  p {
+    margin-left: 1em;
+    font-size: 1.4em;
+    text-transform: uppercase;
+  }
+`;
