@@ -118,7 +118,14 @@ const NavBar = () => {
             <Ul className='dash'>
               <div style={{ position: "relative" }}>
                 <Dropdown icon='alarm' floating labeled className='icon'>
-                  <Dropdown.Menu style={{ width: "250px" }}>
+                  <Dropdown.Menu
+                    style={{
+                      marginLeft: "-150%",
+                      width: "220px",
+                      position: "absolute",
+                      right: "30%",
+                    }}
+                  >
                     <Dropdown.Header content='Your Notifications' />
                     {notices !== null &&
                       notices !== undefined &&

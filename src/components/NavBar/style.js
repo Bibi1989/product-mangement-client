@@ -71,6 +71,7 @@ export const Ul = styled.ul`
   padding: 0.8em 0;
 
   .icon {
+    position: relative;
     i {
       font-size: 2em;
       color: teal;
