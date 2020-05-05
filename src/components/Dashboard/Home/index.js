@@ -19,6 +19,9 @@ import {
   fetchAllProjects,
   deleteProject,
   getSingleProject,
+  getInvites,
+  acceptInvite,
+  deleteInvite,
 } from "../ProjectReducer/store";
 import CreateProject from "../CreateProject";
 import { Button, Badge, Spinner, Dropdown } from "react-bootstrap";
@@ -32,6 +35,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
+  let invites = useSelector(({ project: { invites } }) => invites);
   let projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
   const added_project = useSelector(
@@ -42,8 +46,11 @@ const Home = () => {
   );
   const single = useSelector(({ project: { project } }) => project);
 
+  console.log({ invites });
+
   useEffect(() => {
     fetchAllProjects(dispatch);
+    getInvites(dispatch);
 
     // eslint-disable-next-line
   }, [deletes, count, added_project]);
@@ -89,6 +96,24 @@ const Home = () => {
           {users.first_name} {users.last_name}
         </p>
       </Welcome>
+      {invites !== null &&
+        invites.map((invite) => {
+          return (
+            <div>
+              <p>{invite.sender} invite you to collaborate</p>
+              <Button variant='danger'>Decline</Button>
+              <Button
+                variant='success'
+                onClick={() => {
+                  acceptInvite(dispatch, invite.ProjectId);
+                  deleteInvite(dispatch, invite.id);
+                }}
+              >
+                Accept
+              </Button>
+            </div>
+          );
+        })}
       <Row>
         <Col>
           <Card>

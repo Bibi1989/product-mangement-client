@@ -12,6 +12,8 @@ import {
   INVITE,
   NOTIFY,
   DELETE_NOTIFICATION,
+  GET_INVITE,
+  ACCEPT_INVITE,
 } from "./type";
 
 const initialState = {
@@ -30,6 +32,8 @@ const initialState = {
   invite: [],
   notify: null,
   delete_notify: null,
+  invites: null,
+  accept: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -94,6 +98,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         invite: action.payload,
       };
+    case GET_INVITE:
+      return {
+        ...state,
+        invites: action.payload,
+      };
     case NOTIFY:
       return {
         ...state,
@@ -103,6 +112,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         delete_notify: action.payload,
+      };
+    case ACCEPT_INVITE:
+      return {
+        ...state,
+        accept: action.payload,
       };
 
     default:

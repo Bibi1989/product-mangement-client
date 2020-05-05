@@ -13,12 +13,15 @@ import {
   inviteAction,
   notifyAction,
   notifyDeleteAction,
+  getInviteAction,
+  acceptAction,
 } from "./action";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 // const PROJECT_URL = "http://localhost:5000/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
 const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
-// const NOTIFY_URL = "http://localhost:5000/api/v1/notify";
+const INVITE_URL = "https://b-manager-api.herokuapp.com/api/v1/invite";
+
 const token = JSON.parse(sessionStorage.getItem("token"));
 const user = JSON.parse(sessionStorage.getItem("project_user"));
 
@@ -172,11 +175,11 @@ export const deleteTask = async (dispatch, id) => {
     console.log(error.response);
   }
 };
-export const inviteUser = async (dispatch, id, email) => {
+export const inviteUser = async (dispatch, ProjectId, email) => {
   try {
     const response = await axios.post(
-      `${PROJECT_URL}/invite`,
-      { id, email },
+      `${INVITE_URL}`,
+      { ProjectId, email },
       {
         headers: {
           "Content-type": "Application/Json",
@@ -186,7 +189,7 @@ export const inviteUser = async (dispatch, id, email) => {
     );
     const data = {
       notify: `Email sent successfully to ${email}`,
-      ProjectId: id,
+      ProjectId,
       TaskId: null,
     };
     const notification = await axios.post(`${NOTIFY_URL}`, data, {
@@ -197,6 +200,46 @@ export const inviteUser = async (dispatch, id, email) => {
     });
     dispatch(notifyAction(notification.data.data));
     dispatch(inviteAction(response.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const getInvites = async (dispatch) => {
+  try {
+    const notification = await axios.get(`${INVITE_URL}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(getInviteAction(notification.data.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const acceptInvite = async (dispatch, ProjectId) => {
+  try {
+    await axios.get(`${INVITE_URL}/accept/${ProjectId}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(acceptAction("You a colloborator"));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const deleteInvite = async (dispatch, inviteId) => {
+  console.log({ intId: inviteId });
+  try {
+    await axios.delete(`${INVITE_URL}/${inviteId}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(acceptAction("You a colloborator"));
   } catch (error) {
     console.log(error.response);
   }

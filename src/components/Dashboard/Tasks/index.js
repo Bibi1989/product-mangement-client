@@ -17,7 +17,7 @@ import { Icon, Form } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 
 const Tasks = () => {
-  const user = JSON.parse(sessionStorage.getItem("project_user"));
+  // const user = JSON.parse(sessionStorage.getItem("project_user"));
   const { projectId } = useParams();
   const history = useHistory();
   let tasks = useSelector(({ project: { tasks } }) => tasks);
@@ -68,7 +68,6 @@ const Tasks = () => {
   const [email, setEmail] = useState("");
 
   const handleInvite = ({ target: { value } }) => {
-    notifyMe(dispatch, "You invited a member", projectId, null);
     setEmail(value);
   };
 
@@ -101,7 +100,12 @@ const Tasks = () => {
               onChange={handleInvite}
               style={{ padding: "1em", width: "100%", marginRight: "0.5em" }}
             />
-            <Button onClick={() => inviteUser(dispatch, projectId, email)}>
+            <Button
+              onClick={() => {
+                notifyMe(dispatch, "You invited a member", projectId, null);
+                inviteUser(dispatch, projectId, email);
+              }}
+            >
               Invite
             </Button>
           </Form.Field>

@@ -11,10 +11,12 @@ import {
   SINGLE_TASK,
   NOTIFY,
   DELETE_NOTIFICATION,
+  INVITE,
+  GET_INVITE,
+  ACCEPT_INVITE,
 } from "./type";
 
 export const getAllAction = (response) => {
-  console.log(response);
   return { type: FETCHALL, payload: response };
 };
 
@@ -58,7 +60,11 @@ export const deleteTaskAction = (response) => ({
   payload: response,
 });
 export const inviteAction = (response) => ({
-  type: DELETE_TASK,
+  type: INVITE,
+  payload: response,
+});
+export const getInviteAction = (response) => ({
+  type: GET_INVITE,
   payload: response,
 });
 export const notifyAction = (response) => ({
@@ -67,5 +73,9 @@ export const notifyAction = (response) => ({
 });
 export const notifyDeleteAction = (response) => ({
   type: DELETE_NOTIFICATION,
+  payload: response,
+});
+export const acceptAction = (response) => ({
+  type: ACCEPT_INVITE,
   payload: response,
 });

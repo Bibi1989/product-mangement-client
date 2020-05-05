@@ -16,7 +16,7 @@ export const registerUser = async (dispatch, user, history) => {
     history.push("/dashboard");
     return dispatch(registerAction(response.data));
   } catch (error) {
-    return dispatch(errorAction(error.response.data));
+    return dispatch(errorAction(error.response));
   }
 };
 
@@ -41,6 +41,6 @@ export const loginUser = async (dispatch, user, history) => {
     //   history.push("/");
     // }
   } catch (error) {
-    return dispatch(errorAction(error.response.data));
+    return dispatch(errorAction(error.response));
   }
 };

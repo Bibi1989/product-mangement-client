@@ -8,16 +8,14 @@ import {
   User,
   Buttons,
   ProfilePic,
-  Notification,
 } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Loading } from "../UsersComponent/LoginComponent/style";
-import { Spinner, Popover, OverlayTrigger, Col, Toast } from "react-bootstrap";
-import { Dropdown, Icon } from "semantic-ui-react";
+import { Popover, OverlayTrigger } from "react-bootstrap";
+import { Dropdown } from "semantic-ui-react";
 import {
   deleteNotification,
   getNotifications,
@@ -34,7 +32,6 @@ const NavBar = () => {
     ({ project: { delete_notify } }) => delete_notify
   );
 
-  console.log({ delete_notify });
   const [change, setChange] = useState(false);
 
   useEffect(() => {
@@ -132,9 +129,8 @@ const NavBar = () => {
                       notices.map((notice) => {
                         let s_hr =
                           parseInt(notice.createdAt.slice(11, 16)[1]) + 1;
-                        let f_hr = parseInt(notice.createdAt.slice(11, 16)[0]);
-                        console.log({ hr: f_hr > 0, hour: f_hr, sec: s_hr });
-                        let hr = f_hr > 9 ? s_hr : s_hr;
+                        let f_hr = notice.createdAt.slice(11, 16)[0];
+                        let hr = f_hr + s_hr;
                         let time = hr + notice.createdAt.slice(13, 16);
                         return (
                           <Dropdown.Item
