@@ -138,7 +138,7 @@ const Tasks = () => {
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
-                      Added by {task.User.first_name}
+                      Added by {task.User !== null && task.User.first_name}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
@@ -194,7 +194,7 @@ const Tasks = () => {
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
-                      Added by {task.User.first_name}
+                      Added by {task.User !== null && task.User.first_name}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
@@ -250,7 +250,7 @@ const Tasks = () => {
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
-                      Added by {task.User.first_name}
+                      Added by {task.User !== null && task.User.first_name}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
