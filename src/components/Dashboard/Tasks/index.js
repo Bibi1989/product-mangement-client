@@ -28,6 +28,7 @@ const Tasks = () => {
   const update_task = useSelector(
     ({ project: { update_task } }) => update_task
   );
+  const loading = useSelector(({ project: { loading } }) => loading);
 
   const single_task = useSelector(({ project: { task } }) => task);
 
@@ -128,9 +129,7 @@ const Tasks = () => {
           <CreateTask show={shows} handleClose={handleClose} />
           <Task>
             <div className='spinner'>
-              {starts === null && (
-                <Spinner animation='border' variant='success' />
-              )}
+              {loading && <Spinner animation='border' variant='success' />}
             </div>
             {starts !== null &&
               starts.map((task) => (

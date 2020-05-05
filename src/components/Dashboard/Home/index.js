@@ -41,6 +41,7 @@ const Home = () => {
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
   );
+  const loading = useSelector(({ project: { loading } }) => loading);
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
@@ -118,7 +119,13 @@ const Home = () => {
             <p>Total Projects</p>
             <div className='total'>
               <Icon name='chart bar' />
-              <span>{projects !== undefined && projects.length}</span>
+              <span>
+                {loading ? (
+                  <Spinner animation='grow' variant='success' />
+                ) : (
+                  projects.length
+                )}
+              </span>
             </div>
           </Card>
           <Card>
@@ -162,13 +169,12 @@ const Home = () => {
               You Have no project create one!!!
             </p>
           )}
-          <div className='spinner'>
-            {projects.length === 0 && (
-              <Spinner animation='border' variant='success' />
-            )}
-          </div>
           <Project>
-            {projects !== undefined &&
+            {loading ? (
+              <div className='spinner'>
+                {loading && <Spinner animation='border' variant='success' />}
+              </div>
+            ) : (
               projects.map((project) => (
                 <Prob key={project.id}>
                   <Header>
@@ -214,7 +220,8 @@ const Home = () => {
                     </Dropdown>
                   </Date>
                 </Prob>
-              ))}
+              ))
+            )}
           </Project>
         </Col>
       </Row>

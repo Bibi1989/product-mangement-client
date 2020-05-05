@@ -20,6 +20,9 @@ const WelcomePage = () => {
         <Tab eventKey='projects' title='All Projects'>
           <ProjectComponent />
         </Tab>
+        {/* <Tab eventKey='projects' title='All Notifications'>
+          <ProjectComponent />
+        </Tab> */}
       </Tabs>
     </Container>
   );

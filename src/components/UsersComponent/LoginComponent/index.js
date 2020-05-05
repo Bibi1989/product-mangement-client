@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { loading } from "../userRedux/store";
+// import { loading } from "../userRedux/store";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
@@ -19,10 +19,10 @@ const Login = ({ handleCloseLogin, show }) => {
   path = `http://${path}`;
 
   const token = JSON.parse(sessionStorage.getItem("token"));
-  // const [show, setShow] = useState(false);
-  if (token && !loading) {
-    history.push("/dashboard");
-  }
+  const loading = useSelector(({ user: { loading } }) => loading);
+  // if (token && !loading) {
+  //   history.push("/dashboard");
+  // }
 
   const errors = useSelector(({ user: { errors } }) => errors);
 
@@ -43,22 +43,19 @@ const Login = ({ handleCloseLogin, show }) => {
     e.preventDefault();
 
     loginUser(dispatch, values, history);
-    if (users === null) {
-      // setLoading(true);
-    }
   };
 
   // if (loading) {
   //   return (
   //     <Loading>
   //       <Spinner animation='border' variant='success' />
-  //       <Button
+  //       {/* <Button
   //       // onClick={() => {
   //       //   setLoading(false);
   //       // }}
   //       >
   //         Cancel
-  //       </Button>
+  //       </Button> */}
   //     </Loading>
   //   );
   // }
@@ -116,6 +113,7 @@ const Login = ({ handleCloseLogin, show }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            disabled={loading && true}
             onClick={onsubmit}
             type='submit'
             style={{ display: "block", margin: "1.5em auto" }}

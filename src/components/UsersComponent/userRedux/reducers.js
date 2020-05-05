@@ -1,10 +1,10 @@
-import { LOGIN, REGISTER, ERRORS, VERIFY } from "./types";
+import { LOGIN, REGISTER, ERRORS, VERIFY, LOADING } from "./types";
 
 const initialState = {
   login_user: null,
   register_user: null,
   verify: null,
-  loading: true,
+  loading: false,
   errors: null,
 };
 
@@ -18,16 +18,9 @@ const userReducer = (state = initialState, action) => {
         register_user: action.payload,
       };
     case LOGIN:
-      let loading = "load";
-      if (!token) {
-        loading = "loading";
-      } else {
-        loading = "unload";
-      }
       return {
         ...state,
         login_user: action.payload,
-        loading,
       };
     case VERIFY:
       return {
@@ -35,10 +28,14 @@ const userReducer = (state = initialState, action) => {
         verify: action.payload,
       };
     case ERRORS:
-      console.log(action.payload);
       return {
         ...state,
         errors: action.payload,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

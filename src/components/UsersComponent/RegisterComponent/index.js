@@ -12,14 +12,14 @@ const Register = ({ handleClose, show }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(({ user: { loading } }) => loading);
 
   const token = JSON.parse(sessionStorage.getItem("token"));
-  if (token) {
-    history.push("/dashboard");
-  }
+  // if (token) {
+  //   history.push("/dashboard");
+  // }
 
-  const users = useSelector(({ user: { register_user } }) => register_user);
+  // const users = useSelector(({ user: { register_user } }) => register_user);
   const errors = useSelector(({ user: { errors } }) => errors);
 
   const [values, setValuesRegister] = useState({
@@ -40,10 +40,6 @@ const Register = ({ handleClose, show }) => {
     e.preventDefault();
 
     registerUser(dispatch, values, history);
-
-    if (users === null) {
-      setLoading(true);
-    }
   };
 
   return (
@@ -62,14 +58,6 @@ const Register = ({ handleClose, show }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={onsubmit}>
-            {/* <Form.Field>
-              <label>First Name</label>
-              <input
-                placeholder='First Name'
-                name='first_name'
-                onChange={handleValues}
-              />
-            </Form.Field> */}
             <Form.Field
               id='form-input-control-error-email'
               control={Input}
@@ -100,14 +88,6 @@ const Register = ({ handleClose, show }) => {
                 }
               }
             />
-            {/* <Form.Field>
-              <label>Last Name</label>
-              <input
-                placeholder='Last Name'
-                name='last_name'
-                onChange={handleValues}
-              />
-            </Form.Field> */}
             <Form.Field
               id='form-input-control-error-email'
               control={Input}
@@ -123,14 +103,6 @@ const Register = ({ handleClose, show }) => {
                 }
               }
             />
-            {/* <Form.Field>
-              <label>Email Address</label>
-              <input
-                placeholder='Email Address'
-                name='email'
-                onChange={handleValues}
-              />
-            </Form.Field> */}
             <Form.Field
               id='form-input-control-error-email'
               control={Input}
@@ -146,14 +118,6 @@ const Register = ({ handleClose, show }) => {
                 }
               }
             />
-            {/* <Form.Field>
-              <label>Phone Number</label>
-              <input
-                placeholder='Phone Number'
-                name='phone'
-                onChange={handleValues}
-              />
-            </Form.Field> */}
             <Form.Field
               id='form-input-control-error-email'
               control={Input}
@@ -169,22 +133,18 @@ const Register = ({ handleClose, show }) => {
                 }
               }
             />
-            {/* <Form.Field>
-              <label>Password</label>
-              <input
-                placeholder='Password'
-                name='password'
-                onChange={handleValues}
-              />
-            </Form.Field> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button
+            disabled={loading && true}
             onClick={onsubmit}
             type='submit'
             style={{ display: "block", margin: "1.5em auto" }}
           >
+            {loading && (
+              <Spinner animation='border' variant='white' size='sm' />
+            )}{" "}
             Register
           </Button>
         </Modal.Footer>

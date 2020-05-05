@@ -14,6 +14,7 @@ import {
   DELETE_NOTIFICATION,
   GET_INVITE,
   ACCEPT_INVITE,
+  LOADING,
 } from "./type";
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   delete_notify: null,
   invites: null,
   accept: null,
+  loading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -117,6 +119,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         accept: action.payload,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
 
     default:

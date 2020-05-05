@@ -18,7 +18,7 @@ import {
   getOne,
   notifyMe,
 } from "../ProjectReducer/store";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const priortyList = [
@@ -34,6 +34,8 @@ const CreateTask = ({ show, handleClose }) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const user = JSON.parse(sessionStorage.getItem("project_user"));
   const [updateState, setUpdateState] = useState(false);
+
+  const loading = useSelector(({ user: { loading } }) => loading);
 
   const [values, setValues] = useState({
     summary: "",
@@ -63,11 +65,11 @@ const CreateTask = ({ show, handleClose }) => {
       dispatch,
       parseInt(projectId),
       { ...values, priorty: selects },
-      history
+      history,
+      handleClose
     );
     getOne(dispatch, projectId);
     notifyMe(dispatch, "You added a new task", parseInt(projectId), null);
-    handleClose();
     setUpdateState(!updateState);
   };
 
@@ -138,10 +140,14 @@ const CreateTask = ({ show, handleClose }) => {
         <Modal.Footer>
           <Button
             variant='success'
-            // type='submit'
-            style={{ display: "block", margin: "auto" }}
+            disabled={loading && true}
             onClick={onsubmit}
+            // type='submit'
+            style={{ display: "block", margin: "1.5em auto" }}
           >
+            {loading && (
+              <Spinner animation='border' variant='white' size='sm' />
+            )}{" "}
             Add Task
           </Button>
         </Modal.Footer>

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
 import { Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProject, updateProject } from "../ProjectReducer/store";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const CreateProject = ({ show, handleClose, single }) => {
@@ -12,6 +12,8 @@ const CreateProject = ({ show, handleClose, single }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
+
+  const loading = useSelector(({ user: { loading } }) => loading);
 
   const edit = single !== undefined &&
     single !== null && {
@@ -43,21 +45,19 @@ const CreateProject = ({ show, handleClose, single }) => {
   const onsubmit = (e) => {
     e.preventDefault();
 
-    addProject(dispatch, values, history);
-    handleClose();
+    addProject(dispatch, values, history, handleClose);
+    // handleClose();
   };
 
   const onupdate = (e) => {
     e.preventDefault();
     updateProject(dispatch, single.id, values, history);
-    handleClose();
+    // handleClose();
   };
 
   if (!token) {
     history.push("/");
   }
-
-  // const [shows, setShows] = useState(false);
 
   return (
     <Container>
@@ -126,10 +126,14 @@ const CreateProject = ({ show, handleClose, single }) => {
         <Modal.Footer>
           <Button
             variant='success'
-            // type='submit'
-            style={{ display: "block", margin: "auto" }}
+            disabled={loading && true}
             onClick={single ? onupdate : onsubmit}
+            type='submit'
+            style={{ display: "block", margin: "1.5em auto" }}
           >
+            {loading && (
+              <Spinner animation='border' variant='white' size='sm' />
+            )}{" "}
             {single === null ? "Add Project" : "Edit Project"}
           </Button>
         </Modal.Footer>
@@ -141,24 +145,3 @@ const CreateProject = ({ show, handleClose, single }) => {
 };
 
 export default CreateProject;
-
-export const ModalProject = ({ show, handleClose }) => {
-  console.log(show);
-
-  return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body></Modal.Body>
-      <Modal.Footer>
-        <Button variant='secondary' onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant='primary' onClick={handleClose}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
