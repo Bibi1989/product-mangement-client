@@ -109,10 +109,11 @@ const Tasks = () => {
       </Headers>
       <P>
         <span>{single_project !== null && single_project.project_name}</span>
-        <span className='admin'>
-          {single_project !== null && single_project.User.first_name}{" "}
-          {single_project !== null && single_project.User.last_name} - Admin
-        </span>
+        {/* <span className='admin'>
+          {single_project.User !== null && single_project.User.first_name}{" "}
+          {single_project.User !== null && single_project.User.last_name} -
+          Admin
+        </span> */}
       </P>
       <Row>
         <Col>
