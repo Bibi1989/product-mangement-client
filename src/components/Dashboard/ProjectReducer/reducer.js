@@ -11,6 +11,7 @@ import {
   SINGLE_TASK,
   INVITE,
   NOTIFY,
+  DELETE_NOTIFICATION,
 } from "./type";
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   length: [],
   invite: [],
   notify: null,
+  delete_notify: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -96,6 +98,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         notify: action.payload,
+      };
+    case DELETE_NOTIFICATION:
+      return {
+        ...state,
+        delete_notify: action.payload,
       };
 
     default:

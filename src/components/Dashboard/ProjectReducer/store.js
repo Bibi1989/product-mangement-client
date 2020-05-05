@@ -12,6 +12,7 @@ import {
   singleAction,
   inviteAction,
   notifyAction,
+  notifyDeleteAction,
 } from "./action";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 // const PROJECT_URL = "http://localhost:5000/api/v1/projects";
@@ -227,6 +228,32 @@ export const notifyMe = async (dispatch, msg, ProjectId, TaskId) => {
       },
     });
     dispatch(notifyAction(notification.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const deleteNotification = async (dispatch, deleteId) => {
+  try {
+    const notification = await axios.delete(`${NOTIFY_URL}/${deleteId}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(notifyDeleteAction(notification.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const deleteAllNotification = async (dispatch) => {
+  try {
+    const notification = await axios.delete(`${NOTIFY_URL}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(notifyDeleteAction(notification.data.data));
   } catch (error) {
     console.log(error.response);
   }

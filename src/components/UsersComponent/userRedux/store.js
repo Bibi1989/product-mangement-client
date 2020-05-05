@@ -16,7 +16,7 @@ export const registerUser = async (dispatch, user, history) => {
     history.push("/dashboard");
     return dispatch(registerAction(response.data));
   } catch (error) {
-    return dispatch(errorAction(error.response.data.data));
+    return dispatch(errorAction(error.response.data));
   }
 };
 

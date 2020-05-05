@@ -73,7 +73,7 @@ export const Ul = styled.ul`
   .icon {
     i {
       font-size: 2em;
-      color: orangered;
+      color: teal;
     }
   }
 

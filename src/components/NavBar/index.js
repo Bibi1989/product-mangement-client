@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Nav,
@@ -14,18 +14,32 @@ import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../UsersComponent/LoginComponent/style";
 import { Spinner, Popover, OverlayTrigger, Col, Toast } from "react-bootstrap";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Icon } from "semantic-ui-react";
+import {
+  deleteNotification,
+  getNotifications,
+  deleteAllNotification,
+} from "../Dashboard/ProjectReducer/store";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const user = JSON.parse(sessionStorage.getItem("project_user")) || null;
   const history = useHistory();
+  const dispatch = useDispatch();
   const notices = useSelector(({ project: { notify } }) => notify);
+  const delete_notify = useSelector(
+    ({ project: { delete_notify } }) => delete_notify
+  );
 
-  console.log({ notices });
+  console.log({ delete_notify });
+  const [change, setChange] = useState(false);
+
+  useEffect(() => {
+    getNotifications(dispatch);
+  }, [delete_notify, change]);
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -56,9 +70,10 @@ const NavBar = () => {
     setShowsLogin(false);
   };
 
-  const [showA, setShowA] = useState(true);
-
-  const toggleShowA = () => setShowA(!showA);
+  const handleNotifyDelete = (id) => {
+    setChange(!change);
+    deleteNotification(dispatch, id);
+  };
 
   const popover = (
     <Popover id='popover-basic'>
@@ -101,21 +116,108 @@ const NavBar = () => {
         <>
           {token ? (
             <Ul className='dash'>
-              <Dropdown icon='alarm' floating labeled className='icon'>
-                <Dropdown.Menu style={{ width: "250px" }}>
-                  <Dropdown.Header content='Your Notifications' />
-                  {notices !== null &&
-                    notices !== undefined &&
-                    notices.map((notice) => (
-                      <Dropdown.Item>{notice.notify}</Dropdown.Item>
-                    ))}
-                  <Dropdown.Item>Announcement</Dropdown.Item>
-                  <Dropdown.Item>
-                    Notification feature coming soon!!!
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              {notices !== null && notices !== undefined && notices.length}
+              <div style={{ position: "relative" }}>
+                <Dropdown icon='alarm' floating labeled className='icon'>
+                  <Dropdown.Menu style={{ width: "250px" }}>
+                    <Dropdown.Header content='Your Notifications' />
+                    {notices !== null &&
+                      notices !== undefined &&
+                      notices.map((notice) => {
+                        let s_hr =
+                          parseInt(notice.createdAt.slice(11, 16)[1]) + 1;
+                        let f_hr = parseInt(notice.createdAt.slice(11, 16)[0]);
+                        console.log({ hr: f_hr > 0, hour: f_hr, sec: s_hr });
+                        let hr = f_hr > 9 ? s_hr : s_hr;
+                        let time = hr + notice.createdAt.slice(13, 16);
+                        return (
+                          <Dropdown.Item
+                            key={notice.id}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "flex-start",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  fontSize: "1em",
+                                  color: "#333",
+                                  padding: "0",
+                                }}
+                              >
+                                {notice.notify}
+                              </p>
+                              <span
+                                style={{
+                                  fontSize: "0.8em",
+                                  color: "#999",
+                                  padding: "0",
+                                }}
+                              >
+                                {notice.createdAt.slice(0, 10)}
+                              </span>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "flex-end",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  fontSize: "1.4em",
+                                }}
+                                onClick={() => handleNotifyDelete(notice.id)}
+                              >
+                                &times;{" "}
+                              </p>
+                              <span
+                                style={{
+                                  fontSize: "0.8em",
+                                  color: "#999",
+                                  padding: "0",
+                                }}
+                              >
+                                {time}
+                              </span>
+                            </div>
+                          </Dropdown.Item>
+                        );
+                      })}
+                    <Dropdown.Item>
+                      <p onClick={() => deleteAllNotification(dispatch)}>
+                        Clear all notifications
+                      </p>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <p
+                  style={{
+                    position: "absolute",
+                    right: "5px",
+                    top: "-3px",
+                    width: "18px",
+                    height: "18px",
+                    borderRadius: "50%",
+                    background: "orangered",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {notices !== null && notices !== undefined && notices.length}
+                </p>
+              </div>
 
               <Li className='user'>
                 <OverlayTrigger
