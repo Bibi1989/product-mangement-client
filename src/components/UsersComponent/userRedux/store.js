@@ -14,7 +14,7 @@ export const registerUser = async (dispatch, user, history) => {
       },
     });
     // history.push("/dashboard");
-    // window.location.href = "https://b-manager.netlify.app/dashboard";
+    window.location.href = "https://b-manager.netlify.app/dashboard";
     dispatch({ type: LOADING, payload: false });
     dispatch(registerAction(response.data));
   } catch (error) {
@@ -38,7 +38,7 @@ export const loginUser = async (dispatch, user, history) => {
     sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
     history.push("/dashboard");
     dispatch({ type: LOADING, payload: false });
-    // window.location.href = "https://b-manager.netlify.app/dashboard";
+    window.location.href = "https://b-manager.netlify.app/dashboard";
     dispatch(loginAction(response.data));
   } catch (error) {
     dispatch({ type: LOADING, payload: false });

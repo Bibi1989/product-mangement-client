@@ -36,12 +36,14 @@ const Home = () => {
   const dispatch = useDispatch();
 
   let invites = useSelector(({ project: { invites } }) => invites);
+  let notify = useSelector(({ project: { notify } }) => notify);
   let projects = useSelector(({ project: { projects } }) => projects) || [];
   const count = useSelector(({ project: { count } }) => count);
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
   );
   const loading = useSelector(({ project: { loading } }) => loading);
+  const load = useSelector(({ user: { loading } }) => loading);
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
@@ -52,7 +54,7 @@ const Home = () => {
     getInvites(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes, count, added_project]);
+  }, [deletes, count, added_project, notify]);
 
   if (!token) {
     history.push("/");
