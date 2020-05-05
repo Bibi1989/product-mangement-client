@@ -6,6 +6,8 @@ const LOGIN_URL = `https://b-manager-api.herokuapp.com/auth/v1/login`;
 const REGISTER_URL = `https://b-manager-api.herokuapp.com/auth/v1/register`;
 // const REGISTER_URL = `http://localhost:5000/auth/v1/register`;
 
+export let loading = false;
+
 export const registerUser = async (dispatch, user, history) => {
   try {
     const response = await axios.post(`${REGISTER_URL}`, user, {
@@ -23,12 +25,15 @@ export const registerUser = async (dispatch, user, history) => {
 
 export const loginUser = async (dispatch, user, history) => {
   try {
+    dispatch({ type: "Loading", payload: true });
+
     const response = await axios.post(`${LOGIN_URL}`, user, {
       headers: {
         "Content-Type": "Application/Json",
       },
     });
-    // if (response.data.data.user.isVerify) {
+    dispatch({ type: "Loading", payload: false });
+
     sessionStorage.setItem(
       "project_user",
       JSON.stringify(response.data.data.user)

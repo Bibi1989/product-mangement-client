@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import { loading } from "../userRedux/store";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
@@ -47,20 +48,20 @@ const Login = ({ handleCloseLogin, show }) => {
     }
   };
 
-  // if (loading) {
-  //   return (
-  //     <Loading>
-  //       <Spinner animation='border' variant='success' />
-  //       <Button
-  //         onClick={() => {
-  //           setLoading(false);
-  //         }}
-  //       >
-  //         Cancel
-  //       </Button>
-  //     </Loading>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <Loading>
+        <Spinner animation='border' variant='success' />
+        <Button
+          onClick={() => {
+            setLoading(false);
+          }}
+        >
+          Cancel
+        </Button>
+      </Loading>
+    );
+  }
 
   return (
     <Container>
