@@ -8,7 +8,7 @@ import {
   H1,
   Close,
 } from "../../UsersComponent/LoginComponent/style";
-import { Form, Buttons, Icon, Modalss } from "semantic-ui-react";
+import { Form, Buttons, Icon, Modalss, Select } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,29 +16,36 @@ import {
   updateProject,
   createTask,
   getOne,
+  notifyMe,
 } from "../ProjectReducer/store";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+const priortyList = [
+  { key: "lw", value: "low", text: "Low" },
+  { key: "md", value: "medium", text: "Medium" },
+  { key: "hg", value: "high", text: "High" },
+];
 
 const CreateTask = ({ show, handleClose }) => {
   const { projectId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
+  const user = JSON.parse(sessionStorage.getItem("project_user"));
   const [updateState, setUpdateState] = useState(false);
 
   const [values, setValues] = useState({
     summary: "",
     project_sequence: "",
-    priorty: "",
     status: "",
     due_date: "",
   });
+  const [selects, setSelects] = useState("low");
   useEffect(() => {
     getOne(dispatch, projectId);
     // eslint-disable-next-line
   }, [updateState]);
-  console.log({ updateState });
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -46,11 +53,20 @@ const CreateTask = ({ show, handleClose }) => {
       [name]: value,
     });
   };
+  const handleSelect = ({ target: { textContent } }) => {
+    setSelects(textContent.toLowerCase());
+  };
   const onsubmit = (e) => {
     e.preventDefault();
 
-    createTask(dispatch, parseInt(projectId), values, history);
+    createTask(
+      dispatch,
+      parseInt(projectId),
+      { ...values, priorty: selects },
+      history
+    );
     getOne(dispatch, projectId);
+    notifyMe(dispatch, "You added a new task", parseInt(projectId), null);
     handleClose();
     setUpdateState(!updateState);
   };
@@ -86,11 +102,16 @@ const CreateTask = ({ show, handleClose }) => {
             </Form.Field>
             <Form.Field>
               <label>Priorty</label>
-              <input
+              {/* <input
                 placeholder='Priorty'
                 name='priorty'
                 onChange={handleValues}
                 // value={values.description}
+              /> */}
+              <Select
+                placeholder='Select your country'
+                options={priortyList}
+                onChange={handleSelect}
               />
             </Form.Field>
             <Form.Field>

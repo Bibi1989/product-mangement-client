@@ -10,6 +10,7 @@ import {
   UPDATE_TASK,
   SINGLE_TASK,
   INVITE,
+  NOTIFY,
 } from "./type";
 
 const initialState = {
@@ -26,20 +27,20 @@ const initialState = {
   count: 0,
   length: [],
   invite: [],
+  notify: null,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHALL:
-      // const count =
-      //   (action.payload !== undefined &&
-      //     action.payload.reduce((a, v) => (a += 1), 0)) ||
-      //   0;
+      const count =
+        action.payload !== undefined &&
+        action.payload.reduce((a, v) => (a += v.Tasks.length), 0);
       // console.log(state.projects);
       return {
         ...state,
         projects: action.payload,
-        // count: count,
+        count: count,
       };
     case ADD:
       return {
@@ -90,6 +91,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         invite: action.payload,
+      };
+    case NOTIFY:
+      return {
+        ...state,
+        notify: action.payload,
       };
 
     default:

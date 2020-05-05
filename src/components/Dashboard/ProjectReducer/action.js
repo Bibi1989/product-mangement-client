@@ -9,6 +9,7 @@ import {
   DELETE_TASK,
   UPDATE_TASK,
   SINGLE_TASK,
+  NOTIFY,
 } from "./type";
 
 export const getAllAction = (response) => {
@@ -57,5 +58,9 @@ export const deleteTaskAction = (response) => ({
 });
 export const inviteAction = (response) => ({
   type: DELETE_TASK,
+  payload: response,
+});
+export const notifyAction = (response) => ({
+  type: NOTIFY,
   payload: response,
 });

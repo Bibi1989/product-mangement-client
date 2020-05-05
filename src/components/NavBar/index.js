@@ -23,7 +23,9 @@ const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const user = JSON.parse(sessionStorage.getItem("project_user")) || null;
   const history = useHistory();
-  const users = useSelector(({ user: { login_user } }) => login_user);
+  const notices = useSelector(({ project: { notify } }) => notify);
+
+  console.log({ notices });
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -101,14 +103,19 @@ const NavBar = () => {
             <Ul className='dash'>
               <Dropdown icon='alarm' floating labeled className='icon'>
                 <Dropdown.Menu style={{ width: "250px" }}>
-                  <Dropdown.Header icon='tags' content='Your Notifications' />
-                  <Dropdown.Item>Important</Dropdown.Item>
+                  <Dropdown.Header content='Your Notifications' />
+                  {notices !== null &&
+                    notices !== undefined &&
+                    notices.map((notice) => (
+                      <Dropdown.Item>{notice.notify}</Dropdown.Item>
+                    ))}
                   <Dropdown.Item>Announcement</Dropdown.Item>
                   <Dropdown.Item>
                     Notification feature coming soon!!!
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+              {notices !== null && notices !== undefined && notices.length}
 
               <Li className='user'>
                 <OverlayTrigger

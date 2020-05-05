@@ -102,7 +102,7 @@ const Home = () => {
             <p>Total Tasks</p>
             <div className='total'>
               <Icon name='chart line' />
-              <span>{0}</span>
+              <span>{count}</span>
             </div>
           </Card>
           <Card>

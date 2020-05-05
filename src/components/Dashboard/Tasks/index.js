@@ -8,6 +8,8 @@ import {
   updateTask,
   getSingleProject,
   inviteUser,
+  getNotifications,
+  notifyMe,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 import { Button, Spinner, Dropdown } from "react-bootstrap";
@@ -42,7 +44,12 @@ const Tasks = () => {
   useEffect(() => {
     getTasks(dispatch, parseInt(projectId));
     getSingleProject(dispatch, projectId);
+    getNotifications(dispatch);
   }, [delete_task, update_task, single_task]);
+
+  const notify = useSelector(({ project: { notify } }) => notify);
+
+  console.log({ notify, delete_task });
 
   const [show, setShow] = useState("");
 
@@ -50,15 +57,18 @@ const Tasks = () => {
 
   const handleDelete = (id) => {
     deleteTask(dispatch, parseInt(id));
+    notifyMe(dispatch, "You deleted a task", projectId, id);
     setShow("");
   };
   const handleEdit = (id) => {
+    notifyMe(dispatch, "You edited a task", projectId, id);
     setShow("");
     history.push(`/tasks/${projectId}`);
   };
   const [email, setEmail] = useState("");
 
   const handleInvite = ({ target: { value } }) => {
+    notifyMe(dispatch, "You invited a member", projectId, null);
     setEmail(value);
   };
 
@@ -97,7 +107,13 @@ const Tasks = () => {
           </Form.Field>
         </Form>
       </Headers>
-      <P>{single_project !== null && single_project.project_name}</P>
+      <P>
+        <span>{single_project !== null && single_project.project_name}</span>
+        <span className='admin'>
+          {single_project !== null && single_project.User.first_name}{" "}
+          {single_project !== null && single_project.User.last_name} - Admin
+        </span>
+      </P>
       <Row>
         <Col>
           <h1>Start</h1>
@@ -118,9 +134,11 @@ const Tasks = () => {
             {starts !== null &&
               starts.map((task) => (
                 <Display key={task.id}>
-                  <TaskHeader>
+                  <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
-                    <p>Added by {task.priorty}</p>
+                    <p className='added_person'>
+                      Added by {task.User.first_name}
+                    </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -172,9 +190,11 @@ const Tasks = () => {
             {reviews !== null &&
               reviews.map((task) => (
                 <Display key={task.id}>
-                  <TaskHeader>
+                  <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
-                    <p>Added by {task.priorty}</p>
+                    <p className='added_person'>
+                      Added by {task.User.first_name}
+                    </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -226,9 +246,11 @@ const Tasks = () => {
             {finishes !== null &&
               finishes.map((task) => (
                 <Display key={task.id}>
-                  <TaskHeader>
+                  <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
-                    <p>Added by {task.priorty}</p>
+                    <p className='added_person'>
+                      Added by {task.User.first_name}
+                    </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
@@ -353,9 +375,16 @@ export const Task = styled.div`
 `;
 
 export const P = styled.p`
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: 800;
   color: orangered;
+  display: flex;
+  flex-direction: column;
+
+  .admin {
+    color: teal;
+    font-size: 0.8em;
+  }
 `;
 export const Headers = styled.div`
   display: flex;

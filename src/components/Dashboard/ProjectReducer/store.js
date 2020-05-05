@@ -11,11 +11,13 @@ import {
   updateTaskAction,
   singleAction,
   inviteAction,
+  notifyAction,
 } from "./action";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 // const PROJECT_URL = "http://localhost:5000/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
-// const TASK_URL = "http://localhost:5000/api/v1/tasks";
+const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
+// const NOTIFY_URL = "http://localhost:5000/api/v1/notify";
 const token = JSON.parse(sessionStorage.getItem("token"));
 const user = JSON.parse(sessionStorage.getItem("project_user"));
 
@@ -27,6 +29,7 @@ export const fetchAllProjects = async (dispatch) => {
         auth: `${token}`,
       },
     });
+    console.log(response.data.data);
     dispatch(getAllAction(response.data.data));
   } catch (error) {
     console.log(error.response);
@@ -92,9 +95,9 @@ export const createTask = async (dispatch, id, task, history) => {
   const tasks = {
     ...task,
     status: "start",
-    priorty: user.first_name,
     ProjectId: id,
   };
+
   try {
     const response = await axios.post(`${TASK_URL}/add`, tasks, {
       headers: {
@@ -102,6 +105,7 @@ export const createTask = async (dispatch, id, task, history) => {
         auth: `${token}`,
       },
     });
+
     history.push(`/tasks/${id}`);
     dispatch(addTaskAction(response.data.data));
   } catch (error) {
@@ -132,7 +136,6 @@ export const getOne = async (dispatch, id) => {
         auth: `${token}`,
       },
     });
-    console.log({ response });
     dispatch(singleAction(response.data.data));
   } catch (error) {
     console.log(error.response);
@@ -180,7 +183,50 @@ export const inviteUser = async (dispatch, id, email) => {
         },
       }
     );
+    const data = {
+      notify: `Email sent successfully to ${email}`,
+      ProjectId: id,
+      TaskId: null,
+    };
+    const notification = await axios.post(`${NOTIFY_URL}`, data, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(notifyAction(notification.data.data));
     dispatch(inviteAction(response.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const getNotifications = async (dispatch) => {
+  try {
+    const notification = await axios.get(`${NOTIFY_URL}`, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(notifyAction(notification.data.data));
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+export const notifyMe = async (dispatch, msg, ProjectId, TaskId) => {
+  try {
+    const data = {
+      notify: msg,
+      ProjectId,
+      TaskId,
+    };
+    const notification = await axios.post(`${NOTIFY_URL}`, data, {
+      headers: {
+        "Content-type": "Application/Json",
+        auth: `${token}`,
+      },
+    });
+    dispatch(notifyAction(notification.data.data));
   } catch (error) {
     console.log(error.response);
   }

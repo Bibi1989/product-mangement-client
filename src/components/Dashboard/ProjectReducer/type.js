@@ -9,3 +9,4 @@ export const DELETE_TASK = "DELETE_TASK";
 export const UPDATE_TASK = "UPDATE_TASK";
 export const SINGLE_TASK = "SINGLE_TASK";
 export const INVITE = "INVITE";
+export const NOTIFY = "NOTIFY";
