@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Modals,
-  ModalHeader,
-  ModalBody,
-  ModalContent,
-  H1,
-  Close,
-} from "../../UsersComponent/LoginComponent/style";
-import { Form, Buttons, Icon, Modalss } from "semantic-ui-react";
+import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
+import { Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addProject, updateProject } from "../ProjectReducer/store";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -62,9 +54,8 @@ const CreateProject = ({ show, handleClose, single }) => {
   };
 
   if (!token) {
-    history.push("/login");
+    history.push("/");
   }
-  console.log(single);
 
   // const [shows, setShows] = useState(false);
 

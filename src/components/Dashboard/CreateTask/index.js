@@ -72,7 +72,7 @@ const CreateTask = ({ show, handleClose }) => {
   };
 
   if (!token) {
-    history.push("/login");
+    history.push("/");
   }
 
   return (
