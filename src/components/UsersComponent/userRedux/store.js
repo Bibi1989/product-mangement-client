@@ -26,21 +26,21 @@ export const registerUser = async (dispatch, user, history) => {
 export const loginUser = async (dispatch, user, history) => {
   try {
     dispatch({ type: "Loading", payload: true });
-
+    loading = true;
     const response = await axios.post(`${LOGIN_URL}`, user, {
       headers: {
         "Content-Type": "Application/Json",
       },
     });
     dispatch({ type: "Loading", payload: false });
-
+    loading = false;
     sessionStorage.setItem(
       "project_user",
       JSON.stringify(response.data.data.user)
     );
     sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
     // history.push("/dashboard");
-    window.location.href = "https://b-manager.netlify.app/dashboard";
+    // window.location.href = "https://b-manager.netlify.app/dashboard";
     // window.location.href = "http://localhost:3000/dashboard";
     dispatch(loginAction(response.data));
     // } else {

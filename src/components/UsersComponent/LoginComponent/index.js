@@ -6,21 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { loading } from "../userRedux/store";
+import { loading } from "../userRedux/store";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   let path = window.location.href.split("/").slice(1, 3).join("");
   path = `http://${path}`;
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   // const [show, setShow] = useState(false);
-  if (token) {
+  if (token && !loading) {
     history.push("/dashboard");
   }
 
@@ -44,24 +44,24 @@ const Login = ({ handleCloseLogin, show }) => {
 
     loginUser(dispatch, values, history);
     if (users === null) {
-      setLoading(true);
+      // setLoading(true);
     }
   };
 
-  if (loading) {
-    return (
-      <Loading>
-        <Spinner animation='border' variant='success' />
-        <Button
-          onClick={() => {
-            setLoading(false);
-          }}
-        >
-          Cancel
-        </Button>
-      </Loading>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Loading>
+  //       <Spinner animation='border' variant='success' />
+  //       <Button
+  //       // onClick={() => {
+  //       //   setLoading(false);
+  //       // }}
+  //       >
+  //         Cancel
+  //       </Button>
+  //     </Loading>
+  //   );
+  // }
 
   return (
     <Container>
@@ -120,8 +120,8 @@ const Login = ({ handleCloseLogin, show }) => {
             type='submit'
             style={{ display: "block", margin: "1.5em auto" }}
           >
-            {loading === null && (
-              <Spinner animation='border' variant='success' size='sm' />
+            {loading && (
+              <Spinner animation='border' variant='white' size='sm' />
             )}{" "}
             Login
           </Button>
