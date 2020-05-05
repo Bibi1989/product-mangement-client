@@ -46,21 +46,6 @@ const Register = ({ handleClose, show }) => {
     }
   };
 
-  // if (loading) {
-  //   return (
-  //     <Loading>
-  //       <Spinner animation='border' variant='success' />
-  //       <Button
-  //         onClick={() => {
-  //           setLoading(false);
-  //         }}
-  //       >
-  //         Cancel
-  //       </Button>
-  //     </Loading>
-  //   );
-  // }
-
   return (
     <Container>
       <Modal

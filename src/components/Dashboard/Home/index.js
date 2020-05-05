@@ -46,8 +46,6 @@ const Home = () => {
   );
   const single = useSelector(({ project: { project } }) => project);
 
-  console.log({ invites });
-
   useEffect(() => {
     fetchAllProjects(dispatch);
     getInvites(dispatch);

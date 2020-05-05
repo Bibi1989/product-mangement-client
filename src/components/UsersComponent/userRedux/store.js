@@ -13,7 +13,8 @@ export const registerUser = async (dispatch, user, history) => {
         "Content-Type": "Application/Json",
       },
     });
-    history.push("/dashboard");
+    // history.push("/dashboard");
+    window.location.href = "https://b-manager.netlify.app/dashboard";
     return dispatch(registerAction(response.data));
   } catch (error) {
     return dispatch(errorAction(error.response));
@@ -33,7 +34,7 @@ export const loginUser = async (dispatch, user, history) => {
       JSON.stringify(response.data.data.user)
     );
     sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
-    history.push("/dashboard");
+    // history.push("/dashboard");
     window.location.href = "https://b-manager.netlify.app/dashboard";
     // window.location.href = "http://localhost:3000/dashboard";
     dispatch(loginAction(response.data));

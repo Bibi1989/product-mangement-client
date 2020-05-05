@@ -31,12 +31,6 @@ function App() {
               <Route exact path='/'>
                 <LandingPage />
               </Route>
-              {/* <Route exact path='/login'>
-                <Login />
-              </Route>
-              <Route exact path='/register'>
-                <Register />
-              </Route> */}
               <Route exact path='/dashboard'>
                 <WelcomePage />
               </Route>

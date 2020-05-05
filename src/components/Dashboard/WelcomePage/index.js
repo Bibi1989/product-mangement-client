@@ -5,35 +5,10 @@ import Home from "../Home/index";
 import ProjectComponent from "../Projects";
 import { Tabs } from "react-bootstrap";
 
-// const panes = [
-//   {
-//     menuItem: "Create Project",
-//     render: () => (
-//       <Div>
-//         <Home />
-//       </Div>
-//     ),
-//   },
-//   {
-//     menuItem: "All Projects",
-//     render: () => (
-//       <Tab.Pane>
-//         <ProjectComponent />
-//       </Tab.Pane>
-//     ),
-//   },
-//   { menuItem: "Tab 3", render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
-// ];
-
 const WelcomePage = () => {
   const [key, setKey] = React.useState("dashboard");
   return (
     <Container>
-      {/* <Tab
-        menu={{ fluid: true, vertical: true, tabular: true }}
-        panes={panes}
-      /> */}
-
       <Tabs
         id='controlled-tab-example'
         activeKey={key}

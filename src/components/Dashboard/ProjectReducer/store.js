@@ -33,7 +33,6 @@ export const fetchAllProjects = async (dispatch) => {
         auth: `${token}`,
       },
     });
-    console.log(response.data.data);
     dispatch(getAllAction(response.data.data));
   } catch (error) {
     console.log(error.response);
@@ -231,7 +230,6 @@ export const acceptInvite = async (dispatch, ProjectId) => {
   }
 };
 export const deleteInvite = async (dispatch, inviteId) => {
-  console.log({ intId: inviteId });
   try {
     await axios.delete(`${INVITE_URL}/${inviteId}`, {
       headers: {

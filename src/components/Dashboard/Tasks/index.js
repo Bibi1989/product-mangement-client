@@ -47,13 +47,9 @@ const Tasks = () => {
     getNotifications(dispatch);
   }, [delete_task, update_task, single_task]);
 
-  const notify = useSelector(({ project: { notify } }) => notify);
-
-  console.log({ notify, delete_task });
+  // const notify = useSelector(({ project: { notify } }) => notify);
 
   const [show, setShow] = useState("");
-
-  const [open, setOpen] = useState(false);
 
   const handleDelete = (id) => {
     deleteTask(dispatch, parseInt(id));
