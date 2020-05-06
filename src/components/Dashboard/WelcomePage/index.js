@@ -3,6 +3,7 @@ import { Tab } from "semantic-ui-react";
 import styled from "styled-components";
 import Home from "../Home/index";
 import ProjectComponent from "../Projects";
+import Collaborator from "../Notification/index";
 import { Tabs } from "react-bootstrap";
 
 const WelcomePage = () => {
@@ -20,9 +21,9 @@ const WelcomePage = () => {
         <Tab eventKey='projects' title='All Projects'>
           <ProjectComponent />
         </Tab>
-        {/* <Tab eventKey='projects' title='All Notifications'>
-          <ProjectComponent />
-        </Tab> */}
+        <Tab eventKey='collaborator' title='Collaborator'>
+          <Collaborator />
+        </Tab>
       </Tabs>
     </Container>
   );
