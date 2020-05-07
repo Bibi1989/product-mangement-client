@@ -116,11 +116,14 @@ const NavBar = () => {
               <div style={{ position: "relative" }}>
                 <Dropdown icon='alarm' floating labeled className='icon'>
                   <Dropdown.Menu
+                    className='notice'
                     style={{
                       marginLeft: "-150%",
                       width: "220px",
                       position: "absolute",
                       right: "30%",
+                      maxHeight: "400px",
+                      overflow: "auto",
                     }}
                   >
                     <Dropdown.Header content='Your Notifications' />

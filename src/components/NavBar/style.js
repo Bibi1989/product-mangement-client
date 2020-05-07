@@ -70,6 +70,18 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
+  .notice {
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      padding: 0 0.3em;
+      width: 3px;
+      background-color: orangered;
+    }
+  }
+
   .icon {
     position: relative;
     i {

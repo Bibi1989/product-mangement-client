@@ -9,7 +9,6 @@ const Collaborator = () => {
     (collaborate) => collaborate.userArray.length > 1
   );
   let user = JSON.parse(sessionStorage.getItem("project_user"));
-  console.log(collaborate_projects);
   return (
     <Container>
       <Row>

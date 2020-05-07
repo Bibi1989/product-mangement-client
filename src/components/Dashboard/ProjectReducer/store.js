@@ -18,7 +18,6 @@ import {
 } from "./action";
 import { LOADING } from "./type";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
-// const PROJECT_URL = "http://localhost:5000/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
 const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
 const INVITE_URL = "https://b-manager-api.herokuapp.com/api/v1/invite";
