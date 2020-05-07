@@ -121,7 +121,7 @@ const NavBar = () => {
                     className='notice'
                     style={{
                       marginLeft: "-220%",
-                      maxWidth: "250px",
+                      maxWidth: "220px",
                       minWidth: "250px",
                       position: "absolute",
                       right: "30%",
