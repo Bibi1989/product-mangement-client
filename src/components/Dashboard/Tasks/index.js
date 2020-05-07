@@ -44,7 +44,7 @@ const Tasks = () => {
 
   useEffect(() => {
     getTasks(dispatch, parseInt(projectId));
-    getSingleProject(dispatch, projectId);
+    // getSingleProject(dispatch, projectId);
     getNotifications(dispatch);
   }, [delete_task, update_task, single_task]);
 

@@ -56,7 +56,7 @@ export const addProject = async (dispatch, project, history, handleClose) => {
     dispatch({ type: LOADING, payload: false });
     dispatch(addAction(response.data.data));
   } catch (error) {
-    handleClose();
+    // handleClose();
     dispatch({ type: LOADING, payload: false });
     console.log(error.response);
   }
@@ -94,7 +94,13 @@ export const getSingleProject = async (dispatch, id) => {
     console.log(error.response);
   }
 };
-export const updateProject = async (dispatch, id, value, history) => {
+export const updateProject = async (
+  dispatch,
+  id,
+  value,
+  history,
+  handleClose
+) => {
   try {
     dispatch({ type: LOADING, payload: true });
     const response = await axios.put(`${PROJECT_URL}/${id}`, value, {
@@ -103,9 +109,14 @@ export const updateProject = async (dispatch, id, value, history) => {
         auth: `${token}`,
       },
     });
-    history.push("/dashboard");
+
+    if (response.data.data.status !== "error") {
+      history.push("/dashboard");
+      handleClose();
+      dispatch({ type: LOADING, payload: false });
+      dispatch(updateAction(response.data.data));
+    }
     dispatch({ type: LOADING, payload: false });
-    dispatch(updateAction(response.data.data));
   } catch (error) {
     dispatch({ type: LOADING, payload: false });
     console.log(error.response);

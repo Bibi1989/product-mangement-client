@@ -73,12 +73,13 @@ export const Ul = styled.ul`
   .notice {
     &::-webkit-scrollbar {
       width: 3px;
+      background-color: #ffffff;
     }
 
     &::-webkit-scrollbar-thumb {
       padding: 0 0.3em;
       width: 3px;
-      background-color: orangered;
+      background-color: #f9fbfc;
     }
   }
 
@@ -96,7 +97,7 @@ export const Ul = styled.ul`
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: lightgray;
+      background: #f9fbfc;
       font-size: 1.3em;
       display: flex;
       justify-content: center;
@@ -141,7 +142,7 @@ export const ModalBody = styled.div``;
 export const Notification = styled.div`
   p {
     padding: 1em !important;
-    border-bottom: 1px solid #eee !important;
+    border-bottom: 1px solid #f9fbfc !important;
   }
 `;
 export const ProfilePic = styled.div`
@@ -151,7 +152,7 @@ export const ProfilePic = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: lightgray;
+    background: linen;
     font-size: 1.3em;
     display: flex;
     justify-content: center;

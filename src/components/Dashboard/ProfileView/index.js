@@ -11,8 +11,8 @@ const Profile = () => {
     <Container>
       <Icon
         name='home'
-        size='huge'
-        style={{ marginBottom: "1em", color: "orangered" }}
+        size='big'
+        style={{ marginBottom: "1em", color: "orangered", cursor: "pointer" }}
         onClick={() => {
           history.push("/dashboard");
         }}

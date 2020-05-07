@@ -13,7 +13,7 @@ import {
   Headers,
   Welcome,
 } from "./style";
-import { Icon, Form } from "semantic-ui-react";
+import { Icon, Form, Dropdown } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
@@ -24,7 +24,7 @@ import {
   deleteInvite,
 } from "../ProjectReducer/store";
 import CreateProject from "../CreateProject";
-import { Button, Badge, Spinner, Dropdown } from "react-bootstrap";
+import { Button, Badge, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = () => {
@@ -42,6 +42,9 @@ const Home = () => {
   const added_project = useSelector(
     ({ project: { added_project } }) => added_project
   );
+  const updated_project = useSelector(
+    ({ project: { updated_project } }) => updated_project
+  );
   const loading = useSelector(({ project: { loading } }) => loading);
   const load = useSelector(({ user: { loading } }) => loading);
   const deletes = useSelector(
@@ -54,7 +57,9 @@ const Home = () => {
     getInvites(dispatch);
 
     // eslint-disable-next-line
-  }, [deletes, count, added_project, notify]);
+  }, [deletes, count, added_project, notify, updated_project]);
+
+  console.log(single);
 
   if (!token) {
     history.push("/");
@@ -201,19 +206,21 @@ const Home = () => {
                       <span>Created: {project.start_date} -- </span>
                       <span>Due: {project.end_date}</span>
                     </div>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        variant='info'
-                        id='dropdown-basic'
-                      ></Dropdown.Toggle>
-
+                    <Dropdown
+                      icon='ellipsis vertical'
+                      floating
+                      labeled
+                      className='icon'
+                    >
                       <Dropdown.Menu>
-                        <Dropdown.Item href='#/action-1'>
+                        <Dropdown.Header icon='tags' content='Actions' />
+                        <Dropdown.Divider />
+                        <Dropdown.Item>
                           <p onClick={() => handleEdit(project.id)}>
                             <Icon name='edit' color='teal' /> Edit
                           </p>
                         </Dropdown.Item>
-                        <Dropdown.Item href='#/action-2'>
+                        <Dropdown.Item>
                           <p onClick={() => handleDelete(project.id)}>
                             <Icon name='cut' color='orange' /> Delete
                           </p>

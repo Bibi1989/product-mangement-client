@@ -46,6 +46,7 @@ const CreateTask = ({ show, handleClose }) => {
   const [selects, setSelects] = useState("low");
   useEffect(() => {
     getOne(dispatch, projectId);
+
     // eslint-disable-next-line
   }, [updateState]);
 
@@ -68,7 +69,7 @@ const CreateTask = ({ show, handleClose }) => {
       history,
       handleClose
     );
-    getOne(dispatch, projectId);
+    // getOne(dispatch, projectId);
     notifyMe(dispatch, "You added a new task", parseInt(projectId), null);
     setUpdateState(!updateState);
   };
@@ -104,12 +105,6 @@ const CreateTask = ({ show, handleClose }) => {
             </Form.Field>
             <Form.Field>
               <label>Priorty</label>
-              {/* <input
-                placeholder='Priorty'
-                name='priorty'
-                onChange={handleValues}
-                // value={values.description}
-              /> */}
               <Select
                 placeholder='Select your country'
                 options={priortyList}

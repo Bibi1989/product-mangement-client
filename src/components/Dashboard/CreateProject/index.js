@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
-import { Form } from "semantic-ui-react";
+import { Form, Input } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addProject, updateProject } from "../ProjectReducer/store";
@@ -14,6 +14,9 @@ const CreateProject = ({ show, handleClose, single }) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const loading = useSelector(({ user: { loading } }) => loading);
+  const updated_project = useSelector(
+    ({ user: { updated_project } }) => updated_project
+  );
 
   const edit = single !== undefined &&
     single !== null && {
@@ -34,7 +37,7 @@ const CreateProject = ({ show, handleClose, single }) => {
     setValues(edit);
 
     // eslint-disable-next-line
-  }, [single]);
+  }, [single, updated_project]);
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -51,8 +54,7 @@ const CreateProject = ({ show, handleClose, single }) => {
 
   const onupdate = (e) => {
     e.preventDefault();
-    updateProject(dispatch, single.id, values, history);
-    // handleClose();
+    updateProject(dispatch, single.id, values, history, handleClose);
   };
 
   if (!token) {

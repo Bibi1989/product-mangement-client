@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { format, parseISO } from "date-fns";
+import Moment from "react-moment";
 import {
   Container,
   Nav,
@@ -119,7 +121,8 @@ const NavBar = () => {
                     className='notice'
                     style={{
                       marginLeft: "-220%",
-                      width: "220px",
+                      maxWidth: "250px",
+                      minWidth: "250px",
                       position: "absolute",
                       right: "30%",
                       maxHeight: "400px",
@@ -167,7 +170,7 @@ const NavBar = () => {
                                   padding: "0",
                                 }}
                               >
-                                {notice.createdAt.slice(0, 10)}
+                                <Moment fromNow>{notice.createdAt}</Moment>
                               </span>
                             </div>
                             <div
@@ -186,15 +189,6 @@ const NavBar = () => {
                               >
                                 &times;{" "}
                               </p>
-                              <span
-                                style={{
-                                  fontSize: "0.8em",
-                                  color: "#999",
-                                  padding: "0",
-                                }}
-                              >
-                                {time}
-                              </span>
                             </div>
                           </Dropdown.Item>
                         );
