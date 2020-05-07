@@ -118,7 +118,7 @@ const NavBar = () => {
                   <Dropdown.Menu
                     className='notice'
                     style={{
-                      marginLeft: "-150%",
+                      marginLeft: "-220%",
                       width: "220px",
                       position: "absolute",
                       right: "30%",
