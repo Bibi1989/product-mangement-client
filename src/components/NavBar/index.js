@@ -298,6 +298,7 @@ const NavBar = () => {
                   padding: "0.7em 1.5em",
                   background: "teal",
                   border: "none",
+                  color: "#ffffff",
                 }}
               >
                 Login
@@ -313,6 +314,7 @@ const NavBar = () => {
                   padding: "0.7em 1.5em",
                   background: "orangered",
                   border: "none",
+                  color: "#ffffff",
                 }}
               >
                 Register
