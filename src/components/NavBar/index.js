@@ -226,7 +226,50 @@ const NavBar = () => {
               </div>
 
               <Li className='user'>
-                <OverlayTrigger
+                <Dropdown icon='user' floating labeled className='icon'>
+                  <Dropdown.Menu
+                    className='notice'
+                    style={{
+                      marginLeft: "-500%",
+                      // width: "220px",
+                      position: "absolute",
+                      right: "30%",
+                      maxHeight: "400px",
+                      overflow: "auto",
+                    }}
+                  >
+                    <Dropdown.Header content='Your Profile' />
+                    <Dropdown.Item
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <ProfilePic>
+                        <h2 className='avatar'>
+                          {user !== null &&
+                            user.first_name[0].toUpperCase() +
+                              user.last_name[0].toUpperCase()}
+                        </h2>
+                        <div className='profile_contact'>
+                          <p>
+                            {user !== null && user.first_name}{" "}
+                            {user !== null && user.last_name}
+                          </p>
+                          <p>{user !== null && user.email}</p>
+                          <p>{user !== null && user.phone}</p>
+                        </div>
+                      </ProfilePic>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link to='/profile'>
+                        <p>View Your Profile</p>
+                      </Link>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+
+                {/* <OverlayTrigger
                   trigger='click'
                   placement='bottom'
                   overlay={popover}
@@ -235,7 +278,7 @@ const NavBar = () => {
                     {user.first_name[0].toUpperCase() +
                       user.last_name[0].toUpperCase()}
                   </h2>
-                </OverlayTrigger>
+                </OverlayTrigger> */}
               </Li>
               <Link className='links' to='/'>
                 <Li className='logout' onClick={handleLogout}>
