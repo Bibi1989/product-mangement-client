@@ -56,7 +56,6 @@ export const addProject = async (dispatch, project, history, handleClose) => {
     dispatch({ type: LOADING, payload: false });
     dispatch(addAction(response.data.data));
   } catch (error) {
-    // handleClose();
     dispatch({ type: LOADING, payload: false });
     console.log(error.response);
   }

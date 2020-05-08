@@ -214,7 +214,6 @@ const NavBar = () => {
               <Li className='user'>
                 <Dropdown icon='user' floating labeled className='icon'>
                   <Dropdown.Menu
-                    className='notice'
                     style={{
                       marginLeft: "-500%",
                       // width: "220px",
@@ -224,7 +223,10 @@ const NavBar = () => {
                       overflow: "auto",
                     }}
                   >
-                    <Dropdown.Header content='Your Profile' />
+                    <Dropdown.Header
+                      content='Your Profile'
+                      styled={{ borderBottom: "1px solid #cccccc" }}
+                    />
                     <Dropdown.Item
                       style={{
                         display: "flex",
@@ -248,8 +250,25 @@ const NavBar = () => {
                       </ProfilePic>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <Link to='/profile'>
-                        <p>View Your Profile</p>
+                      <Link style={{ color: "#999999" }} to='/profile'>
+                        <p
+                          style={{
+                            padding: "1em 0",
+                            borderBottom: "1px solid #aaaaaa",
+                            borderTop: "1px solid #aaaaaa",
+                          }}
+                        >
+                          View Your Profile
+                        </p>
+                      </Link>
+                      <Link style={{ color: "#999999" }} to='/invite'>
+                        <p
+                          style={{
+                            padding: "1em 0",
+                          }}
+                        >
+                          View Invites
+                        </p>
                       </Link>
                     </Dropdown.Item>
                   </Dropdown.Menu>

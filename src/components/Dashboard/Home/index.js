@@ -23,7 +23,7 @@ import {
   deleteInvite,
 } from "../ProjectReducer/store";
 import CreateProject from "../CreateProject";
-import { Button, Badge, Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Props from "./Props";
 

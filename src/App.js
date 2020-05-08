@@ -20,6 +20,7 @@ import CreateProject from "./components/Dashboard/CreateProject/index";
 import PageNotFound from "./PageNotFound";
 import Tasks from "./components/Dashboard/Tasks";
 import Profile from "./components/Dashboard/ProfileView";
+import Invite from "./components/Dashboard/Invites/Invite";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
               </Route>
               <Route exact path='/profile'>
                 <Profile />
+              </Route>
+              <Route exact path='/invite'>
+                <Invite />
               </Route>
               <Route exact to='/notfound'>
                 <PageNotFound />
