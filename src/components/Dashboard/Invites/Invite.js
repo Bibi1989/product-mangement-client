@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Spinner } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import {
   acceptInvite,
   deleteInvite,
   getInvites,
 } from "../ProjectReducer/store";
+import { Header } from "../Home/style";
+import { Icon } from "semantic-ui-react";
 
 const Invite = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   let invites = useSelector(({ project: { invites } }) => invites);
 
@@ -21,7 +25,18 @@ const Invite = () => {
   return (
     <Container>
       <Row>
-        <h1>Invites</h1>
+        <Header paddingBottom='1em'>
+          <Icon
+            name='home'
+            size='big'
+            style={{
+              color: "orangered",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/dashboard")}
+          />
+          <h1>Invites</h1>
+        </Header>
         {invites !== null &&
           invites.map((invite) => {
             return (

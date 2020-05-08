@@ -12,7 +12,7 @@ import {
   Headers,
   Welcome,
 } from "./style";
-import { Icon, Form } from "semantic-ui-react";
+import { Icon, Form, Label } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
@@ -101,7 +101,7 @@ const Home = () => {
           {users.first_name} {users.last_name}
         </p>
       </Welcome>
-      {invites !== null &&
+      {/* {invites !== null &&
         invites.map((invite) => {
           return (
             <div>
@@ -126,7 +126,15 @@ const Home = () => {
               </Button>
             </div>
           );
-        })}
+        })} */}
+      {invites !== null && invites.length > 0 && (
+        <p style={{ color: "teal" }}>
+          Some one sent You an Invite{" "}
+          <Link to='/invite'>
+            <Label>View Invites</Label>
+          </Link>
+        </p>
+      )}
       <Row>
         <Col>
           <Card>

@@ -105,6 +105,12 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: ${(props) =>
+    props.paddingBottom ? props.paddingBottom : ""};
+
+  h1 {
+    margin: 0;
+  }
 `;
 export const Menu = styled.div`
   display: flex;
