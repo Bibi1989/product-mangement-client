@@ -120,11 +120,8 @@ const NavBar = () => {
                   <Dropdown.Menu
                     className='notice'
                     style={{
-                      marginLeft: "-220%",
-                      maxWidth: "220px",
-                      minWidth: "250px",
+                      // marginLeft: "-220%",
                       position: "absolute",
-                      right: "30%",
                       maxHeight: "400px",
                       overflow: "auto",
                     }}
@@ -133,11 +130,6 @@ const NavBar = () => {
                     {notices !== null &&
                       notices !== undefined &&
                       notices.map((notice) => {
-                        let s_hr =
-                          parseInt(notice.createdAt.slice(11, 16)[1]) + 1;
-                        let f_hr = notice.createdAt.slice(11, 16)[0];
-                        let hr = f_hr + s_hr;
-                        let time = hr + notice.createdAt.slice(13, 16);
                         return (
                           <Dropdown.Item
                             key={notice.id}

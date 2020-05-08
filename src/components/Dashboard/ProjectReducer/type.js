@@ -14,3 +14,4 @@ export const NOTIFY = "NOTIFY";
 export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION";
 export const ACCEPT_INVITE = "ACCEPT_INVITE";
 export const LOADING = "LOADING";
+export const ERROR = "ERROR";

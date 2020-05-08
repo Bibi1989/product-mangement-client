@@ -70,21 +70,30 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0.8em 0;
 
-  .notice {
-    &::-webkit-scrollbar {
-      width: 3px;
-      background-color: #ffffff;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      padding: 0 0.3em;
-      width: 3px;
-      background-color: #f9fbfc;
-    }
-  }
-
   .icon {
     position: relative;
+
+    .notice {
+      margin-left: -80px;
+      max-width: 220px;
+      min-width: 200px;
+      max-height: 400px;
+      position: absolute;
+      left: -100%;
+      right: 10%;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 3px;
+        background-color: #ffffff;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        padding: 0 0.3em;
+        width: 3px;
+        background-color: #f9fbfc;
+      }
+    }
     i {
       font-size: 2em;
       color: teal;

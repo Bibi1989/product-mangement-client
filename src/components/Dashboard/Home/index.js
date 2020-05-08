@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { EditOutlined } from "@ant-design/icons";
 import {
   Container,
   Row,
@@ -13,7 +12,7 @@ import {
   Headers,
   Welcome,
 } from "./style";
-import { Icon, Form, Dropdown } from "semantic-ui-react";
+import { Icon, Form } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
@@ -26,6 +25,7 @@ import {
 import CreateProject from "../CreateProject";
 import { Button, Badge, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Props from "./Props";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -88,7 +88,6 @@ const Home = () => {
     getSingleProject(dispatch, id);
     setShow("");
     setShows(true);
-    // history.push("/dashboard");
   };
 
   const handleShow = () => setShows(true);
@@ -106,9 +105,17 @@ const Home = () => {
         invites.map((invite) => {
           return (
             <div>
-              <p>{invite.sender} invite you to collaborate</p>
-              <Button variant='danger'>Decline</Button>
+              <p>Invit from {invite.sender.split("@")[0]} to collaborate</p>
               <Button
+                variant='danger'
+                onClick={() => {
+                  deleteInvite(dispatch, invite.id);
+                }}
+              >
+                Decline
+              </Button>
+              <Button
+                style={{ marginLeft: "0.5em" }}
                 variant='success'
                 onClick={() => {
                   acceptInvite(dispatch, invite.ProjectId);
@@ -183,52 +190,12 @@ const Home = () => {
               </div>
             ) : (
               projects.map((project) => (
-                <Prob key={project.id}>
-                  <Header>
-                    <h1>{project.project_name}</h1>
-                    <Badge
-                      className='primary'
-                      pill
-                      variant={
-                        project.project_identifier === "public"
-                          ? "info"
-                          : "primary"
-                      }
-                    >
-                      {project.project_identifier}
-                    </Badge>
-                  </Header>
-                  <Link className='link' to={`/tasks/${project.id}`}>
-                    <p>{project.description}</p>
-                  </Link>
-                  <Date>
-                    <div>
-                      <span>Created: {project.start_date} -- </span>
-                      <span>Due: {project.end_date}</span>
-                    </div>
-                    <Dropdown
-                      icon='ellipsis vertical'
-                      floating
-                      labeled
-                      className='icon'
-                    >
-                      <Dropdown.Menu>
-                        <Dropdown.Header icon='tags' content='Actions' />
-                        <Dropdown.Divider />
-                        <Dropdown.Item>
-                          <p onClick={() => handleEdit(project.id)}>
-                            <Icon name='edit' color='teal' /> Edit
-                          </p>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <p onClick={() => handleDelete(project.id)}>
-                            <Icon name='cut' color='orange' /> Delete
-                          </p>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Date>
-                </Prob>
+                <Props
+                  key={project.id}
+                  project={project}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                />
               ))
             )}
           </Project>

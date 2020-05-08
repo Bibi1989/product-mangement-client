@@ -14,6 +14,7 @@ import {
   INVITE,
   GET_INVITE,
   ACCEPT_INVITE,
+  ERROR,
 } from "./type";
 
 export const getAllAction = (response) => {
@@ -77,5 +78,9 @@ export const notifyDeleteAction = (response) => ({
 });
 export const acceptAction = (response) => ({
   type: ACCEPT_INVITE,
+  payload: response,
+});
+export const errorsAction = (response) => ({
+  type: ERROR,
   payload: response,
 });

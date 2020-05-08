@@ -15,6 +15,7 @@ import {
   GET_INVITE,
   ACCEPT_INVITE,
   LOADING,
+  ERROR,
 } from "./type";
 
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   invites: null,
   accept: null,
   loading: false,
+  errors: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -124,6 +126,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case ERROR:
+      return {
+        ...state,
+        errors: action.payload,
       };
 
     default:
