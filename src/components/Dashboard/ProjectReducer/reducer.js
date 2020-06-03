@@ -16,6 +16,8 @@ import {
   ACCEPT_INVITE,
   LOADING,
   ERROR,
+  CURRENT,
+  CLEAR,
 } from "./type";
 
 const initialState = {
@@ -38,6 +40,7 @@ const initialState = {
   accept: null,
   loading: false,
   errors: null,
+  current: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,7 +52,7 @@ const reducer = (state = initialState, action) => {
       // console.log(state.projects);
       return {
         ...state,
-        projects: action.payload,
+        projects: [...action.payload],
         count: count,
       };
     case ADD:
@@ -66,6 +69,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         updated_project: action.payload,
+      };
+    case CURRENT:
+      return {
+        ...state,
+        current: action.payload,
+      };
+    case CLEAR:
+      return {
+        ...state,
+        current: null,
       };
     case DELETE:
       return {

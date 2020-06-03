@@ -30,7 +30,7 @@ const Props = ({ project, handleEdit, handleDelete }) => {
             <Dropdown.Header icon='tags' content='Actions' />
             <Dropdown.Divider />
             <Dropdown.Item>
-              <p onClick={() => handleEdit(project.id)}>
+              <p onClick={() => handleEdit(project)}>
                 <Icon name='edit' color='teal' /> Edit
               </p>
             </Dropdown.Item>

@@ -59,6 +59,7 @@ const Home = () => {
 
   projects =
     (projects !== null &&
+      projects !== undefined &&
       projects.filter((project) =>
         project.project_name.toLowerCase().includes(search.toLowerCase())
       )) ||

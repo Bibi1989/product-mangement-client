@@ -3,9 +3,14 @@ import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
 import { Form, Input } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addProject, updateProject } from "../ProjectReducer/store";
+import {
+  addProject,
+  updateProject,
+  clearCurrent,
+} from "../ProjectReducer/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { memo } from "react";
 
 const CreateProject = ({ show, handleClose, single }) => {
   // const [show, setShow] = useState(false);
@@ -17,6 +22,9 @@ const CreateProject = ({ show, handleClose, single }) => {
   const updated_project = useSelector(
     ({ user: { updated_project } }) => updated_project
   );
+
+  const current = useSelector(({ project: { current } }) => current);
+  console.log({ current });
 
   const edit = single !== undefined &&
     single !== null && {
@@ -34,10 +42,10 @@ const CreateProject = ({ show, handleClose, single }) => {
     end_date: "",
   });
   useEffect(() => {
-    setValues(edit);
+    setValues(current !== null && current);
 
     // eslint-disable-next-line
-  }, [single, updated_project]);
+  }, [single, current]);
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -54,7 +62,9 @@ const CreateProject = ({ show, handleClose, single }) => {
 
   const onupdate = (e) => {
     e.preventDefault();
-    updateProject(dispatch, single.id, values, history, handleClose);
+
+    updateProject(dispatch, current.id, values, history, handleClose);
+    clearCurrent(dispatch);
   };
 
   if (!token) {
@@ -72,11 +82,11 @@ const CreateProject = ({ show, handleClose, single }) => {
       >
         <Modal.Header>
           <Modal.Title>
-            <H1>{single === null ? "Add Project" : "Edit Project"}</H1>
+            <H1>{current === null ? "Add Project" : "Edit Project"}</H1>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={single ? onupdate : onsubmit}>
+          <Form onSubmit={updateProject}>
             <Form.Field>
               <label>Project Name</label>
               <input
@@ -129,14 +139,14 @@ const CreateProject = ({ show, handleClose, single }) => {
           <Button
             variant='success'
             disabled={loading && true}
-            onClick={single ? onupdate : onsubmit}
+            onClick={current ? onupdate : onsubmit}
             type='submit'
             style={{ display: "block", margin: "1.5em auto" }}
           >
             {loading && (
               <Spinner animation='border' variant='white' size='sm' />
             )}{" "}
-            {single === null ? "Add Project" : "Edit Project"}
+            {current === null ? "Add Project" : "Edit Project"}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -146,4 +156,4 @@ const CreateProject = ({ show, handleClose, single }) => {
   );
 };
 
-export default CreateProject;
+export default memo(CreateProject);

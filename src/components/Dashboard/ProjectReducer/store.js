@@ -16,7 +16,7 @@ import {
   getInviteAction,
   acceptAction,
 } from "./action";
-import { LOADING } from "./type";
+import { LOADING, CURRENT, CLEAR } from "./type";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
 const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
@@ -121,6 +121,15 @@ export const updateProject = async (
     console.log(error.response);
   }
 };
+
+export const getCurrent = (dispatch, project) => {
+  dispatch({ type: CURRENT, payload: project });
+};
+
+export const clearCurrent = (dispatch) => {
+  dispatch({ type: CLEAR });
+};
+
 export const createTask = async (dispatch, id, task, history, handleClose) => {
   const tasks = {
     ...task,

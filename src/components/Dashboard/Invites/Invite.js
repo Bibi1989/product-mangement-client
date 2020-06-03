@@ -41,7 +41,7 @@ const Invite = () => {
           invites.map((invite) => {
             return (
               <div style={{ marginBottom: "1em" }}>
-                <p>Invit from {invite.sender.split("@")[0]} to collaborate</p>
+                <p>Invite from {invite.sender.split("@")[0]} to collaborate</p>
                 <Button
                   variant='danger'
                   onClick={() => {

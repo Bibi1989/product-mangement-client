@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { useHistory, Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Project,
-  Prob,
-  Date,
-  Header,
-  Headers,
-  Welcome,
-} from "./style";
+import { Container, Row, Col, Card, Project, Headers, Welcome } from "./style";
 import { Icon, Form, Label } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
   deleteProject,
-  getSingleProject,
   getInvites,
-  acceptInvite,
-  deleteInvite,
+  getCurrent,
 } from "../ProjectReducer/store";
 import CreateProject from "../CreateProject";
 import { Button, Spinner } from "react-bootstrap";
@@ -31,7 +18,7 @@ const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const users = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
-  const [show, setShow] = useState("");
+  const [_, setShow] = useState("");
 
   const dispatch = useDispatch();
 
@@ -46,7 +33,7 @@ const Home = () => {
     ({ project: { updated_project } }) => updated_project
   );
   const loading = useSelector(({ project: { loading } }) => loading);
-  const load = useSelector(({ user: { loading } }) => loading);
+  // const load = useSelector(({ user: { loading } }) => loading);
   const deletes = useSelector(
     ({ project: { deleted_project } }) => deleted_project
   );
@@ -58,8 +45,6 @@ const Home = () => {
 
     // eslint-disable-next-line
   }, [deletes, count, added_project, notify, updated_project]);
-
-  console.log(single);
 
   if (!token) {
     history.push("/");
@@ -84,14 +69,22 @@ const Home = () => {
     deleteProject(dispatch, id, history);
     setShow("");
   };
-  const handleEdit = (id) => {
-    getSingleProject(dispatch, id);
+  const handleEdit = (project) => {
+    getCurrent(dispatch, project);
     setShow("");
     setShows(true);
   };
 
   const handleShow = () => setShows(true);
   const handleClose = () => setShows(false);
+
+  if (!projects) {
+    return (
+      <div className='spinner'>
+        {loading && <Spinner animation='border' variant='success' />}
+      </div>
+    );
+  }
 
   return (
     <Container>
@@ -101,32 +94,7 @@ const Home = () => {
           {users.first_name} {users.last_name}
         </p>
       </Welcome>
-      {/* {invites !== null &&
-        invites.map((invite) => {
-          return (
-            <div>
-              <p>Invit from {invite.sender.split("@")[0]} to collaborate</p>
-              <Button
-                variant='danger'
-                onClick={() => {
-                  deleteInvite(dispatch, invite.id);
-                }}
-              >
-                Decline
-              </Button>
-              <Button
-                style={{ marginLeft: "0.5em" }}
-                variant='success'
-                onClick={() => {
-                  acceptInvite(dispatch, invite.ProjectId);
-                  deleteInvite(dispatch, invite.id);
-                }}
-              >
-                Accept
-              </Button>
-            </div>
-          );
-        })} */}
+
       {invites !== null && invites.length > 0 && (
         <p style={{ color: "teal" }}>
           Some one sent You an Invite{" "}
@@ -192,20 +160,18 @@ const Home = () => {
             </p>
           )}
           <Project>
-            {loading ? (
-              <div className='spinner'>
+            {/* {loading ? ( */}
+            {/* <div className='spinner'>
                 {loading && <Spinner animation='border' variant='success' />}
-              </div>
-            ) : (
-              projects.map((project) => (
-                <Props
-                  key={project.id}
-                  project={project}
-                  handleEdit={handleEdit}
-                  handleDelete={handleDelete}
-                />
-              ))
-            )}
+              </div> */}
+            {projects.map((project) => (
+              <Props
+                key={project.id}
+                project={project}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            ))}
           </Project>
         </Col>
       </Row>
@@ -213,4 +179,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);

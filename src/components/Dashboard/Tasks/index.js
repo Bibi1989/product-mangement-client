@@ -6,13 +6,12 @@ import {
   getTasks,
   deleteTask,
   updateTask,
-  getSingleProject,
   inviteUser,
   getNotifications,
   notifyMe,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
-import { Button, Spinner, Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import { Icon, Form } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 
@@ -46,6 +45,8 @@ const Tasks = () => {
     getTasks(dispatch, parseInt(projectId));
     // getSingleProject(dispatch, projectId);
     getNotifications(dispatch);
+
+    // eslint-disable-next-line
   }, [delete_task, update_task, single_task]);
 
   // const notify = useSelector(({ project: { notify } }) => notify);
@@ -128,12 +129,9 @@ const Tasks = () => {
           </Button>
           <CreateTask show={shows} handleClose={handleClose} />
           <Task>
-            <div className='spinner'>
-              {loading && <Spinner animation='border' variant='success' />}
-            </div>
             {starts !== null &&
               starts.map((task) => (
-                <Display key={task.id}>
+                <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
@@ -182,14 +180,9 @@ const Tasks = () => {
         <Col>
           <h1>Review</h1>
           <Task>
-            <div className='spinner'>
-              {starts === null && (
-                <Spinner animation='border' variant='success' />
-              )}
-            </div>
             {reviews !== null &&
               reviews.map((task) => (
-                <Display key={task.id}>
+                <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
@@ -238,14 +231,9 @@ const Tasks = () => {
         <Col>
           <h1>Finish</h1>
           <Task>
-            <div className='spinner'>
-              {starts === null && (
-                <Spinner animation='border' variant='success' />
-              )}
-            </div>
             {finishes !== null &&
               finishes.map((task) => (
-                <Display key={task.id}>
+                <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
