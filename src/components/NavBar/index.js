@@ -52,6 +52,10 @@ const NavBar = () => {
     });
     setShows(false);
   };
+
+  let count =
+    notices !== null && notices !== undefined && notices.length.toString();
+
   const handleShowLogin = () => setShowsLogin(true);
   const handleCloseLogin = (setValues) => {
     setValues({
@@ -68,7 +72,11 @@ const NavBar = () => {
 
   return (
     <Container>
-      <Navbar bg='light' expand='lg'>
+      <Navbar
+        bg='light'
+        expand='lg'
+        style={{ paddingLeft: "1em", paddingRight: "1em" }}
+      >
         <Navbar.Brand>
           <Logo>
             <Image>
@@ -83,11 +91,15 @@ const NavBar = () => {
         {token ? (
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <Nav.Link>Home</Nav.Link>
-              <Nav.Link>Link</Nav.Link>
-              <NavDropdown
-                title={<Icon name='alarm' />}
+              <NavDropdownStyle
+                title={
+                  <Div>
+                    <Icon size='large' name='alarm' />
+                    <Count>{count}</Count>
+                  </Div>
+                }
                 id='basic-nav-dropdown'
+                style={{ marginTop: "2px" }}
               >
                 <NavDropdown.Item>Actions</NavDropdown.Item>
                 <NavDropdown.Item
@@ -127,10 +139,13 @@ const NavBar = () => {
                     Clear all notifications
                   </ClearAllStyle>
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdownStyle>
 
               {/* User Profile */}
-              <NavDropdown title={<Icon name='user' />} id='basic-nav-dropdown'>
+              <NavDropdown
+                title={<Icon name='user' size='large' />}
+                id='basic-nav-dropdown'
+              >
                 <NavDropdown.Item>Action</NavDropdown.Item>
                 <NavDropdown.Item>
                   <ProfilePic>
@@ -243,5 +258,45 @@ const LText = styled.p`
   span {
     color: orangered;
   }
+`;
+const NavDropdownStyle = styled(NavDropdown)`
+  .dropdown-toggle::after {
+    content: ${({ count }) => (count ? count.toString() : "0")};
+    display: none;
+    margin-left: 0.255em;
+    margin-top: 0.255em;
+    vertical-align: 0.255em;
+    width: 1.4em;
+    height: 1.4em;
+    font-size: 0.8em;
+    color: white;
+    background: orangered;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 50%;
+    /* border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent; */
+  }
+`;
+const Div = styled.div`
+  position: relative;
+  display: flex;
+`;
+const Count = styled.div`
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  background: orangered;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 1em;
+  text-align: center;
+  line-height: 18px;
 `;
 // const NotifyList = styled.div``
