@@ -72,7 +72,7 @@ const NavBar = () => {
 
   return (
     <Container>
-      <Navbar
+      <NavbarStyle
         bg='light'
         expand='lg'
         style={{ paddingLeft: "1em", paddingRight: "1em" }}
@@ -94,7 +94,7 @@ const NavBar = () => {
               <NavDropdownStyle
                 title={
                   <Div>
-                    <Icon size='large' name='alarm' />
+                    <Icon size='large' name='alarm' color='teal' />
                     <Count>{count}</Count>
                   </Div>
                 }
@@ -143,7 +143,7 @@ const NavBar = () => {
 
               {/* User Profile */}
               <NavDropdown
-                title={<Icon name='user' size='large' />}
+                title={<Icon name='user' size='large' color='teal' />}
                 id='basic-nav-dropdown'
               >
                 <NavDropdown.Item>Action</NavDropdown.Item>
@@ -213,7 +213,7 @@ const NavBar = () => {
             </Nav>
           </Navbar.Collapse>
         )}
-      </Navbar>
+      </NavbarStyle>
     </Container>
   );
 };
@@ -298,5 +298,16 @@ const Count = styled.div`
   font-size: 1em;
   text-align: center;
   line-height: 18px;
+`;
+const NavbarStyle = styled(Navbar)`
+  padding: 0.5em 10% !important;
+
+  @media (max-width: 1400px) {
+    padding: 0.5em 5% !important;
+  }
+
+  @media (max-width: 769px) {
+    padding: 0.5em 1em !important;
+  }
 `;
 // const NotifyList = styled.div``

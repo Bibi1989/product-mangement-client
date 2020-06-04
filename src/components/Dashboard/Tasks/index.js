@@ -11,9 +11,11 @@ import {
   notifyMe,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
+// import NewTasks from "../CreateTask/NewTasks";
 import { Button, Dropdown } from "react-bootstrap";
 import { Icon, Form } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
+import { TaskComponent } from "../CreateTask/NewTasks";
 
 const Tasks = () => {
   // const user = JSON.parse(sessionStorage.getItem("project_user"));
@@ -120,15 +122,16 @@ const Tasks = () => {
       <Row>
         <Col>
           <h1>Start</h1>
-          <Button
+          {/* <Button
             variant='primary'
             onClick={handleShow}
             style={{ marginBottom: "1em" }}
           >
             <Icon name='plus' /> Create Task
-          </Button>
-          <CreateTask show={shows} handleClose={handleClose} />
+          </Button> */}
           <Task>
+            {/* <CreateTask show={shows} handleClose={handleClose} /> */}
+            <TaskComponent />
             {starts !== null &&
               starts.map((task) => (
                 <Display key={task.id} draggable={true}>
