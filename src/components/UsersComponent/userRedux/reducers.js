@@ -1,9 +1,10 @@
-import { LOGIN, REGISTER, ERRORS, VERIFY, LOADING } from "./types";
+import { LOGIN, REGISTER, ERRORS, VERIFY, LOADING, LOAD_USER } from "./types";
 
 const initialState = {
   login_user: null,
   register_user: null,
   verify: null,
+  user_verify: null,
   loading: false,
   errors: null,
 };
@@ -26,6 +27,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         verify: action.payload,
+      };
+    case LOAD_USER:
+      return {
+        ...state,
+        user_verify: action.payload,
       };
     case ERRORS:
       return {

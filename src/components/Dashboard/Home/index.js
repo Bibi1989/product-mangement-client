@@ -13,6 +13,7 @@ import CreateProject from "../CreateProject";
 import { Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Props from "./Props";
+import { loadUser } from "../../UsersComponent/userRedux/store";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -42,13 +43,11 @@ const Home = () => {
   useEffect(() => {
     fetchAllProjects(dispatch);
     getInvites(dispatch);
+    loadUser(dispatch, token);
 
     // eslint-disable-next-line
   }, [deletes, count, added_project, notify, updated_project]);
 
-  if (!token) {
-    history.push("/");
-  }
   const [shows, setShows] = useState(false);
   // const [open, setOpen] = useState(false);
 

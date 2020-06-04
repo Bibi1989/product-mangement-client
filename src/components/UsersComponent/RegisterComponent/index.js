@@ -122,6 +122,7 @@ const Register = ({ handleClose, show }) => {
               id='form-input-control-error-email'
               control={Input}
               label='Password'
+              type='password'
               placeholder='Password'
               name='password'
               onChange={handleValues}

@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import "antd/dist/antd.css";
 
+import "materialize-css";
+
 // import Login from "./components/UsersComponent/LoginComponent/index";
 // import Register from "./components/UsersComponent/RegisterComponent/index";
 import Nav from "./components/NavBar/index";
@@ -21,6 +23,7 @@ import PageNotFound from "./PageNotFound";
 import Tasks from "./components/Dashboard/Tasks";
 import Profile from "./components/Dashboard/ProfileView";
 import Invite from "./components/Dashboard/Invites/Invite";
+import PrivateRoute from "./privateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -33,9 +36,7 @@ function App() {
               <Route exact path='/'>
                 <LandingPage />
               </Route>
-              <Route exact path='/dashboard'>
-                <WelcomePage />
-              </Route>
+              <PrivateRoute exact path='/dashboard' component={WelcomePage} />
               <Route exact path='/create'>
                 <CreateProject />
               </Route>

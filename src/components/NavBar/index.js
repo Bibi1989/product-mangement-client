@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import Moment from "react-moment";
+import styled from "styled-components";
 import {
   Container,
-  Nav,
+  Navs,
   Ul,
   Li,
   Logo,
@@ -16,8 +17,14 @@ import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Popover, OverlayTrigger } from "react-bootstrap";
-import { Dropdown } from "semantic-ui-react";
+import {
+  Popover,
+  OverlayTrigger,
+  Navbar,
+  NavDropdown,
+  Nav,
+} from "react-bootstrap";
+import { Dropdown, Icon, Label, Button } from "semantic-ui-react";
 import {
   deleteNotification,
   getNotifications,
@@ -74,263 +81,182 @@ const NavBar = () => {
     deleteNotification(dispatch, id);
   };
 
-  const popover = (
-    <Popover id='popover-basic'>
-      <ProfilePic>
-        <h2 className='avatar'>
-          {user !== null &&
-            user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}
-        </h2>
-        <div className='profile_contact'>
-          <p>
-            {user !== null && user.first_name} {user !== null && user.last_name}
-          </p>
-          <p>{user !== null && user.email}</p>
-          <p>{user !== null && user.phone}</p>
-        </div>
-      </ProfilePic>
-      <Popover.Content>
-        <Link to='/profile'>
-          <p>View Your Profile</p>
-        </Link>
-      </Popover.Content>
-    </Popover>
-  );
-
   return (
     <Container>
-      <Nav
-        style={{
-          position: "relative",
-        }}
-      >
-        <Logo>
-          <div className='img'>
-            <img src='../../../assets/pyramid3.svg' alt='logo' />
-          </div>
-          <h3>
-            <span>B</span>-MANAGER
-          </h3>
-        </Logo>
-        <>
-          {token ? (
-            <Ul className='dash'>
-              <div style={{ position: "relative" }}>
-                <Dropdown icon='alarm' floating labeled className='icon'>
-                  <Dropdown.Menu
-                    className='notice'
-                    style={{
-                      // marginLeft: "-220%",
-                      position: "absolute",
-                      maxHeight: "400px",
-                      overflow: "auto",
-                    }}
-                  >
-                    <Dropdown.Header content='Your Notifications' />
-                    {notices !== null &&
-                      notices !== undefined &&
-                      notices.map((notice) => {
-                        return (
-                          <Dropdown.Item
-                            key={notice.id}
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "flex-start",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  fontSize: "1em",
-                                  color: "#333",
-                                  padding: "0",
-                                }}
-                              >
-                                {notice.notify}
-                              </p>
-                              <span
-                                style={{
-                                  fontSize: "0.8em",
-                                  color: "#999",
-                                  padding: "0",
-                                }}
-                              >
-                                <Moment fromNow>{notice.createdAt}</Moment>
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "flex-end",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  fontSize: "1.4em",
-                                }}
-                                onClick={() => handleNotifyDelete(notice.id)}
-                              >
-                                &times;{" "}
-                              </p>
-                            </div>
-                          </Dropdown.Item>
-                        );
-                      })}
-                    <Dropdown.Item>
-                      <p onClick={() => deleteAllNotification(dispatch)}>
-                        Clear all notifications
-                      </p>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <p
+      <Navbar bg='light' expand='lg'>
+        <Navbar.Brand>
+          <Logo>
+            <Image>
+              <img src='../../../assets/pyramid3.svg' alt='logo' />
+            </Image>
+            <LText>
+              <span>B</span>-MANAGER
+            </LText>
+          </Logo>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        {token ? (
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Nav className='ml-auto'>
+              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>Link</Nav.Link>
+              <NavDropdown
+                title={<Icon name='alarm' />}
+                id='basic-nav-dropdown'
+              >
+                <NavDropdown.Item>Actions</NavDropdown.Item>
+                <NavDropdown.Item
                   style={{
-                    position: "absolute",
-                    right: "5px",
-                    top: "-3px",
-                    width: "18px",
-                    height: "18px",
-                    borderRadius: "50%",
-                    background: "orangered",
-                    color: "white",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    minWidth: "250px",
+                    maxWidth: "300px",
+                    overflow: "auto",
                   }}
                 >
-                  {notices !== null && notices !== undefined && notices.length}
-                </p>
-              </div>
-
-              <Li className='user'>
-                <Dropdown icon='user' floating labeled className='icon'>
-                  <Dropdown.Menu
-                    style={{
-                      marginLeft: "-500%",
-                      // width: "220px",
-                      position: "absolute",
-                      right: "30%",
-                      maxHeight: "400px",
-                      overflow: "auto",
-                    }}
+                  {notices !== null &&
+                    notices !== undefined &&
+                    notices.map((notice) => {
+                      return (
+                        <ItemStyle key={notice.id}>
+                          <NotifyList>
+                            <PText>{notice.notify}</PText>
+                            <DateStyle>
+                              <Moment fromNow>{notice.createdAt}</Moment>
+                            </DateStyle>
+                          </NotifyList>
+                          <RemoveTag>
+                            <PRemove
+                              onClick={() => handleNotifyDelete(notice.id)}
+                            >
+                              &times;{" "}
+                            </PRemove>
+                          </RemoveTag>
+                        </ItemStyle>
+                      );
+                    })}
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <ClearAllStyle
+                    onClick={() => deleteAllNotification(dispatch)}
                   >
-                    <Dropdown.Header
-                      content='Your Profile'
-                      styled={{ borderBottom: "1px solid #cccccc" }}
-                    />
-                    <Dropdown.Item
+                    Clear all notifications
+                  </ClearAllStyle>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              {/* User Profile */}
+              <NavDropdown title={<Icon name='user' />} id='basic-nav-dropdown'>
+                <NavDropdown.Item>Action</NavDropdown.Item>
+                <NavDropdown.Item>
+                  <ProfilePic>
+                    <h2 className='avatar'>
+                      {user !== null &&
+                        user.first_name[0].toUpperCase() +
+                          user.last_name[0].toUpperCase()}
+                    </h2>
+                    <div className='profile_contact'>
+                      <p>
+                        {user !== null && user.first_name}{" "}
+                        {user !== null && user.last_name}
+                      </p>
+                      <p>{user !== null && user.email}</p>
+                      <p>{user !== null && user.phone}</p>
+                    </div>
+                  </ProfilePic>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link style={{ color: "#999999" }} to='/profile'>
+                    <p
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
+                        padding: "1em 0",
                       }}
                     >
-                      <ProfilePic>
-                        <h2 className='avatar'>
-                          {user !== null &&
-                            user.first_name[0].toUpperCase() +
-                              user.last_name[0].toUpperCase()}
-                        </h2>
-                        <div className='profile_contact'>
-                          <p>
-                            {user !== null && user.first_name}{" "}
-                            {user !== null && user.last_name}
-                          </p>
-                          <p>{user !== null && user.email}</p>
-                          <p>{user !== null && user.phone}</p>
-                        </div>
-                      </ProfilePic>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Link style={{ color: "#999999" }} to='/profile'>
-                        <p
-                          style={{
-                            padding: "1em 0",
-                            borderBottom: "1px solid #aaaaaa",
-                            borderTop: "1px solid #aaaaaa",
-                          }}
-                        >
-                          View Your Profile
-                        </p>
-                      </Link>
-                      <Link style={{ color: "#999999" }} to='/invite'>
-                        <p
-                          style={{
-                            padding: "1em 0",
-                          }}
-                        >
-                          View Invites
-                        </p>
-                      </Link>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-
-                {/* <OverlayTrigger
-                  trigger='click'
-                  placement='bottom'
-                  overlay={popover}
-                >
-                  <h2>
-                    {user.first_name[0].toUpperCase() +
-                      user.last_name[0].toUpperCase()}
-                  </h2>
-                </OverlayTrigger> */}
-              </Li>
-              <Link className='links' to='/'>
-                <Li className='logout' onClick={handleLogout}>
+                      View Your Profile
+                    </p>
+                  </Link>
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link style={{ color: "#999999" }} to='/invite'>
+                    <p
+                      style={{
+                        padding: "1em 0",
+                      }}
+                    >
+                      View Invites
+                    </p>
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown.Item>
+                <Button color='youtube' onClick={handleLogout}>
                   Logout
-                </Li>
-              </Link>
-            </Ul>
-          ) : (
-            <User>
-              <Buttons
-                // variant='success'
-                onClick={handleShowLogin}
-                style={{
-                  marginBottom: "1em",
-                  borderRadius: "30px",
-                  outline: "none",
-                  padding: "0.7em 1.5em",
-                  background: "teal",
-                  border: "none",
-                  color: "#ffffff",
-                }}
-              >
-                Login
-              </Buttons>
-              <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
-              <Buttons
-                // variant='primary'
-                onClick={handleShow}
-                style={{
-                  marginBottom: "1em",
-                  borderRadius: "30px",
-                  outline: "none",
-                  padding: "0.7em 1.5em",
-                  background: "orangered",
-                  border: "none",
-                  color: "#ffffff",
-                }}
-              >
-                Register
-              </Buttons>
-              <Register show={shows} handleClose={handleClose} />
-            </User>
-          )}
-        </>
-      </Nav>
+                </Button>
+              </NavDropdown.Item>
+            </Nav>
+          </Navbar.Collapse>
+        ) : (
+          <Navbar.Collapse>
+            <Nav className='ml-auto'>
+              <NavDropdown.Item>
+                <Button color='teal' onClick={handleShowLogin}>
+                  Login
+                </Button>
+                <Login show={showsLogin} handleCloseLogin={handleCloseLogin} />
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Button color='orange' onClick={handleShow}>
+                  Register
+                </Button>
+                <Register show={shows} handleClose={handleClose} />
+              </NavDropdown.Item>
+            </Nav>
+          </Navbar.Collapse>
+        )}
+      </Navbar>
     </Container>
   );
 };
 
 export default NavBar;
+
+const NotifyList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const ItemStyle = styled(Dropdown.Item)`
+  display: flex;
+  justify-content: space-between;
+`;
+const PText = styled.p`
+  font-size: 1em;
+  color: #333;
+  padding: 0;
+`;
+const DateStyle = styled.span`
+  font-size: 0.8em;
+  color: #999999;
+  padding: 0;
+`;
+const RemoveTag = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+const PRemove = styled.p`
+  font-size: 1.4em;
+  padding: 0;
+`;
+const ClearAllStyle = styled.p``;
+const Image = styled.div``;
+const LText = styled.p`
+  color: teal;
+
+  span {
+    color: orangered;
+  }
+`;
+// const NotifyList = styled.div``

@@ -8,7 +8,7 @@ export const Container = styled.div`
     padding: 0;
   }
 `;
-export const Nav = styled.nav`
+export const Navs = styled.nav`
   width: 95%;
   margin: auto;
   display: flex;

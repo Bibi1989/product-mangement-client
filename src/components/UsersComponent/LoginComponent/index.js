@@ -96,6 +96,7 @@ const Login = ({ handleCloseLogin, show }) => {
             />
             <Form.Field
               id='form-input-control-error-email'
+              type='password'
               control={Input}
               label='Password'
               placeholder='Password'
