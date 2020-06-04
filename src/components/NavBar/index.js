@@ -2,28 +2,13 @@ import React, { useState, useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import Moment from "react-moment";
 import styled from "styled-components";
-import {
-  Container,
-  Navs,
-  Ul,
-  Li,
-  Logo,
-  User,
-  Buttons,
-  ProfilePic,
-} from "./style";
+import { Container, Logo, ProfilePic } from "./style";
 import { Link, useHistory } from "react-router-dom";
 import Login from "../UsersComponent/LoginComponent";
 import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Popover,
-  OverlayTrigger,
-  Navbar,
-  NavDropdown,
-  Nav,
-} from "react-bootstrap";
+import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import { Dropdown, Icon, Label, Button } from "semantic-ui-react";
 import {
   deleteNotification,
