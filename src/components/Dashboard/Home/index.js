@@ -14,6 +14,8 @@ import { Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Props from "./Props";
 import { loadUser } from "../../UsersComponent/userRedux/store";
+import Chart from "../commons/Chart";
+import SearchInput from "../commons/SearchInput";
 
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -103,48 +105,13 @@ const Home = () => {
         </p>
       )}
       <Row>
-        <Col>
-          <Card>
-            <p>Total Projects</p>
-            <div className='total'>
-              <Icon name='chart bar' />
-              <span>
-                {loading ? (
-                  <Spinner animation='grow' variant='success' />
-                ) : (
-                  projects.length
-                )}
-              </span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Tasks</p>
-            <div className='total'>
-              <Icon name='chart line' />
-              <span>{count}</span>
-            </div>
-          </Card>
-          <Card>
-            <p>Total Likes</p>
-            <div className='total'>
-              <Icon name='chart pie' />
-              <span>3</span>
-            </div>
-          </Card>
-        </Col>
+        <Chart projects={projects} count={count} loading={loading} />
         <Col>
           <Headers>
             <Button variant='primary' onClick={handleShow}>
               <Icon name='plus' /> Create Project
             </Button>
-            <Form style={{ width: "30%" }}>
-              <Form.Field>
-                <input
-                  placeholder='Search for projects...'
-                  onChange={handleSearch}
-                />
-              </Form.Field>
-            </Form>
+            <SearchInput handleSearch={handleSearch} />
           </Headers>
           <CreateProject
             show={shows}
@@ -159,10 +126,6 @@ const Home = () => {
             </p>
           )}
           <Project>
-            {/* {loading ? ( */}
-            {/* <div className='spinner'>
-                {loading && <Spinner animation='border' variant='success' />}
-              </div> */}
             {projects.map((project) => (
               <Props
                 key={project.id}

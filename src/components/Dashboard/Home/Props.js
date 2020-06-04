@@ -26,7 +26,7 @@ const Props = ({ project, handleEdit, handleDelete }) => {
           <span>Due: {project.end_date}</span>
         </div>
         <Dropdown icon='ellipsis vertical' floating labeled className='icon'>
-          <Dropdown.Menu>
+          <Dropdown.Menu style={{ marginLeft: "-80px" }}>
             <Dropdown.Header icon='tags' content='Actions' />
             <Dropdown.Divider />
             <Dropdown.Item>
