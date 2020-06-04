@@ -27,7 +27,7 @@ export const TaskComponent = () => {
   const [updateState, setUpdateState] = useState(false);
 
   const loading = useSelector(({ user: { loading } }) => loading);
-  const addTask = useSelector(({ user: { task } }) => task);
+  const addTask = useSelector(({ project: { task } }) => task);
 
   const [values, setValues] = useState({
     summary: "",
@@ -35,7 +35,7 @@ export const TaskComponent = () => {
     status: "",
     due_date: "",
   });
-  const [selects, setSelects] = useState("low");
+  const [selects, setSelects] = useState("Front End");
   useEffect(() => {
     getOne(dispatch, projectId);
 
@@ -49,6 +49,7 @@ export const TaskComponent = () => {
     });
   };
   const handleSelect = ({ target: { textContent } }) => {
+    console.log({ textContext: textContent.toLowerCase() });
     setSelects(textContent.toLowerCase());
   };
   const onsubmit = (e) => {
@@ -61,6 +62,13 @@ export const TaskComponent = () => {
       history
       // handleClose
     );
+    setValues({
+      summary: "",
+      project_sequence: "",
+      status: "",
+      due_date: "",
+    });
+    setSelects("");
     // getOne(dispatch, projectId);
     notifyMe(dispatch, "You added a new task", parseInt(projectId), null);
     setUpdateState(!updateState);
@@ -105,6 +113,7 @@ export const TaskComponent = () => {
                 placeholder='Select a label'
                 options={priortyList}
                 onChange={handleSelect}
+                value={selects}
               />
             </Form.Field>
             <Form.Field>

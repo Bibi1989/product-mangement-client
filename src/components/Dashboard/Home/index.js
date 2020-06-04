@@ -42,6 +42,10 @@ const Home = () => {
   );
   const single = useSelector(({ project: { project } }) => project);
 
+  let collaborate_projects = projects.filter(
+    (collaborate) => collaborate.userArray.length > 1
+  );
+
   useEffect(() => {
     fetchAllProjects(dispatch);
     getInvites(dispatch);
@@ -105,7 +109,12 @@ const Home = () => {
         </p>
       )}
       <Row>
-        <Chart projects={projects} count={count} loading={loading} />
+        <Chart
+          projects={projects}
+          count={count}
+          loading={loading}
+          invite={collaborate_projects.length}
+        />
         <Col>
           <Headers>
             <Button variant='primary' onClick={handleShow}>

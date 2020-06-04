@@ -205,8 +205,29 @@ export const TaskHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  .back, .front{
+    width: 50px;
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  .front{
+    background: orange;
+  }
+  .back{
+    background: teal;
+  }
+
   .added_person {
-    color: ${(props) => (props.color ? props.color : "")};
+    /* color: ${(props) => (props.color ? props.color : "")}; */
+    color: #4F5E78;
+    text-align: center;
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background: #DFE1E6;
   }
 `;
 export const Welcome = styled.div`

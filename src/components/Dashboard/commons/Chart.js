@@ -4,7 +4,7 @@ import { Icon } from "semantic-ui-react";
 import { Spinner } from "react-bootstrap";
 import { useCallback } from "react";
 
-const Chart = ({ projects, count, loading }) => {
+const Chart = ({ projects, count, loading, invite }) => {
   const data = [
     {
       title: "Total Projects",
@@ -18,7 +18,12 @@ const Chart = ({ projects, count, loading }) => {
       number: count,
       loaded: loading,
     },
-    { title: "Total Likes", icon: "chart pie", number: 3, loaded: loading },
+    {
+      title: "Total Collaborator",
+      icon: "chart pie",
+      number: invite,
+      loaded: loading,
+    },
   ];
 
   console.log({ loading });

@@ -12,8 +12,8 @@ import {
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 // import NewTasks from "../CreateTask/NewTasks";
-import { Button, Dropdown } from "react-bootstrap";
-import { Icon, Form } from "semantic-ui-react";
+// import { Button } from "react-bootstrap";
+import { Icon, Form, Dropdown, Button } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
 
@@ -113,56 +113,54 @@ const Tasks = () => {
       </Headers>
       <P>
         <span>{single_project !== null && single_project.project_name}</span>
-        {/* <span className='admin'>
-          {single_project.User !== null && single_project.User.first_name}{" "}
-          {single_project.User !== null && single_project.User.last_name} -
-          Admin
-        </span> */}
       </P>
       <Row>
         <Col>
           <h1>Start</h1>
-          {/* <Button
-            variant='primary'
-            onClick={handleShow}
-            style={{ marginBottom: "1em" }}
-          >
-            <Icon name='plus' /> Create Task
-          </Button> */}
           <Task>
-            {/* <CreateTask show={shows} handleClose={handleClose} /> */}
             <TaskComponent />
             {starts !== null &&
               starts.map((task) => (
                 <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
-                    <p>{task.project_sequence}</p>
+                    <div
+                      title={
+                        task.priorty === "front end" ? "Front End" : "Back End"
+                      }
+                      className={
+                        task.priorty === "front end" ? "front" : "back"
+                      }
+                    ></div>
                     <p className='added_person'>
-                      Added by {task.User !== null && task.User.first_name}
+                      {task.User !== null &&
+                        task.User.first_name.slice(0, 1).toUpperCase() +
+                          task.User.last_name.slice(0, 1).toUpperCase()}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          variant='info'
-                          id='dropdown-basic'
-                        ></Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item href='#/action-1'>
+                      <Dropdown
+                        icon='ellipsis vertical'
+                        floating
+                        labeled
+                        className='icon'
+                      >
+                        <Dropdown.Menu style={{ marginLeft: "-80px" }}>
+                          <Dropdown.Header icon='tags' content='Actions' />
+                          <Dropdown.Divider />
+                          <Dropdown.Item>
                             <p onClick={() => handleEdit(task.id)}>
                               <Icon name='edit' color='teal' /> Edit
                             </p>
                           </Dropdown.Item>
-                          <Dropdown.Item href='#/action-2'>
+                          <Dropdown.Item>
                             <p onClick={() => handleDelete(task.id)}>
                               <Icon name='cut' color='orange' /> Delete
                             </p>
                           </Dropdown.Item>
-                          <Dropdown.Item href='#/action-3'>
+                          <Dropdown.Item>
                             <p
                               onClick={() => {
                                 updateTask(dispatch, task.id, task, "review");
@@ -189,21 +187,25 @@ const Tasks = () => {
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
-                      Added by {task.User !== null && task.User.first_name}
+                      {task.User !== null &&
+                        task.User.first_name.slice(0, 1).toUpperCase() +
+                          task.User.last_name.slice(0, 1).toUpperCase()}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          variant='info'
-                          id='dropdown-basic'
-                        ></Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item href='#/action-1'>
+                      <Dropdown
+                        icon='ellipsis vertical'
+                        floating
+                        labeled
+                        className='icon'
+                      >
+                        <Dropdown.Menu style={{ marginLeft: "-160px" }}>
+                          <Dropdown.Header icon='tags' content='Actions' />
+                          <Dropdown.Divider />
+                          <Dropdown.Item>
                             <p
                               onClick={() => {
                                 updateTask(dispatch, task.id, task, "start");
@@ -213,7 +215,7 @@ const Tasks = () => {
                               Move back To Start
                             </p>
                           </Dropdown.Item>
-                          <Dropdown.Item href='#/action-2'>
+                          <Dropdown.Item>
                             <p
                               onClick={() => {
                                 updateTask(dispatch, task.id, task, "finish");
@@ -240,21 +242,25 @@ const Tasks = () => {
                   <TaskHeader color={task.project_sequence}>
                     <p>{task.project_sequence}</p>
                     <p className='added_person'>
-                      Added by {task.User !== null && task.User.first_name}
+                      {task.User !== null &&
+                        task.User.first_name.slice(0, 1).toUpperCase() +
+                          task.User.last_name.slice(0, 1).toUpperCase()}
                     </p>
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
                     <p>{task.createdAt}</p>
                     <Cover>
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          variant='info'
-                          id='dropdown-basic'
-                        ></Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item href='#/action-1'>
+                      <Dropdown
+                        icon='ellipsis vertical'
+                        floating
+                        labeled
+                        className='icon'
+                      >
+                        <Dropdown.Menu style={{ marginLeft: "-180px" }}>
+                          <Dropdown.Header icon='tags' content='Actions' />
+                          <Dropdown.Divider />
+                          <Dropdown.Item>
                             <p
                               onClick={() => {
                                 updateTask(dispatch, task.id, task, "review");
