@@ -17,6 +17,7 @@ import {
   LOADING,
   ERROR,
   CURRENT,
+  CURRENT_TASK,
   CLEAR,
 } from "./type";
 
@@ -41,6 +42,7 @@ const initialState = {
   loading: false,
   errors: null,
   current: null,
+  current_task: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -75,10 +77,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         current: action.payload,
       };
+    case CURRENT_TASK:
+      return {
+        ...state,
+        current_task: action.payload,
+      };
     case CLEAR:
       return {
         ...state,
         current: null,
+        current_task: null,
       };
     case DELETE:
       return {

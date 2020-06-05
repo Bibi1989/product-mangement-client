@@ -16,4 +16,5 @@ export const ACCEPT_INVITE = "ACCEPT_INVITE";
 export const LOADING = "LOADING";
 export const ERROR = "ERROR";
 export const CURRENT = "CURRENT";
+export const CURRENT_TASK = "CURRENT_TASK";
 export const CLEAR = "CLEAR";

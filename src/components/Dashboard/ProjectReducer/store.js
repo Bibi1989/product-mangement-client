@@ -16,7 +16,7 @@ import {
   getInviteAction,
   acceptAction,
 } from "./action";
-import { LOADING, CURRENT, CLEAR } from "./type";
+import { LOADING, CURRENT, CURRENT_TASK, CLEAR } from "./type";
 const PROJECT_URL = "https://b-manager-api.herokuapp.com/api/v1/projects";
 const TASK_URL = "https://b-manager-api.herokuapp.com/api/v1/tasks";
 const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
@@ -126,6 +126,10 @@ export const getCurrent = (dispatch, project) => {
   dispatch({ type: CURRENT, payload: project });
 };
 
+export const getCurrentTask = (dispatch, task) => {
+  dispatch({ type: CURRENT_TASK, payload: task });
+};
+
 export const clearCurrent = (dispatch) => {
   dispatch({ type: CLEAR });
 };
@@ -188,14 +192,16 @@ export const getOne = async (dispatch, id) => {
     console.log(error.response);
   }
 };
+
 export const updateTask = async (dispatch, id, value, status) => {
   const tasks = {
     ...value,
     status,
   };
+  console.log({ tasks, id });
   try {
     dispatch({ type: LOADING, payload: true });
-    const response = await axios.patch(`${TASK_URL}/status/${id}`, tasks, {
+    const response = await axios.put(`${TASK_URL}/${id}`, tasks, {
       headers: {
         "Content-type": "Application/Json",
         auth: `${token}`,

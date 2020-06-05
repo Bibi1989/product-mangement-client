@@ -9,11 +9,12 @@ import {
   inviteUser,
   getNotifications,
   notifyMe,
+  getCurrentTask,
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 // import NewTasks from "../CreateTask/NewTasks";
 import { Accordion, Card } from "react-bootstrap";
-import { Icon, Form, Dropdown, Button } from "semantic-ui-react";
+import { Icon, Form, Dropdown, Button, Popup } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
 
@@ -21,6 +22,9 @@ const Tasks = () => {
   // const user = JSON.parse(sessionStorage.getItem("project_user"));
   const { projectId } = useParams();
   const history = useHistory();
+
+  const [bool, setBool] = useState(false);
+
   let tasks = useSelector(({ project: { tasks } }) => tasks);
   const single_project = useSelector(({ project: { project } }) => project);
   const delete_task = useSelector(
@@ -30,6 +34,10 @@ const Tasks = () => {
     ({ project: { update_task } }) => update_task
   );
   const loading = useSelector(({ project: { loading } }) => loading);
+
+  const current_task = useSelector(
+    ({ project: { current_task } }) => current_task
+  );
 
   const single_task = useSelector(({ project: { task } }) => task);
 
@@ -49,7 +57,7 @@ const Tasks = () => {
     getNotifications(dispatch);
 
     // eslint-disable-next-line
-  }, [delete_task, update_task, single_task]);
+  }, [delete_task, update_task, single_task, bool, current_task]);
 
   // const notify = useSelector(({ project: { notify } }) => notify);
 
@@ -60,8 +68,9 @@ const Tasks = () => {
     notifyMe(dispatch, "You deleted a task", projectId, id);
     setShow("");
   };
-  const handleEdit = (id) => {
-    notifyMe(dispatch, "You edited a task", projectId, id);
+  const handleEdit = (task) => {
+    getCurrentTask(dispatch, task);
+    notifyMe(dispatch, "You edited a task", projectId);
     setShow("");
     history.push(`/tasks/${projectId}`);
   };
@@ -89,27 +98,6 @@ const Tasks = () => {
           }}
           onClick={() => history.push("/dashboard")}
         />
-        {/* <Form>
-          <Form.Field
-            style={{ marginRight: "1em", display: "flex", alignSelf: "center" }}
-          >
-            <input
-              placeholder={`Invite member to ${
-                single_project !== null && single_project.project_name
-              }`}
-              onChange={handleInvite}
-              style={{ padding: "1em", width: "100%", marginRight: "0.5em" }}
-            />
-            <Button
-              onClick={() => {
-                notifyMe(dispatch, "You invited a member", projectId, null);
-                inviteUser(dispatch, projectId, email);
-              }}
-            >
-              Invite
-            </Button>
-          </Form.Field>
-        </Form> */}
       </Headers>
 
       {/* accordion */}
@@ -170,7 +158,11 @@ const Tasks = () => {
         <Col>
           <h1>Start</h1>
           <Task>
-            <TaskComponent />
+            <TaskComponent
+              current_task={current_task}
+              setBool={setBool}
+              bool={bool}
+            />
             {starts !== null &&
               starts.map((task) => (
                 <Display key={task.id} draggable={true}>
@@ -199,11 +191,17 @@ const Tasks = () => {
                         labeled
                         className='icon'
                       >
-                        <Dropdown.Menu style={{ marginLeft: "-80px" }}>
+                        <Dropdown.Menu
+                          style={{
+                            marginLeft: "-80px",
+                            position: "absolute",
+                            zIndex: "20",
+                          }}
+                        >
                           <Dropdown.Header icon='tags' content='Actions' />
                           <Dropdown.Divider />
                           <Dropdown.Item>
-                            <p onClick={() => handleEdit(task.id)}>
+                            <p onClick={() => handleEdit(task)}>
                               <Icon name='edit' color='teal' /> Edit
                             </p>
                           </Dropdown.Item>
@@ -224,6 +222,21 @@ const Tasks = () => {
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
+
+                      {/* <Popup
+                        content={
+                          <PopDetail
+                            task={task}
+                            updateTask={updateTask}
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                            dispatch={dispatch}
+                          />
+                        }
+                        on='click'
+                        pinned
+                        trigger={<Icon name='add' />}
+                      /> */}
                     </Cover>
                   </div>
                 </Display>
@@ -237,7 +250,14 @@ const Tasks = () => {
               reviews.map((task) => (
                 <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
-                    <p>{task.project_sequence}</p>
+                    <div
+                      title={
+                        task.priorty === "front end" ? "Front End" : "Back End"
+                      }
+                      className={
+                        task.priorty === "front end" ? "front" : "back"
+                      }
+                    ></div>
                     <p className='added_person'>
                       {task.User !== null &&
                         task.User.first_name.slice(0, 1).toUpperCase() +
@@ -292,7 +312,14 @@ const Tasks = () => {
               finishes.map((task) => (
                 <Display key={task.id} draggable={true}>
                   <TaskHeader color={task.project_sequence}>
-                    <p>{task.project_sequence}</p>
+                    <div
+                      title={
+                        task.priorty === "front end" ? "Front End" : "Back End"
+                      }
+                      className={
+                        task.priorty === "front end" ? "front" : "back"
+                      }
+                    ></div>
                     <p className='added_person'>
                       {task.User !== null &&
                         task.User.first_name.slice(0, 1).toUpperCase() +
@@ -439,3 +466,59 @@ export const Headers = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+const Wrapper = styled.div`
+  width: 250px;
+  display: grid;
+  grid-template-columns: 70% 30%;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+  .desc {
+    margin-top: 1em;
+  }
+`;
+const Paragraph = styled.p``;
+const First = styled.div``;
+const Second = styled.div`
+  p {
+    padding-bottom: 1em;
+    cursor: pointer;
+  }
+`;
+
+const PopDetail = ({
+  task,
+  handleDelete,
+  handleEdit,
+  updateTask,
+  dispatch,
+}) => {
+  return (
+    <Wrapper>
+      <First>
+        <p>Label</p>
+        <Button color='orange'>FrontEnd</Button>
+        <p className='desc'>Description</p>
+        <Paragraph>User can login</Paragraph>
+      </First>
+      <Second>
+        <p onClick={() => handleEdit(task)}>
+          <Icon name='edit' color='teal' /> Edit
+        </p>
+        <p onClick={() => handleDelete(task.id)}>
+          <Icon name='cut' color='orange' /> Delete
+        </p>
+        <p
+          onClick={() => {
+            updateTask(dispatch, task.id, task, "review");
+          }}
+        >
+          <Icon name='arrow right' color='orange'></Icon> Move
+        </p>
+      </Second>
+    </Wrapper>
+  );
+};

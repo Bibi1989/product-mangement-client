@@ -11,6 +11,8 @@ import {
   createTask,
   getOne,
   notifyMe,
+  updateTask,
+  clearCurrent,
 } from "../ProjectReducer/store";
 
 const priortyList = [
@@ -18,7 +20,7 @@ const priortyList = [
   { key: "be", value: "backend", text: "Back End" },
 ];
 
-export const TaskComponent = () => {
+export const TaskComponent = ({ current_task, setBool, bool }) => {
   const { projectId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -38,9 +40,16 @@ export const TaskComponent = () => {
   const [selects, setSelects] = useState("Front End");
   useEffect(() => {
     getOne(dispatch, projectId);
+    setValues(
+      current_task !== null && {
+        summary: current_task.summary,
+        status: current_task.status,
+        due_date: current_task.due_date,
+      }
+    );
 
     // eslint-disable-next-line
-  }, [updateState, addTask]);
+  }, [updateState, addTask, current_task]);
 
   const handleValues = ({ target: { name, value } }) => {
     setValues({
@@ -62,6 +71,7 @@ export const TaskComponent = () => {
       history
       // handleClose
     );
+    setUpdateState(!updateState);
     setValues({
       summary: "",
       project_sequence: "",
@@ -74,12 +84,30 @@ export const TaskComponent = () => {
     setUpdateState(!updateState);
   };
 
+  const onupdate = (e) => {
+    e.preventDefault();
+    updateTask(
+      dispatch,
+      current_task !== null && current_task.id,
+      values,
+      "start"
+    );
+    setBool(true);
+    setValues({
+      summary: "",
+      project_sequence: "",
+      status: "",
+      due_date: "",
+    });
+    clearCurrent(dispatch);
+  };
+
   if (!token) {
     history.push("/");
   }
 
   return (
-    <AccordionStyle>
+    <AccordionStyle defaultActiveKey={current_task && "0"}>
       <Card>
         <Card.Header>
           <Accordion.Toggle
@@ -93,18 +121,21 @@ export const TaskComponent = () => {
             }}
             eventKey='0'
           >
-            Add a task
+            {current_task ? "Edit Task" : "Add a task"}
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey='0'>
-          <Form onSubmit={onsubmit} style={{ padding: "1em" }}>
+          <Form
+            onSubmit={current_task ? onupdate : onsubmit}
+            style={{ padding: "1em" }}
+          >
             <Form.Field>
               <label>Summary</label>
               <input
                 placeholder='Summary'
                 name='summary'
                 onChange={handleValues}
-                value={values.project_name}
+                value={values.summary}
               />
             </Form.Field>
             <Form.Field>
@@ -132,20 +163,20 @@ export const TaskComponent = () => {
                 placeholder='Due Date (2020-05-21)'
                 name='due_date'
                 onChange={handleValues}
-                value={values.end_date}
+                value={values.due_date}
               />
             </Form.Field>
             <Button
               variant='success'
               disabled={loading && true}
-              onClick={onsubmit}
-              // type='submit'
+              onClick={current_task ? onupdate : onsubmit}
+              type='submit'
               style={{ display: "block", margin: "1.5em auto" }}
             >
               {loading && (
                 <Spinner animation='border' variant='white' size='sm' />
               )}{" "}
-              Add Task
+              {current_task ? "Edit Task" : "Add Task"}
             </Button>
           </Form>
         </Accordion.Collapse>
