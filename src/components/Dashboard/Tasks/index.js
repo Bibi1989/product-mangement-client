@@ -12,7 +12,7 @@ import {
 } from "../ProjectReducer/store";
 import CreateTask from "../CreateTask";
 // import NewTasks from "../CreateTask/NewTasks";
-// import { Button } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 import { Icon, Form, Dropdown, Button } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
@@ -89,7 +89,7 @@ const Tasks = () => {
           }}
           onClick={() => history.push("/dashboard")}
         />
-        <Form>
+        {/* <Form>
           <Form.Field
             style={{ marginRight: "1em", display: "flex", alignSelf: "center" }}
           >
@@ -109,8 +109,60 @@ const Tasks = () => {
               Invite
             </Button>
           </Form.Field>
-        </Form>
+        </Form> */}
       </Headers>
+
+      {/* accordion */}
+      <Accordion>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle
+              as={Button}
+              variant='link'
+              style={{
+                color: "#fff",
+                textAlign: "left",
+                background: "teal",
+              }}
+              eventKey='0'
+            >
+              Invite
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey='0'>
+            <Form style={{ padding: "1em" }}>
+              <Form.Field
+                style={{
+                  marginRight: "1em",
+                  display: "flex",
+                  alignSelf: "center",
+                }}
+              >
+                <input
+                  placeholder={`Invite member to ${
+                    single_project !== null && single_project.project_name
+                  }`}
+                  onChange={handleInvite}
+                  style={{
+                    padding: "1em",
+                    width: "100%",
+                    marginRight: "0.5em",
+                  }}
+                />
+                <Button
+                  onClick={() => {
+                    notifyMe(dispatch, "You invited a member", projectId, null);
+                    inviteUser(dispatch, projectId, email);
+                  }}
+                >
+                  Invite
+                </Button>
+              </Form.Field>
+            </Form>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+
       <P>
         <span>{single_project !== null && single_project.project_name}</span>
       </P>
