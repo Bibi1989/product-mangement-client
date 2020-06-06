@@ -1,10 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  getTasks,
+  deleteTask,
+  updateTask,
+  inviteUser,
+  getNotifications,
+  notifyMe,
+  getCurrentTask,
+} from "../ProjectReducer/store";
+import CreateTask from "../CreateTask";
+// import NewTasks from "../CreateTask/NewTasks";
+import { Accordion, Card } from "react-bootstrap";
+import { Icon, Form, Dropdown, Button, Popup } from "semantic-ui-react";
+import { Cover, TaskHeader } from "../Home/style";
+import { TaskComponent } from "../CreateTask/NewTasks";
+import { DragDropContext } from "react-beautiful-dnd";
 
-const Cards = () => {
+const Cards = ({
+  title,
+  starts,
+  handleDelete,
+  handleEdit,
+  updateTask,
+  dispatch,
+  current_task,
+}) => {
   return (
     <Col>
-      <h1>Start</h1>
+      <h1>{title}</h1>
       <Task>
         {starts !== null &&
           starts.map((task) => (
@@ -54,7 +78,7 @@ const Cards = () => {
                       <Dropdown.Item>
                         <p
                           onClick={() => {
-                            updateTask(dispatch, task.id, task, "review");
+                            updateTask(dispatch, task.id, task, `${title}`);
                           }}
                         >
                           <Icon name='arrow right' color='orange'></Icon> Move
@@ -81,11 +105,7 @@ const Cards = () => {
               </div>
             </Display>
           ))}
-        <TaskComponent
-          current_task={current_task}
-          setBool={setBool}
-          bool={bool}
-        />
+        <TaskComponent current_task={current_task} />
       </Task>
     </Col>
   );

@@ -14,10 +14,11 @@ import {
 import CreateTask from "../CreateTask";
 // import NewTasks from "../CreateTask/NewTasks";
 import { Accordion, Card } from "react-bootstrap";
-import { Icon, Form, Dropdown, Button, Popup } from "semantic-ui-react";
+import { Icon, Form, Dropdown, Button, Popup, Modal } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
 import { DragDropContext } from "react-beautiful-dnd";
+import Menu from "./Menu";
 
 const Tasks = () => {
   // const user = JSON.parse(sessionStorage.getItem("project_user"));
@@ -229,29 +230,18 @@ const Tasks = () => {
                           </Dropdown.Menu>
                         </Dropdown>
 
-                        {/* <Popup
-                        content={
-                          <PopDetail
-                            task={task}
-                            updateTask={updateTask}
-                            handleEdit={handleEdit}
-                            handleDelete={handleDelete}
-                            dispatch={dispatch}
-                          />
-                        }
-                        on='click'
-                        pinned
-                        trigger={<Icon name='add' />}
-                      /> */}
+                        <Menu
+                          task={task}
+                          updateTask={updateTask}
+                          handleEdit={handleEdit}
+                          handleDelete={handleDelete}
+                          current_task={current_task}
+                        />
                       </Cover>
                     </div>
                   </Display>
                 ))}
-              <TaskComponent
-                current_task={current_task}
-                setBool={setBool}
-                bool={bool}
-              />
+              <TaskComponent current_task={current_task} />
             </Task>
           </Col>
           <Col>
@@ -484,9 +474,8 @@ export const Headers = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 250px;
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 60% 40%;
 
   p {
     padding: 0;
@@ -496,11 +485,46 @@ const Wrapper = styled.div`
     margin-top: 1em;
   }
 `;
+const ModalStyle = styled(Modal)`
+  width: 40% !important;
+  height: 80vh !important;
+  margin-left: 30% !important;
+
+  @media (max-width: 769px) {
+    width: 96% !important;
+    margin-left: 2% !important;
+  }
+`;
 const Paragraph = styled.p``;
-const First = styled.div``;
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  &:first-child {
+    margin-right: 1em;
+  }
+`;
+const First = styled.div`
+  .added_person {
+    color: #4f5e78;
+    text-align: center;
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background: #dfe1e6;
+  }
+`;
 const Second = styled.div`
+  padding-left: 2em;
   p {
-    padding-bottom: 1em;
+    padding: 1em;
+    background: #f9fbfc;
+    margin-bottom: 1em;
+    box-shadow: 0 2px 10px #eee;
     cursor: pointer;
   }
 `;
@@ -513,28 +537,57 @@ const PopDetail = ({
   dispatch,
 }) => {
   return (
-    <Wrapper>
-      <First>
-        <p>Label</p>
-        <Button color='orange'>FrontEnd</Button>
-        <p className='desc'>Description</p>
-        <Paragraph>User can login</Paragraph>
-      </First>
-      <Second>
-        <p onClick={() => handleEdit(task)}>
-          <Icon name='edit' color='teal' /> Edit
-        </p>
-        <p onClick={() => handleDelete(task.id)}>
-          <Icon name='cut' color='orange' /> Delete
-        </p>
-        <p
-          onClick={() => {
-            updateTask(dispatch, task.id, task, "review");
-          }}
-        >
-          <Icon name='arrow right' color='orange'></Icon> Move
-        </p>
-      </Second>
-    </Wrapper>
+    <ModalStyle
+      trigger={<Icon name='align left' style={{ cursor: "pointer" }} />}
+    >
+      <Modal.Header>Actions</Modal.Header>
+      <Modal.Content>
+        <Wrapper>
+          <First>
+            <Flex>
+              <Icon name='align center' />
+              <p>Label</p>
+            </Flex>
+            <Button
+              color={task.priorty === "front end" ? "orange" : "teal"}
+              style={{ textTransform: "capitalize" }}
+            >
+              {task.priorty}
+            </Button>
+            <Flex>
+              <Icon name='user' />
+              <p className='added_person'>
+                {task.User !== null &&
+                  task.User.first_name.slice(0, 1).toUpperCase() +
+                    task.User.last_name.slice(0, 1).toUpperCase()}
+              </p>
+            </Flex>
+
+            <Flex>
+              <Icon name='keyboard' />
+              <p>Description</p>
+            </Flex>
+            <Paragraph>{task.summary}</Paragraph>
+          </First>
+          <Modal.Description>
+            <Second>
+              <p onClick={() => handleEdit(task)}>
+                <Icon name='edit' color='teal' /> Edit
+              </p>
+              <p onClick={() => handleDelete(task.id)}>
+                <Icon name='cut' color='orange' /> Delete
+              </p>
+              <p
+                onClick={() => {
+                  updateTask(dispatch, task.id, task, "review");
+                }}
+              >
+                <Icon name='arrow right' color='orange'></Icon> Move
+              </p>
+            </Second>
+          </Modal.Description>
+        </Wrapper>
+      </Modal.Content>
+    </ModalStyle>
   );
 };

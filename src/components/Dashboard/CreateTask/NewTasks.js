@@ -20,7 +20,7 @@ const priortyList = [
   { key: "be", value: "backend", text: "Back End" },
 ];
 
-export const TaskComponent = ({ current_task, setBool, bool }) => {
+export const TaskComponent = ({ current_task }) => {
   const { projectId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -92,7 +92,6 @@ export const TaskComponent = ({ current_task, setBool, bool }) => {
       values,
       "start"
     );
-    setBool(true);
     setValues({
       summary: "",
       project_sequence: "",

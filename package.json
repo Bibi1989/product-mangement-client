@@ -15,7 +15,7 @@
     "date-fns": "^2.13.0",
     "moment": "^2.25.3",
     "react": "^16.13.1",
-    "react-beautiful-dnd": "^13.0.0",
+    "react-beautiful-dnd": "10.1.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-id-swiper": "^3.0.0",
