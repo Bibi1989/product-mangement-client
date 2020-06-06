@@ -17,6 +17,7 @@ import { Accordion, Card } from "react-bootstrap";
 import { Icon, Form, Dropdown, Button, Popup } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const Tasks = () => {
   // const user = JSON.parse(sessionStorage.getItem("project_user"));
@@ -85,145 +86,150 @@ const Tasks = () => {
   const handleShow = () => setShows(true);
   const handleClose = () => setShows(false);
 
-  return (
-    <Container>
-      <Headers>
-        <Icon
-          name='home'
-          size='big'
-          style={{
-            color: "orangered",
-            marginBottom: "0.7em",
-            cursor: "pointer",
-          }}
-          onClick={() => history.push("/dashboard")}
-        />
-      </Headers>
+  const onDragEnd = (result) => {};
 
-      {/* accordion */}
-      <Accordion>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle
-              as={Button}
-              variant='link'
-              style={{
-                color: "#fff",
-                textAlign: "left",
-                background: "teal",
-              }}
-              eventKey='0'
-            >
-              Invite
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey='0'>
-            <Form style={{ padding: "1em" }}>
-              <Form.Field
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Container>
+        <Headers>
+          <Icon
+            name='home'
+            size='big'
+            style={{
+              color: "orangered",
+              marginBottom: "0.7em",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/dashboard")}
+          />
+        </Headers>
+
+        {/* accordion */}
+        <Accordion>
+          <Card>
+            <Card.Header>
+              <Accordion.Toggle
+                as={Button}
+                variant='link'
                 style={{
-                  marginRight: "1em",
-                  display: "flex",
-                  alignSelf: "center",
+                  color: "#fff",
+                  textAlign: "left",
+                  background: "teal",
                 }}
+                eventKey='0'
               >
-                <input
-                  placeholder={`Invite member to ${
-                    single_project !== null && single_project.project_name
-                  }`}
-                  onChange={handleInvite}
+                Invite
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='0'>
+              <Form style={{ padding: "1em" }}>
+                <Form.Field
                   style={{
-                    padding: "1em",
-                    width: "100%",
-                    marginRight: "0.5em",
-                  }}
-                />
-                <Button
-                  onClick={() => {
-                    notifyMe(dispatch, "You invited a member", projectId, null);
-                    inviteUser(dispatch, projectId, email);
+                    marginRight: "1em",
+                    display: "flex",
+                    alignSelf: "center",
                   }}
                 >
-                  Invite
-                </Button>
-              </Form.Field>
-            </Form>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+                  <input
+                    placeholder={`Invite member to ${
+                      single_project !== null && single_project.project_name
+                    }`}
+                    onChange={handleInvite}
+                    style={{
+                      padding: "1em",
+                      width: "100%",
+                      marginRight: "0.5em",
+                    }}
+                  />
+                  <Button
+                    onClick={() => {
+                      notifyMe(
+                        dispatch,
+                        "You invited a member",
+                        projectId,
+                        null
+                      );
+                      inviteUser(dispatch, projectId, email);
+                    }}
+                  >
+                    Invite
+                  </Button>
+                </Form.Field>
+              </Form>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
 
-      <P>
-        <span>{single_project !== null && single_project.project_name}</span>
-      </P>
-      <Row>
-        <Col>
-          <h1>Start</h1>
-          <Task>
-            <TaskComponent
-              current_task={current_task}
-              setBool={setBool}
-              bool={bool}
-            />
-            {starts !== null &&
-              starts.map((task) => (
-                <Display key={task.id} draggable={true}>
-                  <TaskHeader color={task.project_sequence}>
-                    <div
-                      title={
-                        task.priorty === "front end" ? "Front End" : "Back End"
-                      }
-                      className={
-                        task.priorty === "front end" ? "front" : "back"
-                      }
-                    ></div>
-                    <p className='added_person'>
-                      {task.User !== null &&
-                        task.User.first_name.slice(0, 1).toUpperCase() +
-                          task.User.last_name.slice(0, 1).toUpperCase()}
-                    </p>
-                  </TaskHeader>
-                  <p>{task.summary}</p>
-                  <div className='status'>
-                    <p>{task.createdAt}</p>
-                    <Cover>
-                      <Dropdown
-                        icon='ellipsis vertical'
-                        floating
-                        labeled
-                        className='icon'
-                      >
-                        <Dropdown.Menu
-                          style={{
-                            marginLeft: "-80px",
-                            position: "absolute",
-                            zIndex: "20",
-                          }}
+        <P>
+          <span>{single_project !== null && single_project.project_name}</span>
+        </P>
+        <Row>
+          <Col>
+            <h1>Start</h1>
+            <Task>
+              {starts !== null &&
+                starts.map((task) => (
+                  <Display key={task.id} draggable={true}>
+                    <TaskHeader color={task.project_sequence}>
+                      <div
+                        title={
+                          task.priorty === "front end"
+                            ? "Front End"
+                            : "Back End"
+                        }
+                        className={
+                          task.priorty === "front end" ? "front" : "back"
+                        }
+                      ></div>
+                      <p className='added_person'>
+                        {task.User !== null &&
+                          task.User.first_name.slice(0, 1).toUpperCase() +
+                            task.User.last_name.slice(0, 1).toUpperCase()}
+                      </p>
+                    </TaskHeader>
+                    <p>{task.summary}</p>
+                    <div className='status'>
+                      <p>{task.createdAt}</p>
+                      <Cover>
+                        <Dropdown
+                          icon='ellipsis vertical'
+                          floating
+                          labeled
+                          className='icon'
                         >
-                          <Dropdown.Header icon='tags' content='Actions' />
-                          <Dropdown.Divider />
-                          <Dropdown.Item>
-                            <p onClick={() => handleEdit(task)}>
-                              <Icon name='edit' color='teal' /> Edit
-                            </p>
-                          </Dropdown.Item>
-                          <Dropdown.Item>
-                            <p onClick={() => handleDelete(task.id)}>
-                              <Icon name='cut' color='orange' /> Delete
-                            </p>
-                          </Dropdown.Item>
-                          <Dropdown.Item>
-                            <p
-                              onClick={() => {
-                                updateTask(dispatch, task.id, task, "review");
-                              }}
-                            >
-                              <Icon name='arrow right' color='orange'></Icon>{" "}
-                              Move
-                            </p>
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
+                          <Dropdown.Menu
+                            style={{
+                              marginLeft: "-80px",
+                              position: "absolute",
+                              zIndex: "20",
+                            }}
+                          >
+                            <Dropdown.Header icon='tags' content='Actions' />
+                            <Dropdown.Divider />
+                            <Dropdown.Item>
+                              <p onClick={() => handleEdit(task)}>
+                                <Icon name='edit' color='teal' /> Edit
+                              </p>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <p onClick={() => handleDelete(task.id)}>
+                                <Icon name='cut' color='orange' /> Delete
+                              </p>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <p
+                                onClick={() => {
+                                  updateTask(dispatch, task.id, task, "review");
+                                }}
+                              >
+                                <Icon name='arrow right' color='orange'></Icon>{" "}
+                                Move
+                              </p>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
 
-                      {/* <Popup
+                        {/* <Popup
                         content={
                           <PopDetail
                             task={task}
@@ -237,128 +243,138 @@ const Tasks = () => {
                         pinned
                         trigger={<Icon name='add' />}
                       /> */}
-                    </Cover>
-                  </div>
-                </Display>
-              ))}
-          </Task>
-        </Col>
-        <Col>
-          <h1>Review</h1>
-          <Task>
-            {reviews !== null &&
-              reviews.map((task) => (
-                <Display key={task.id} draggable={true}>
-                  <TaskHeader color={task.project_sequence}>
-                    <div
-                      title={
-                        task.priorty === "front end" ? "Front End" : "Back End"
-                      }
-                      className={
-                        task.priorty === "front end" ? "front" : "back"
-                      }
-                    ></div>
-                    <p className='added_person'>
-                      {task.User !== null &&
-                        task.User.first_name.slice(0, 1).toUpperCase() +
-                          task.User.last_name.slice(0, 1).toUpperCase()}
-                    </p>
-                  </TaskHeader>
-                  <p>{task.summary}</p>
-                  <div className='status'>
-                    <p>{task.createdAt}</p>
-                    <Cover>
-                      <Dropdown
-                        icon='ellipsis vertical'
-                        floating
-                        labeled
-                        className='icon'
-                      >
-                        <Dropdown.Menu style={{ marginLeft: "-160px" }}>
-                          <Dropdown.Header icon='tags' content='Actions' />
-                          <Dropdown.Divider />
-                          <Dropdown.Item>
-                            <p
-                              onClick={() => {
-                                updateTask(dispatch, task.id, task, "start");
-                              }}
-                            >
-                              <Icon name='arrow left' color='orange'></Icon>{" "}
-                              Move back To Start
-                            </p>
-                          </Dropdown.Item>
-                          <Dropdown.Item>
-                            <p
-                              onClick={() => {
-                                updateTask(dispatch, task.id, task, "finish");
-                              }}
-                            >
-                              <Icon name='arrow right' color='orange'></Icon>{" "}
-                              Move To Finish
-                            </p>
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Cover>
-                  </div>
-                </Display>
-              ))}
-          </Task>
-        </Col>
-        <Col>
-          <h1>Finish</h1>
-          <Task>
-            {finishes !== null &&
-              finishes.map((task) => (
-                <Display key={task.id} draggable={true}>
-                  <TaskHeader color={task.project_sequence}>
-                    <div
-                      title={
-                        task.priorty === "front end" ? "Front End" : "Back End"
-                      }
-                      className={
-                        task.priorty === "front end" ? "front" : "back"
-                      }
-                    ></div>
-                    <p className='added_person'>
-                      {task.User !== null &&
-                        task.User.first_name.slice(0, 1).toUpperCase() +
-                          task.User.last_name.slice(0, 1).toUpperCase()}
-                    </p>
-                  </TaskHeader>
-                  <p>{task.summary}</p>
-                  <div className='status'>
-                    <p>{task.createdAt}</p>
-                    <Cover>
-                      <Dropdown
-                        icon='ellipsis vertical'
-                        floating
-                        labeled
-                        className='icon'
-                      >
-                        <Dropdown.Menu style={{ marginLeft: "-180px" }}>
-                          <Dropdown.Header icon='tags' content='Actions' />
-                          <Dropdown.Divider />
-                          <Dropdown.Item>
-                            <p
-                              onClick={() => {
-                                updateTask(dispatch, task.id, task, "review");
-                              }}
-                            >
-                              <Icon name='arrow left' color='orange'></Icon>{" "}
-                              Move back To Review
-                            </p>
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Cover>
-                  </div>
-                </Display>
-              ))}
-          </Task>
-        </Col>
-      </Row>
-    </Container>
+                      </Cover>
+                    </div>
+                  </Display>
+                ))}
+              <TaskComponent
+                current_task={current_task}
+                setBool={setBool}
+                bool={bool}
+              />
+            </Task>
+          </Col>
+          <Col>
+            <h1>Review</h1>
+            <Task>
+              {reviews !== null &&
+                reviews.map((task) => (
+                  <Display key={task.id} draggable={true}>
+                    <TaskHeader color={task.project_sequence}>
+                      <div
+                        title={
+                          task.priorty === "front end"
+                            ? "Front End"
+                            : "Back End"
+                        }
+                        className={
+                          task.priorty === "front end" ? "front" : "back"
+                        }
+                      ></div>
+                      <p className='added_person'>
+                        {task.User !== null &&
+                          task.User.first_name.slice(0, 1).toUpperCase() +
+                            task.User.last_name.slice(0, 1).toUpperCase()}
+                      </p>
+                    </TaskHeader>
+                    <p>{task.summary}</p>
+                    <div className='status'>
+                      <p>{task.createdAt}</p>
+                      <Cover>
+                        <Dropdown
+                          icon='ellipsis vertical'
+                          floating
+                          labeled
+                          className='icon'
+                        >
+                          <Dropdown.Menu style={{ marginLeft: "-160px" }}>
+                            <Dropdown.Header icon='tags' content='Actions' />
+                            <Dropdown.Divider />
+                            <Dropdown.Item>
+                              <p
+                                onClick={() => {
+                                  updateTask(dispatch, task.id, task, "start");
+                                }}
+                              >
+                                <Icon name='arrow left' color='orange'></Icon>{" "}
+                                Move back To Start
+                              </p>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <p
+                                onClick={() => {
+                                  updateTask(dispatch, task.id, task, "finish");
+                                }}
+                              >
+                                <Icon name='arrow right' color='orange'></Icon>{" "}
+                                Move To Finish
+                              </p>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Cover>
+                    </div>
+                  </Display>
+                ))}
+            </Task>
+          </Col>
+          <Col>
+            <h1>Finish</h1>
+            <Task>
+              {finishes !== null &&
+                finishes.map((task) => (
+                  <Display key={task.id} draggable={true}>
+                    <TaskHeader color={task.project_sequence}>
+                      <div
+                        title={
+                          task.priorty === "front end"
+                            ? "Front End"
+                            : "Back End"
+                        }
+                        className={
+                          task.priorty === "front end" ? "front" : "back"
+                        }
+                      ></div>
+                      <p className='added_person'>
+                        {task.User !== null &&
+                          task.User.first_name.slice(0, 1).toUpperCase() +
+                            task.User.last_name.slice(0, 1).toUpperCase()}
+                      </p>
+                    </TaskHeader>
+                    <p>{task.summary}</p>
+                    <div className='status'>
+                      <p>{task.createdAt}</p>
+                      <Cover>
+                        <Dropdown
+                          icon='ellipsis vertical'
+                          floating
+                          labeled
+                          className='icon'
+                        >
+                          <Dropdown.Menu style={{ marginLeft: "-180px" }}>
+                            <Dropdown.Header icon='tags' content='Actions' />
+                            <Dropdown.Divider />
+                            <Dropdown.Item>
+                              <p
+                                onClick={() => {
+                                  updateTask(dispatch, task.id, task, "review");
+                                }}
+                              >
+                                <Icon name='arrow left' color='orange'></Icon>{" "}
+                                Move back To Review
+                              </p>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Cover>
+                    </div>
+                  </Display>
+                ))}
+            </Task>
+          </Col>
+        </Row>
+      </Container>
+    </DragDropContext>
   );
 };
 
@@ -386,7 +402,7 @@ export const Row = styled.div`
 `;
 export const Col = styled.div`
   padding: 1em;
-  background: #ffffff;
+  background: #f9fbfc;
   border-radius: 0.25em;
   box-shadow: 0 0 30px #cccccc;
 
@@ -410,15 +426,16 @@ export const Col = styled.div`
   }
 `;
 export const Display = styled.div`
-  padding: 0.8em;
-  background: #f9fbfc;
+  padding: 0.5em;
+  background: #ffffff;
+  /* background: #f9fbfc; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.5em;
   color: #777777;
-  border-radius: 0.3em;
-  box-shadow: 0px 0px 5px #eee;
+  border-radius: 0.5em;
+  box-shadow: 0px 0px 15px #eee;
 
   .status {
     display: flex;
@@ -427,8 +444,7 @@ export const Display = styled.div`
 `;
 
 export const Task = styled.div`
-  min-height: 40vh;
-  max-height: 50vh;
+  height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
