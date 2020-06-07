@@ -43,7 +43,7 @@ export const TaskComponent = ({ current_task }) => {
     setValues(
       current_task !== null && {
         summary: current_task.summary,
-        status: current_task.status,
+        priorty: current_task.priorty,
         due_date: current_task.due_date,
       }
     );
