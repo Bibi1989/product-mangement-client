@@ -6,6 +6,7 @@ import {
   getTasks,
   deleteTask,
   updateTask,
+  getSingleProject,
   inviteUser,
   getNotifications,
   notifyMe,
@@ -55,7 +56,7 @@ const Tasks = () => {
 
   useEffect(() => {
     getTasks(dispatch, parseInt(projectId));
-    // getSingleProject(dispatch, projectId);
+    getSingleProject(dispatch, projectId);
     getNotifications(dispatch);
 
     // eslint-disable-next-line
@@ -103,10 +104,15 @@ const Tasks = () => {
             }}
             onClick={() => history.push("/dashboard")}
           />
+          <P>
+            <span>
+              {single_project !== null && single_project.project_name}
+            </span>
+          </P>
         </Headers>
 
         {/* accordion */}
-        <Accordion>
+        <Accordion style={{ marginBottom: "2em" }}>
           <Card>
             <Card.Header>
               <Accordion.Toggle
@@ -161,9 +167,9 @@ const Tasks = () => {
           </Card>
         </Accordion>
 
-        <P>
+        {/* <P>
           <span>{single_project !== null && single_project.project_name}</span>
-        </P>
+        </P> */}
         <Row>
           <Col>
             <h1>Start</h1>
@@ -458,8 +464,8 @@ export const Task = styled.div`
 
 export const P = styled.p`
   font-size: 1.5em;
-  font-weight: 800;
-  color: orangered;
+  font-weight: 500;
+  color: #555555;
   display: flex;
   flex-direction: column;
 

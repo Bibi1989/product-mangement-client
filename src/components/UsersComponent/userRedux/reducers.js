@@ -5,6 +5,7 @@ const initialState = {
   register_user: null,
   verify: null,
   user_verify: null,
+  isAuthenticated: null,
   loading: false,
   errors: null,
 };

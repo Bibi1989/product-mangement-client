@@ -26,8 +26,6 @@ const Chart = ({ projects, count, loading, invite }) => {
     },
   ];
 
-  console.log({ loading });
-
   return (
     <Col>
       {data.map(({ title, icon, number, loaded }) => (

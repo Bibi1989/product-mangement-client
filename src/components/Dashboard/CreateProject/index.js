@@ -24,7 +24,6 @@ const CreateProject = ({ show, handleClose, single }) => {
   );
 
   const current = useSelector(({ project: { current } }) => current);
-  console.log({ current });
 
   const edit = single !== undefined &&
     single !== null && {

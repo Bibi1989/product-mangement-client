@@ -37,9 +37,7 @@ export const loginUser = async (dispatch, user, history) => {
       JSON.stringify(response.data.data.user)
     );
     sessionStorage.setItem("token", JSON.stringify(response.data.data.token));
-    // history.push("/dashboard");
     dispatch({ type: LOADING, payload: false });
-    // window.location.href = "http://localhost:3000/dashboard";
     window.location.href = "https://b-manager.netlify.app/dashboard";
     dispatch(loginAction(response.data));
   } catch (error) {
@@ -53,6 +51,7 @@ export const logoutUser = (history) => {
   sessionStorage.removeItem("project_user");
   history.push("/");
 };
+
 export const loadUser = async (dispatch, token) => {
   const user = await axios.get(user_url, {
     headers: {
@@ -60,6 +59,5 @@ export const loadUser = async (dispatch, token) => {
       auth: `${token}`,
     },
   });
-  dispatch({ type: LOAD_USER, payload: user });
-  console.log(user);
+  dispatch({ type: LOAD_USER, payload: user.data.user.user });
 };

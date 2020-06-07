@@ -16,6 +16,8 @@ import {
   deleteAllNotification,
 } from "../Dashboard/ProjectReducer/store";
 
+const navbar_icon = "./assets/pyramid3.png";
+
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const user = JSON.parse(sessionStorage.getItem("project_user")) || null;
@@ -79,9 +81,9 @@ const NavBar = () => {
       >
         <Navbar.Brand>
           <Logo>
-            <Image>
-              <img src='../../../assets/pyramid3.svg' alt='logo' />
-            </Image>
+            {/* <Image>
+              <img src={navbar_icon} alt='logo' />
+            </Image> */}
             <LText>
               <span>B</span>-MANAGER
             </LText>
@@ -101,11 +103,17 @@ const NavBar = () => {
                 id='basic-nav-dropdown'
                 style={{ marginTop: "2px" }}
               >
-                <NavDropdown.Item>Actions</NavDropdown.Item>
+                <NavDropdown.Item
+                  style={{ padding: "1em", background: "#f1f1f1" }}
+                >
+                  Actions
+                </NavDropdown.Item>
                 <NavDropdown.Item
                   style={{
                     minWidth: "250px",
                     maxWidth: "300px",
+                    maxHeight: "400px",
+                    background: "transparent !important",
                     overflow: "auto",
                   }}
                 >
@@ -229,6 +237,10 @@ const NotifyList = styled.div`
 const ItemStyle = styled(Dropdown.Item)`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.5em;
+  background-color: white;
+  width: 100%;
+  padding: 1em;
 `;
 const PText = styled.p`
   font-size: 1em;
@@ -250,7 +262,10 @@ const PRemove = styled.p`
   font-size: 1.4em;
   padding: 0;
 `;
-const ClearAllStyle = styled.p``;
+const ClearAllStyle = styled.p`
+  padding: 1em;
+  background: #f1f1f1;
+`;
 const Image = styled.div``;
 const LText = styled.p`
   color: teal;
@@ -260,6 +275,19 @@ const LText = styled.p`
   }
 `;
 const NavDropdownStyle = styled(NavDropdown)`
+  .dropdown-menu {
+    background-color: transparent;
+    border: none;
+  }
+  .dropdown-item {
+    padding: 0;
+    margin: 0;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .dropdown-toggle::after {
     content: ${({ count }) => (count ? count.toString() : "0")};
     display: none;

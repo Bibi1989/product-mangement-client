@@ -80,7 +80,12 @@ export const TaskComponent = ({ current_task }) => {
     });
     setSelects("");
     // getOne(dispatch, projectId);
-    notifyMe(dispatch, "You added a new task", parseInt(projectId), null);
+    notifyMe(
+      dispatch,
+      `You added a new task ${values.summary.slice(0, 10)}...`,
+      parseInt(projectId),
+      null
+    );
     setUpdateState(!updateState);
   };
 

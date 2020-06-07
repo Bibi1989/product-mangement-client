@@ -156,29 +156,11 @@ const Home = () => {
                             <Icon name='cut' color='orange' /> Delete
                           </p>
                         </Dropdown.Item>
-                        {/* <Dropdown.Item href='#/action-3'>
-                          <p>
-                            <Icon name='user' color='green' /> Invite member
-                          </p>
-                        </Dropdown.Item> */}
                       </Dropdown.Menu>
                     </Dropdown>
                   </Date>
                 </Prob>
               ))}
-            {/* <Menus onClick={() => setOpen(!open)}>
-              <span></span>
-              <span></span>
-              <span></span>
-              <DropUps open={open}>
-                <p onClick={() => setOpen(true)}>
-                  <Icon name='edit' color='teal' />
-                </p>
-                <p>
-                  <Icon name='cut' color='orange' />
-                </p>
-              </DropUps>
-            </Menus> */}
           </Project>
         </Col>
       </Row>

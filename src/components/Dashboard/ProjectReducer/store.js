@@ -38,7 +38,6 @@ export const fetchAllProjects = async (dispatch) => {
     dispatch(getAllAction(response.data.data));
   } catch (error) {
     dispatch({ type: LOADING, payload: false });
-    console.log(error.response);
   }
 };
 
@@ -198,7 +197,6 @@ export const updateTask = async (dispatch, id, value, status) => {
     ...value,
     status,
   };
-  console.log({ tasks, id });
   try {
     dispatch({ type: LOADING, payload: true });
     const response = await axios.put(`${TASK_URL}/${id}`, tasks, {

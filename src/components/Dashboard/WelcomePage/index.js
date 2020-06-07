@@ -5,9 +5,18 @@ import Home from "../Home/index";
 import ProjectComponent from "../Projects";
 import Collaborator from "../Notification/index";
 import { Tabs } from "react-bootstrap";
+import { useEffect } from "react";
+import { setAuth } from "../../Utils/setAuth";
+import { useSelector } from "react-redux";
 
 const WelcomePage = () => {
   const [key, setKey] = React.useState("dashboard");
+  useEffect(() => {
+    if (sessionStorage.token) {
+      setAuth(sessionStorage.token);
+    }
+  }, []);
+  const user_verify = useSelector(({ user: { user_verify } }) => user_verify);
   return (
     <Container>
       <Tabs
@@ -21,7 +30,7 @@ const WelcomePage = () => {
         <Tab eventKey='projects' title='All Projects'>
           <ProjectComponent />
         </Tab>
-        <Tab eventKey='collaborator' title='Collaborator'>
+        <Tab eventKey='collaborator' title='Collaborating Boards'>
           <Collaborator />
         </Tab>
       </Tabs>
