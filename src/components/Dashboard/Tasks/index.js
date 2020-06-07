@@ -172,7 +172,7 @@ const Tasks = () => {
         </P> */}
         <Row>
           <Col>
-            <h1>Start</h1>
+            <h1>Backlogs</h1>
             <Task>
               {starts !== null &&
                 starts.map((task) => (
@@ -206,7 +206,7 @@ const Tasks = () => {
                         >
                           <Dropdown.Menu
                             style={{
-                              marginLeft: "-80px",
+                              marginLeft: "-160px",
                               position: "absolute",
                               zIndex: "20",
                             }}
@@ -230,7 +230,7 @@ const Tasks = () => {
                                 }}
                               >
                                 <Icon name='arrow right' color='orange'></Icon>{" "}
-                                Move
+                                Move To In Progress
                               </p>
                             </Dropdown.Item>
                           </Dropdown.Menu>
@@ -251,7 +251,7 @@ const Tasks = () => {
             </Task>
           </Col>
           <Col>
-            <h1>Review</h1>
+            <h1>In Progress</h1>
             <Task>
               {reviews !== null &&
                 reviews.map((task) => (
@@ -283,7 +283,7 @@ const Tasks = () => {
                           labeled
                           className='icon'
                         >
-                          <Dropdown.Menu style={{ marginLeft: "-160px" }}>
+                          <Dropdown.Menu style={{ marginLeft: "-190px" }}>
                             <Dropdown.Header icon='tags' content='Actions' />
                             <Dropdown.Divider />
                             <Dropdown.Item>
@@ -293,7 +293,7 @@ const Tasks = () => {
                                 }}
                               >
                                 <Icon name='arrow left' color='orange'></Icon>{" "}
-                                Move back To Start
+                                Move back To Backlogs
                               </p>
                             </Dropdown.Item>
                             <Dropdown.Item>
@@ -303,7 +303,7 @@ const Tasks = () => {
                                 }}
                               >
                                 <Icon name='arrow right' color='orange'></Icon>{" "}
-                                Move To Finish
+                                Move To Done
                               </p>
                             </Dropdown.Item>
                           </Dropdown.Menu>
@@ -315,7 +315,7 @@ const Tasks = () => {
             </Task>
           </Col>
           <Col>
-            <h1>Finish</h1>
+            <h1>Done</h1>
             <Task>
               {finishes !== null &&
                 finishes.map((task) => (
@@ -347,7 +347,7 @@ const Tasks = () => {
                           labeled
                           className='icon'
                         >
-                          <Dropdown.Menu style={{ marginLeft: "-180px" }}>
+                          <Dropdown.Menu style={{ marginLeft: "-200px" }}>
                             <Dropdown.Header icon='tags' content='Actions' />
                             <Dropdown.Divider />
                             <Dropdown.Item>
@@ -357,7 +357,7 @@ const Tasks = () => {
                                 }}
                               >
                                 <Icon name='arrow left' color='orange'></Icon>{" "}
-                                Move back To Review
+                                Move back To In Progress
                               </p>
                             </Dropdown.Item>
                           </Dropdown.Menu>
