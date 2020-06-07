@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Form, Select, Modal, Icon } from "semantic-ui-react";
-import { Button, Spinner } from "react-bootstrap";
+import { Form, Select, Modal, Icon, Button } from "semantic-ui-react";
+import { Spinner } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Moment from "react-moment";
 
 import {
   createTask,
   getOne,
   notifyMe,
   clearCurrent,
+  deleteAllNotification,
+  deleteNotification,
 } from "../ProjectReducer/store";
 
 const priortyList = [
@@ -25,8 +28,11 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
   const user = JSON.parse(sessionStorage.getItem("project_user"));
   const [updateState, setUpdateState] = useState(false);
 
+  const [change, setChange] = useState(false);
+
   const loading = useSelector(({ user: { loading } }) => loading);
   const addTask = useSelector(({ project: { task } }) => task);
+  const notices = useSelector(({ project: { notify } }) => notify);
 
   const [values, setValues] = useState({
     summary: "",
@@ -98,6 +104,11 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
     clearCurrent(dispatch);
   };
 
+  const handleNotifyDelete = (id) => {
+    setChange(!change);
+    deleteNotification(dispatch, id);
+  };
+
   if (!token) {
     history.push("/");
   }
@@ -111,6 +122,17 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
         <Wrapper>
           <First>
             <Flex>
+              <h5>{task.Project.project_name}</h5>
+            </Flex>
+            <Flex>
+              <Icon name='user' />
+              <p className='added_person'>
+                {task.User !== null &&
+                  task.User.first_name.slice(0, 1).toUpperCase() +
+                    task.User.last_name.slice(0, 1).toUpperCase()}
+              </p>
+            </Flex>
+            <Flex>
               <Icon name='align center' />
               <p>Label</p>
             </Flex>
@@ -120,14 +142,6 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
             >
               {task.priorty}
             </Button>
-            <Flex>
-              <Icon name='user' />
-              <p className='added_person'>
-                {task.User !== null &&
-                  task.User.first_name.slice(0, 1).toUpperCase() +
-                    task.User.last_name.slice(0, 1).toUpperCase()}
-              </p>
-            </Flex>
 
             <Flex>
               <Icon name='keyboard' />
@@ -153,7 +167,7 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
                   placeholder='Select a label'
                   options={priortyList}
                   onChange={handleSelect}
-                  value={selects}
+                  value={selects.value}
                 />
               </Form.Field>
               <Form.Field>
@@ -176,7 +190,7 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
                 />
               </Form.Field>
               <Button
-                variant='success'
+                color={current_task ? "orange" : "teal"}
                 disabled={loading && true}
                 onClick={current_task ? onupdate : onsubmit}
                 type='submit'
@@ -205,6 +219,28 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
                 <Icon name='arrow right' color='orange'></Icon> Move
               </p>
             </Second>
+            <Notces>
+              <H2>Activites</H2>
+              {notices !== null &&
+                notices !== undefined &&
+                notices.map((notice) => {
+                  return (
+                    <ItemStyle key={notice.id}>
+                      <NotifyList>
+                        <PText>{notice.notify}</PText>
+                        <DateStyle>
+                          <Moment fromNow>{notice.createdAt}</Moment>
+                        </DateStyle>
+                      </NotifyList>
+                      <RemoveTag>
+                        <PRemove onClick={() => handleNotifyDelete(notice.id)}>
+                          &times;{" "}
+                        </PRemove>
+                      </RemoveTag>
+                    </ItemStyle>
+                  );
+                })}
+            </Notces>
           </Modal.Description>
         </Wrapper>
       </Modal.Content>
@@ -224,6 +260,10 @@ const Wrapper = styled.div`
   }
   .desc {
     margin-top: 1em;
+  }
+
+  @media (max-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 const ModalStyle = styled(Modal)`
@@ -262,6 +302,10 @@ const First = styled.div`
 `;
 const Second = styled.div`
   padding-left: 2em;
+
+  @media (max-width: 769px) {
+    padding-left: 0.5em;
+  }
   p {
     padding: 1em;
     background: #f9fbfc;
@@ -269,4 +313,52 @@ const Second = styled.div`
     box-shadow: 0 2px 10px #eee;
     cursor: pointer;
   }
+`;
+
+const Notces = styled.div`
+  padding-left: 2em;
+
+  @media (max-width: 769px) {
+    padding-left: 0.5em;
+  }
+`;
+
+const NotifyList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const H2 = styled.h2`
+  padding: 1em 0;
+  color: #777777;
+`;
+const NoActivity = styled.div``;
+const ItemStyle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  background: #f9fbfc;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 10px #eee;
+`;
+const PText = styled.p`
+  font-size: 1em;
+  color: #333;
+  padding: 0;
+`;
+const DateStyle = styled.span`
+  font-size: 0.8em;
+  color: #999999;
+  padding: 0;
+`;
+const RemoveTag = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+const PRemove = styled.p`
+  font-size: 1.4em;
+  padding: 0;
 `;

@@ -445,7 +445,7 @@ export const Task = styled.div`
   &::-webkit-scrollbar-thumb {
     /* display: none; */
     width: 1.5px;
-    background-color: orangered;
+    background-color: #eee;
   }
 
   .spinner {
