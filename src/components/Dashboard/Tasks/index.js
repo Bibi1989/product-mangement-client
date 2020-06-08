@@ -12,13 +12,12 @@ import {
   notifyMe,
   getCurrentTask,
 } from "../ProjectReducer/store";
-import CreateTask from "../CreateTask";
+import { getDateFunc } from "../../Utils/dateFunc";
 // import NewTasks from "../CreateTask/NewTasks";
 import { Accordion, Card } from "react-bootstrap";
 import { Icon, Form, Dropdown, Button, Popup, Modal } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
-import { DragDropContext } from "react-beautiful-dnd";
 import Menu from "./Menu";
 
 const Tasks = () => {
@@ -87,13 +86,18 @@ const Tasks = () => {
 
   const handleShow = () => setShows(true);
   const handleClose = () => setShows(false);
+
+  // preventing default behavior of dragging over
   const onDragOver = (e) => {
     e.preventDefault();
   };
+
+  // setting the id of draggable card
   const onDragStart = (e, id) => {
     e.dataTransfer.setData("id", id);
-    // console.log({ dragId: id });
   };
+
+  // get the id of a dragable card and update the card with the card dropped
   const onDrop = (e, text) => {
     let id = e.dataTransfer.getData("id");
 
@@ -103,8 +107,6 @@ const Tasks = () => {
       status: text,
       due_date: t.due_date,
     };
-
-    console.log({ id, new_t });
     updateTask(dispatch, Number(id), new_t, text);
   };
 
@@ -177,16 +179,13 @@ const Tasks = () => {
         </Card>
       </Accordion>
 
-      {/* <P>
-          <span>{single_project !== null && single_project.project_name}</span>
-        </P> */}
       <Row>
-        <Col>
+        <Col
+          onDragOver={(e) => onDragOver(e)}
+          onDrop={(e) => onDrop(e, "start")}
+        >
           <h1>Backlogs</h1>
-          <Task
-            onDragOver={(e) => onDragOver(e)}
-            onDrop={(e) => onDrop(e, "start")}
-          >
+          <Task>
             {starts !== null &&
               starts.map((task) => (
                 <Display
@@ -212,7 +211,7 @@ const Tasks = () => {
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
-                    <p>{task.createdAt}</p>
+                    <p>{getDateFunc(task.createdAt)}</p>
                     <Cover>
                       <Dropdown
                         icon='ellipsis vertical'
@@ -266,12 +265,12 @@ const Tasks = () => {
             <TaskComponent current_task={current_task} />
           </Task>
         </Col>
-        <Col>
+        <Col
+          onDragOver={(e) => onDragOver(e)}
+          onDrop={(e) => onDrop(e, "review")}
+        >
           <h1>In Progress</h1>
-          <Task
-            onDragOver={(e) => onDragOver(e)}
-            onDrop={(e) => onDrop(e, "review")}
-          >
+          <Task>
             {reviews !== null &&
               reviews.map((task) => (
                 <Display
@@ -296,7 +295,7 @@ const Tasks = () => {
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
-                    <p>{task.createdAt}</p>
+                    <p>{getDateFunc(task.createdAt)}</p>
                     <Cover>
                       <Dropdown
                         icon='ellipsis vertical'
@@ -335,12 +334,12 @@ const Tasks = () => {
               ))}
           </Task>
         </Col>
-        <Col>
+        <Col
+          onDragOver={(e) => onDragOver(e)}
+          onDrop={(e) => onDrop(e, "finish")}
+        >
           <h1>Done</h1>
-          <Task
-            onDragOver={(e) => onDragOver(e)}
-            onDrop={(e) => onDrop(e, "finish")}
-          >
+          <Task>
             {finishes !== null &&
               finishes.map((task) => (
                 <Display
@@ -365,7 +364,7 @@ const Tasks = () => {
                   </TaskHeader>
                   <p>{task.summary}</p>
                   <div className='status'>
-                    <p>{task.createdAt}</p>
+                    <p>{getDateFunc(task.createdAt)}</p>
                     <Cover>
                       <Dropdown
                         icon='ellipsis vertical'

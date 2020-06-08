@@ -267,9 +267,9 @@ const Wrapper = styled.div`
   }
 `;
 const ModalStyle = styled(Modal)`
-  width: 40% !important;
+  width: 60% !important;
   height: 100% !important;
-  margin-left: 30% !important;
+  margin-left: 20% !important;
 
   @media (max-width: 769px) {
     width: 96% !important;

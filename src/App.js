@@ -15,7 +15,7 @@ import WelcomePage from "./components/Dashboard/WelcomePage";
 import LandingPage from "./components/ProjectComponent/LandingPage";
 import CreateProject from "./components/Dashboard/CreateProject/index";
 import PageNotFound from "./PageNotFound";
-import Tasks from "./components/Dashboard/Tasks";
+import NewTaskCards from "./components/Dashboard/Tasks/NewTaskCards";
 import Profile from "./components/Dashboard/ProfileView";
 import Invite from "./components/Dashboard/Invites/Invite";
 import PrivateRoute from "./privateRoute/PrivateRoute";
@@ -36,7 +36,7 @@ function App() {
                 <CreateProject />
               </Route>
               <Route exact path='/tasks/:projectId'>
-                <Tasks />
+                <NewTaskCards />
               </Route>
               <Route exact path='/profile'>
                 <Profile />
