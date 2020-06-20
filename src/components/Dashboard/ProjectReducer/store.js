@@ -23,7 +23,7 @@ const NOTIFY_URL = "https://b-manager-api.herokuapp.com/api/v1/notify";
 const INVITE_URL = "https://b-manager-api.herokuapp.com/api/v1/invite";
 
 const token = JSON.parse(sessionStorage.getItem("token"));
-const user = JSON.parse(sessionStorage.getItem("project_user"));
+// const user = JSON.parse(sessionStorage.getItem("project_user"));
 
 export const fetchAllProjects = async (dispatch) => {
   try {

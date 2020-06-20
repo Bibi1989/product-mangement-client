@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link, useLocation } from "react-router-dom";
-import axios from "axios";
+import { useHistory, Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -25,7 +24,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const history = useHistory();
-  const [show, setShow] = useState("");
+  const [, setShow] = useState("");
 
   const dispatch = useDispatch();
 

@@ -30,7 +30,7 @@ const WelcomePage = () => {
         <Tab eventKey='projects' title='All Projects'>
           <ProjectComponent />
         </Tab>
-        <Tab eventKey='collaborator' title='Collaborating Boards'>
+        <Tab eventKey='collaborator' title='Col Boards'>
           <Collaborator />
         </Tab>
       </Tabs>

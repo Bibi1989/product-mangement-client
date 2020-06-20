@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   getTasks,
-  deleteTask,
-  updateTask,
   getSingleProject,
   inviteUser,
   getNotifications,
   notifyMe,
-  getCurrentTask,
 } from "../ProjectReducer/store";
-import { getDateFunc } from "../../Utils/dateFunc";
 // import NewTasks from "../CreateTask/NewTasks";
-import { Accordion, Card } from "react-bootstrap";
-import { Icon, Form, Dropdown, Button, Popup, Modal } from "semantic-ui-react";
-import Menu from "./Menu";
+import { Modal } from "semantic-ui-react";
 import TaskCard from "./TaskCard";
 import NewTaskHeader from "./NewTaskHeader";
 
 const NewTaskCards = () => {
   // const user = JSON.parse(sessionStorage.getItem("project_user"));
   const { projectId } = useParams();
-  const history = useHistory();
-
-  const [bool, setBool] = useState(false);
 
   let tasks = useSelector(({ project: { tasks } }) => tasks);
   const single_project = useSelector(({ project: { project } }) => project);
@@ -35,7 +26,7 @@ const NewTaskCards = () => {
   const update_task = useSelector(
     ({ project: { update_task } }) => update_task
   );
-  const loading = useSelector(({ project: { loading } }) => loading);
+  // const loading = useSelector(({ project: { loading } }) => loading);
 
   const current_task = useSelector(
     ({ project: { current_task } }) => current_task
@@ -59,7 +50,7 @@ const NewTaskCards = () => {
     getNotifications(dispatch);
 
     // eslint-disable-next-line
-  }, [delete_task, update_task, single_task, bool, current_task]);
+  }, [delete_task, update_task, single_task, current_task]);
 
   const [email, setEmail] = useState("");
 
@@ -74,6 +65,7 @@ const NewTaskCards = () => {
       forward: "review",
       backward: "start",
       status: "start",
+      count: starts !== null && starts.length,
     },
     {
       title: "In Progress",
@@ -81,6 +73,7 @@ const NewTaskCards = () => {
       forward: "finish",
       backward: "start",
       status: "review",
+      count: reviews !== null && reviews.length,
     },
     {
       title: "Done",
@@ -88,6 +81,7 @@ const NewTaskCards = () => {
       forward: "finish",
       backward: "review",
       status: "finish",
+      count: finishes !== null && finishes.length,
     },
   ];
 
@@ -112,6 +106,7 @@ const NewTaskCards = () => {
               forward={array.forward}
               backword={array.backword}
               status_text={array.status}
+              count={array.count}
             />
           );
         })}
@@ -225,61 +220,61 @@ export const Headers = styled.div`
   justify-content: space-between;
 `;
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 60% 40%;
+// const Wrapper = styled.div`
+//   display: grid;
+//   grid-template-columns: 60% 40%;
 
-  p {
-    padding: 0;
-    margin: 0;
-  }
-  .desc {
-    margin-top: 1em;
-  }
-`;
-const ModalStyle = styled(Modal)`
-  width: 40% !important;
-  height: 80vh !important;
-  margin-left: 30% !important;
+//   p {
+//     padding: 0;
+//     margin: 0;
+//   }
+//   .desc {
+//     margin-top: 1em;
+//   }
+// `;
+// const ModalStyle = styled(Modal)`
+//   width: 40% !important;
+//   height: 80vh !important;
+//   margin-left: 30% !important;
 
-  @media (max-width: 769px) {
-    width: 96% !important;
-    margin-left: 2% !important;
-  }
-`;
-const Paragraph = styled.p``;
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1em;
-  margin-bottom: 1em;
+//   @media (max-width: 769px) {
+//     width: 96% !important;
+//     margin-left: 2% !important;
+//   }
+// `;
+// const Paragraph = styled.p``;
+// const Flex = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-top: 1em;
+//   margin-bottom: 1em;
 
-  &:first-child {
-    margin-right: 1em;
-  }
-`;
-const First = styled.div`
-  .added_person {
-    color: #4f5e78;
-    text-align: center;
-    font-weight: 600;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    background: #dfe1e6;
-  }
-`;
-const Second = styled.div`
-  padding-left: 2em;
-  p {
-    padding: 1em;
-    background: #f9fbfc;
-    margin-bottom: 1em;
-    box-shadow: 0 2px 10px #eee;
-    cursor: pointer;
-  }
-`;
+//   &:first-child {
+//     margin-right: 1em;
+//   }
+// `;
+// const First = styled.div`
+//   .added_person {
+//     color: #4f5e78;
+//     text-align: center;
+//     font-weight: 600;
+//     width: 30px;
+//     height: 30px;
+//     line-height: 30px;
+//     border-radius: 50%;
+//     background: #dfe1e6;
+//   }
+// `;
+// const Second = styled.div`
+//   padding-left: 2em;
+//   p {
+//     padding: 1em;
+//     background: #f9fbfc;
+//     margin-bottom: 1em;
+//     box-shadow: 0 2px 10px #eee;
+//     cursor: pointer;
+//   }
+// `;
 
 {
   /* <Col

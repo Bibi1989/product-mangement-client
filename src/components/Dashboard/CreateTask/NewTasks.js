@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import {
-  addProject,
-  updateProject,
   createTask,
   getOne,
   notifyMe,
@@ -25,7 +23,7 @@ export const TaskComponent = ({ current_task }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const user = JSON.parse(sessionStorage.getItem("project_user"));
+  // const user = JSON.parse(sessionStorage.getItem("project_user"));
   const [updateState, setUpdateState] = useState(false);
 
   const loading = useSelector(({ user: { loading } }) => loading);

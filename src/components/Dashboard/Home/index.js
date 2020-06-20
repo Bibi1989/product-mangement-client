@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Container, Row, Col, Card, Project, Headers, Welcome } from "./style";
-import { Icon, Form, Label } from "semantic-ui-react";
+import { Container, Row, Col, Project, Headers, Welcome } from "./style";
+import { Icon, Label } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllProjects,
@@ -21,7 +21,7 @@ const Home = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const users = JSON.parse(sessionStorage.getItem("project_user"));
   const history = useHistory();
-  const [_, setShow] = useState("");
+  // const [_, setShow] = useState("");
 
   const dispatch = useDispatch();
 
@@ -72,11 +72,11 @@ const Home = () => {
 
   const handleDelete = (id) => {
     deleteProject(dispatch, id, history);
-    setShow("");
+    // setShow("");
   };
   const handleEdit = (project) => {
     getCurrent(dispatch, project);
-    setShow("");
+    // setShow("");
     setShows(true);
   };
 

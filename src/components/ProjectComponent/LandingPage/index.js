@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import FirstSection from "../FirstSection";
 import SecondSection from "../SecondSecion";
 import HowItWork from "../HowItWork";
-import Slider from "../../Utils/Slider";
 import SlidingComponent from "../SlidingComponent";
 
 const LandingPage = () => {
@@ -19,7 +18,6 @@ const LandingPage = () => {
       <SecondSection />
       <HowItWork />
       <SlidingComponent />
-      {/* <Slider /> */}
     </div>
   );
 };

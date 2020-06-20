@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Container, Loading } from "./style";
+import { Container } from "./style";
 import { Form, Input } from "semantic-ui-react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../userRedux/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
@@ -10,15 +10,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = ({ handleCloseLogin, show }) => {
   const history = useHistory();
-  const location = useLocation();
   const dispatch = useDispatch();
 
   // const [loading, setLoading] = useState(false);
 
-  let path = window.location.href.split("/").slice(1, 3).join("");
-  path = `http://${path}`;
+  // let path = window.location.href.split("/").slice(1, 3).join("");
+  // path = `http://${path}`;
 
-  const token = JSON.parse(sessionStorage.getItem("token"));
+  // const token = JSON.parse(sessionStorage.getItem("token"));
   const loading = useSelector(({ user: { loading } }) => loading);
   // if (token && !loading) {
   //   history.push("/dashboard");
@@ -26,7 +25,7 @@ const Login = ({ handleCloseLogin, show }) => {
 
   const errors = useSelector(({ user: { errors } }) => errors);
 
-  const users = useSelector(({ user: { login_user } }) => login_user);
+  // const users = useSelector(({ user: { login_user } }) => login_user);
 
   const [values, setValues] = useState({
     email: "",

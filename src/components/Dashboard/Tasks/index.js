@@ -61,10 +61,6 @@ const Tasks = () => {
     // eslint-disable-next-line
   }, [delete_task, update_task, single_task, bool, current_task]);
 
-  // const notify = useSelector(({ project: { notify } }) => notify);
-
-  const [show, setShow] = useState("");
-
   const handleDelete = (id) => {
     deleteTask(dispatch, parseInt(id));
     notifyMe(dispatch, "You deleted a task", projectId, id);
@@ -73,7 +69,6 @@ const Tasks = () => {
   const handleEdit = (task) => {
     getCurrentTask(dispatch, task);
     notifyMe(dispatch, "You edited a task", projectId);
-    setShow("");
     history.push(`/tasks/${projectId}`);
   };
   const [email, setEmail] = useState("");
@@ -81,11 +76,6 @@ const Tasks = () => {
   const handleInvite = ({ target: { value } }) => {
     setEmail(value);
   };
-
-  const [shows, setShows] = useState(false);
-
-  const handleShow = () => setShows(true);
-  const handleClose = () => setShows(false);
 
   // preventing default behavior of dragging over
   const onDragOver = (e) => {

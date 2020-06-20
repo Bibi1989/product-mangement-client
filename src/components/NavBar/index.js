@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { format, parseISO } from "date-fns";
 import Moment from "react-moment";
 import styled from "styled-components";
 import { Container, Logo, ProfilePic } from "./style";
@@ -9,14 +8,12 @@ import Register from "../UsersComponent/RegisterComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-import { Dropdown, Icon, Label, Button } from "semantic-ui-react";
+import { Dropdown, Icon, Button } from "semantic-ui-react";
 import {
   deleteNotification,
   getNotifications,
   deleteAllNotification,
 } from "../Dashboard/ProjectReducer/store";
-
-const navbar_icon = "./assets/pyramid3.png";
 
 const NavBar = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -32,6 +29,8 @@ const NavBar = () => {
 
   useEffect(() => {
     getNotifications(dispatch);
+
+    // eslint-disable-next-line
   }, [delete_notify, change]);
 
   const handleLogout = () => {
@@ -266,7 +265,7 @@ const ClearAllStyle = styled.p`
   padding: 1em;
   background: #f1f1f1;
 `;
-const Image = styled.div``;
+// const Image = styled.div``;
 const LText = styled.p`
   color: teal;
 

@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { getDateFunc } from "../../Utils/dateFunc";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import {
-  getTasks,
   deleteTask,
   updateTask,
-  getSingleProject,
-  inviteUser,
-  getNotifications,
   notifyMe,
   getCurrentTask,
 } from "../ProjectReducer/store";
 
-import { Accordion, Card } from "react-bootstrap";
-import { Icon, Form, Dropdown, Button, Popup, Modal } from "semantic-ui-react";
+import { Icon, Dropdown } from "semantic-ui-react";
 import { Cover, TaskHeader } from "../Home/style";
 import { TaskComponent } from "../CreateTask/NewTasks";
-import { DragDropContext } from "react-beautiful-dnd";
 import Menu from "./Menu";
-import { useRef } from "react";
 
 const TaskCard = ({
   boards,
@@ -31,13 +24,14 @@ const TaskCard = ({
   forward,
   backward,
   status_text,
+  count,
 }) => {
-  const [show, setShow] = useState("");
+  const [, setShow] = useState("");
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [move, setMove] = useState("");
+  // const [move, setMove] = useState("");
 
   console.log({ boards, status_text });
 
@@ -83,14 +77,31 @@ const TaskCard = ({
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, status_text)}
     >
-      <h1>{title}</h1>
+      <div
+        style={{ display: "flex", alignItems: "center", paddingBottom: "1em" }}
+      >
+        <p
+          style={{
+            width: "30px",
+            height: "30px",
+            borderRadius: "50%",
+            background: "teal",
+            color: "white",
+            textAlign: "center",
+            lineHeight: "30px",
+            fontSize: "1.2em",
+          }}
+        >
+          {count}
+        </p>{" "}
+        <h1 style={{ padding: "0" }}>{title}</h1>
+      </div>
       <Task>
         {boards !== false &&
           boards.map((task) => (
             <Display
               key={task.id}
               draggable={true}
-              draggable
               onDragStart={(e) => onDragStart(e, task.id)}
               id={task.id}
             >

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { ProfilePic } from "../../NavBar/style";
-import { Icon, Button } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 const Profile = () => {
   const user = JSON.parse(sessionStorage.getItem("project_user"));

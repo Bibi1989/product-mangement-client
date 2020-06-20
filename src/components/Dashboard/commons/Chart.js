@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Card } from "../Home/style";
 import { Icon } from "semantic-ui-react";
 import { Spinner } from "react-bootstrap";
-import { useCallback } from "react";
 
 const Chart = ({ projects, count, loading, invite }) => {
   const data = [

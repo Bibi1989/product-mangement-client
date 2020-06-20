@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Container, Loading } from "../LoginComponent/style";
+import { Container } from "../LoginComponent/style";
 import { Form, Input } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../userRedux/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from "react-toastify";
 
 const Register = ({ handleClose, show }) => {
   const history = useHistory();
@@ -14,7 +13,7 @@ const Register = ({ handleClose, show }) => {
 
   const loading = useSelector(({ user: { loading } }) => loading);
 
-  const token = JSON.parse(sessionStorage.getItem("token"));
+  // const token = JSON.parse(sessionStorage.getItem("token"));
   // if (token) {
   //   history.push("/dashboard");
   // }

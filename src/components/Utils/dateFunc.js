@@ -1,4 +1,4 @@
-let days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+let days = ["", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
 let months = [
   "Jan",
   "Feb",
@@ -17,7 +17,7 @@ let months = [
 export const getDateFunc = (date) => {
   return `${months[new Date(date).getMonth()]}, ${
     days[new Date(date).getDay()]
-  } ${new Date(date).getFullYear()}, ${new Date(date).toLocaleTimeString(
-    "en-US"
-  )}`;
+  } ${new Date(date).getUTCDate()} ${new Date(date).getFullYear()}, ${new Date(
+    date
+  ).toLocaleTimeString("en-US")}`;
 };

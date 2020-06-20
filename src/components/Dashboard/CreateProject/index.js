@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
-import { Form, Input } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,20 +19,17 @@ const CreateProject = ({ show, handleClose, single }) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const loading = useSelector(({ user: { loading } }) => loading);
-  const updated_project = useSelector(
-    ({ user: { updated_project } }) => updated_project
-  );
 
   const current = useSelector(({ project: { current } }) => current);
 
-  const edit = single !== undefined &&
-    single !== null && {
-      project_name: single.project_name,
-      description: single.description,
-      project_identifier: single.project_identifier,
-      start_date: single.start_date,
-      end_date: single.end_date,
-    };
+  // const edit = single !== undefined &&
+  //   single !== null && {
+  //     project_name: single.project_name,
+  //     description: single.description,
+  //     project_identifier: single.project_identifier,
+  //     start_date: single.start_date,
+  //     end_date: single.end_date,
+  //   };
   const [values, setValues] = useState({
     project_name: "",
     description: "",

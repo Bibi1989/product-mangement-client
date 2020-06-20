@@ -96,7 +96,7 @@ const reducer = (state = initialState, action) => {
     case TASK:
       return {
         ...state,
-        tasks: action.payload,
+        tasks: [...action.payload],
       };
     case SINGLE_TASK:
       return {
