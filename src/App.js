@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { Provider } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import "antd/dist/antd.css";
 import Nav from "./components/NavBar/index";
 
 import store from "./redux/store";
