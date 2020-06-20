@@ -11,7 +11,6 @@ import {
   getOne,
   notifyMe,
   clearCurrent,
-  deleteAllNotification,
   deleteNotification,
 } from "../ProjectReducer/store";
 
@@ -25,7 +24,6 @@ const Menu = ({ task, handleDelete, handleEdit, updateTask, current_task }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const user = JSON.parse(sessionStorage.getItem("project_user"));
   const [updateState, setUpdateState] = useState(false);
 
   const [change, setChange] = useState(false);
@@ -333,7 +331,6 @@ const H2 = styled.h2`
   padding: 1em 0;
   color: #777777;
 `;
-const NoActivity = styled.div``;
 const ItemStyle = styled.div`
   display: flex;
   justify-content: space-between;

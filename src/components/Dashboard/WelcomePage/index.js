@@ -16,7 +16,6 @@ const WelcomePage = () => {
       setAuth(sessionStorage.token);
     }
   }, []);
-  const user_verify = useSelector(({ user: { user_verify } }) => user_verify);
   return (
     <Container>
       <Tabs

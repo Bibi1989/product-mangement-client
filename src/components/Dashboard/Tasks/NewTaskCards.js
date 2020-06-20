@@ -9,8 +9,6 @@ import {
   getNotifications,
   notifyMe,
 } from "../ProjectReducer/store";
-// import NewTasks from "../CreateTask/NewTasks";
-import { Modal } from "semantic-ui-react";
 import TaskCard from "./TaskCard";
 import NewTaskHeader from "./NewTaskHeader";
 

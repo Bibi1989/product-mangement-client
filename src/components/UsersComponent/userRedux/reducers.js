@@ -10,8 +10,6 @@ const initialState = {
   errors: null,
 };
 
-const token = JSON.parse(sessionStorage.getItem("token")) || null;
-
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER:
