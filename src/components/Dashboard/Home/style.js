@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   background: #f9fbfc;
-  min-height: 50vh;
+  height: 100%;
   padding: 1em;
 `;
 export const Row = styled.div``;
@@ -39,6 +39,7 @@ export const Card = styled.div`
   margin-right: 1em;
   border-radius: 0.3em;
   box-shadow: 0 0 15px solid #cccccc;
+  border-left: ${({ color }) => color && `5px solid ${color}`};
 
   @media (max-width: 769px) {
     width: 100%;

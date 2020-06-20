@@ -6,7 +6,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   background: orangered;
-  margin-top: 5%;
 `;
 export const Row = styled.div`
   width: 100%;

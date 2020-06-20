@@ -10,28 +10,31 @@ const Chart = ({ projects, count, loading, invite }) => {
       icon: "chart bar",
       number: projects.length,
       loaded: loading,
+      color: "teal",
     },
     {
       title: "Total Tasks",
       icon: "chart line",
       number: count,
       loaded: loading,
+      color: "violet",
     },
     {
       title: "Total Collaborator",
       icon: "chart pie",
       number: invite,
       loaded: loading,
+      color: "orangered",
     },
   ];
 
   return (
     <Col>
-      {data.map(({ title, icon, number, loaded }) => (
-        <Card>
+      {data.map(({ title, icon, number, loaded, color }) => (
+        <Card color={color}>
           <p>{title}</p>
           <div className='total'>
-            <Icon name={icon} />
+            <Icon name={icon} color={color} />
             <div>
               {loaded ? (
                 <Spinner animation='grow' variant='success' />
