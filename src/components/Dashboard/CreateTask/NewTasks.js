@@ -197,7 +197,3 @@ const AccordionStyle = styled(Accordion)`
     width: 100%;
   }
 `;
-
-{
-  /*  */
-}
