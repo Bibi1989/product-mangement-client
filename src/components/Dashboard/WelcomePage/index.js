@@ -7,7 +7,6 @@ import Collaborator from "../Notification/index";
 import { Tabs } from "react-bootstrap";
 import { useEffect } from "react";
 import { setAuth } from "../../Utils/setAuth";
-import { useSelector } from "react-redux";
 
 const WelcomePage = () => {
   const [key, setKey] = React.useState("dashboard");

@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Modals,
-  ModalHeader,
-  ModalBody,
-  ModalContent,
-  H1,
-  Close,
-} from "../../UsersComponent/LoginComponent/style";
-import { Form, Buttons, Icon, Modalss, Select } from "semantic-ui-react";
+import { Container, H1 } from "../../UsersComponent/LoginComponent/style";
+import { Form, Select } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addProject,
-  updateProject,
-  createTask,
-  getOne,
-  notifyMe,
-} from "../ProjectReducer/store";
+import { createTask, getOne, notifyMe } from "../ProjectReducer/store";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
